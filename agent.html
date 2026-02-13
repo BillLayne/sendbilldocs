@@ -15,6 +15,26 @@
         html{scroll-behavior:smooth}
         body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f4f8;color:var(--gray-700);line-height:1.6;min-height:100vh}
 
+        /* Lock Screen */
+        .lock-screen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:9999}
+        .lock-screen.hidden{display:none}
+        .lock-card{background:white;border-radius:var(--radius-lg);padding:40px 32px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+        .lock-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:white;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 24px rgba(15,39,68,0.3)}
+        .lock-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px}
+        .lock-sub{font-size:13px;color:var(--gray-500);margin-bottom:24px}
+        .lock-input{width:100%;height:56px;padding:0 18px;font-size:20px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;letter-spacing:6px;text-align:center;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none}
+        .lock-input:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(37,99,235,0.15)}
+        .lock-input.error{border-color:var(--red);animation:shake 0.4s ease}
+        @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+        .lock-btn{width:100%;height:52px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-top:16px;transition:all 0.2s;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+        .lock-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.4)}
+        .lock-error{font-size:13px;color:var(--red);font-weight:600;margin-top:12px;display:none}
+        .lock-error.show{display:block}
+        .lock-remember{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-size:13px;color:var(--gray-500)}
+        .lock-remember input{width:16px;height:16px;cursor:pointer}
+        .app-content{display:none}
+        .app-content.unlocked{display:block}
+
         /* Header */
         .header{background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
         .header-brand{display:flex;align-items:center;gap:12px}
@@ -109,6 +129,23 @@
     </style>
 </head>
 <body>
+
+    <!-- PASSCODE LOCK SCREEN -->
+    <div class="lock-screen" id="lockScreen">
+        <div class="lock-card">
+            <div class="lock-icon"><i class="fas fa-lock"></i></div>
+            <div class="lock-title">Agent Access</div>
+            <div class="lock-sub">Enter the office passcode to continue</div>
+            <input type="password" id="passcodeInput" class="lock-input" maxlength="6" placeholder="••••" autofocus
+                   onkeydown="if(event.key==='Enter')checkPasscode()">
+            <button class="lock-btn" onclick="checkPasscode()"><i class="fas fa-arrow-right" style="margin-right:8px;"></i> Enter</button>
+            <div class="lock-error" id="lockError">Incorrect passcode. Try again.</div>
+            <label class="lock-remember"><input type="checkbox" id="rememberMe"> Remember me on this device</label>
+        </div>
+    </div>
+
+    <!-- APP CONTENT (hidden until passcode entered) -->
+    <div class="app-content" id="appContent">
 
     <!-- Header -->
     <div class="header">
@@ -236,7 +273,44 @@
     <!-- Toast notification -->
     <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastText">Copied!</span></div>
 
+    </div><!-- END app-content -->
+
     <script>
+        // ========================================
+        // PASSCODE GATE
+        // ========================================
+        // CHANGE THIS to your office passcode:
+        var OFFICE_PASSCODE = '1993';
+        var STORAGE_KEY = 'sbd_agent_auth';
+
+        // Check if already authenticated
+        (function() {
+            if (localStorage.getItem(STORAGE_KEY) === OFFICE_PASSCODE) {
+                unlockApp();
+            }
+        })();
+
+        function checkPasscode() {
+            var input = document.getElementById('passcodeInput');
+            var val = input.value.trim();
+            if (val === OFFICE_PASSCODE) {
+                if (document.getElementById('rememberMe').checked) {
+                    localStorage.setItem(STORAGE_KEY, OFFICE_PASSCODE);
+                }
+                unlockApp();
+            } else {
+                input.classList.add('error');
+                document.getElementById('lockError').classList.add('show');
+                input.value = '';
+                input.focus();
+                setTimeout(function() { input.classList.remove('error'); }, 500);
+            }
+        }
+
+        function unlockApp() {
+            document.getElementById('lockScreen').classList.add('hidden');
+            document.getElementById('appContent').classList.add('unlocked');
+        }
         // ========================================
         // CONFIG
         // ========================================
