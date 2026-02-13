@@ -511,6 +511,27 @@
                 if (err) err.style.display = 'none';
             });
         });
+
+        // ========================================
+        // AUTO-FILL FROM URL PARAMS (Agent Links)
+        // ========================================
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            if (params.has('name')) document.getElementById('fullName').value = params.get('name');
+            if (params.has('email')) document.getElementById('email').value = params.get('email');
+            if (params.has('phone')) document.getElementById('phone').value = params.get('phone');
+            if (params.has('doc')) {
+                var docSelect = document.getElementById('docType');
+                var docVal = params.get('doc');
+                for (var i = 0; i < docSelect.options.length; i++) {
+                    if (docSelect.options[i].value === docVal) {
+                        docSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            if (params.has('notes')) document.getElementById('notes').value = params.get('notes');
+        })();
     </script>
 </body>
 </html>
