@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendBillDocs — Agent Link Generator</title>
+    <link rel="icon" href="https://fav.farm/🔗" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;--gold:#f59e0b;--gold-light:#fbbf24;--green:#10b981;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;--radius:14px;--radius-sm:10px;--radius-lg:20px}
+        html{scroll-behavior:smooth}
+        body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f4f8;color:var(--gray-700);line-height:1.6;min-height:100vh}
+
+        /* Header */
+        .header{background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+        .header-brand{display:flex;align-items:center;gap:12px}
+        .header-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--blue),#4338ca);display:flex;align-items:center;justify-content:center;color:white;font-size:18px}
+        .header-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:white}
+        .header-title span{color:var(--gold-light)}
+        .header-subtitle{font-size:12px;color:rgba(255,255,255,0.5);font-weight:600}
+        .header-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px}
+
+        /* Main layout */
+        .main{max-width:1100px;margin:0 auto;padding:32px 20px 60px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+        @media(max-width:768px){.main{grid-template-columns:1fr;gap:20px}}
+
+        /* Cards */
+        .card{background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+        .card-header{padding:20px 24px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:10px}
+        .card-header-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+        .card-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--navy)}
+        .card-body{padding:24px}
+
+        /* Form fields */
+        .field{margin-bottom:18px}
+        .field:last-child{margin-bottom:0}
+        .field-label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+        .field-input{width:100%;height:46px;padding:0 14px;font-size:15px;font-family:'DM Sans',sans-serif;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
+        .field-input:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(37,99,235,0.15)}
+        .field-input::placeholder{color:var(--gray-400)}
+        select.field-input{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:40px}
+        textarea.field-input{height:auto;min-height:70px;padding:12px 14px;resize:vertical}
+
+        /* Generate button */
+        .generate-btn{width:100%;height:52px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+        .generate-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.4)}
+        .generate-btn:active{transform:translateY(0)}
+
+        /* Output section */
+        .output-card{background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+        .output-empty{padding:60px 24px;text-align:center}
+        .output-empty-icon{width:64px;height:64px;border-radius:50%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;color:var(--gray-400)}
+        .output-empty h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--gray-400);margin-bottom:6px}
+        .output-empty p{font-size:13px;color:var(--gray-400)}
+
+        .output-filled{display:none}
+        .output-filled.active{display:block}
+
+        /* Text message preview */
+        .text-preview{margin:0}
+        .text-preview-header{padding:16px 20px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+        .text-preview-label{font-size:12px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:6px}
+        .text-preview-label i{color:var(--green)}
+        .text-preview-body{padding:20px;font-size:15px;color:var(--gray-800);line-height:1.7;white-space:pre-wrap;word-break:break-word;background:white;min-height:120px;border-bottom:1px solid var(--gray-100)}
+        .text-preview-body .link-highlight{color:var(--blue);font-weight:600;text-decoration:underline}
+
+        /* Copy buttons */
+        .copy-row{padding:16px 20px;display:flex;gap:10px;flex-wrap:wrap}
+        .copy-btn{flex:1;min-width:140px;height:46px;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+        .copy-btn-text{background:var(--green);color:white;box-shadow:0 2px 8px rgba(16,185,129,0.3)}
+        .copy-btn-text:hover{background:#059669}
+        .copy-btn-link{background:var(--gray-100);color:var(--gray-700);border:1px solid var(--gray-200)}
+        .copy-btn-link:hover{background:var(--gray-200)}
+        .copy-btn.copied{background:var(--navy)!important;color:white!important}
+
+        /* Link display */
+        .link-section{padding:0 20px 20px}
+        .link-box{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--blue);word-break:break-all;font-family:monospace;line-height:1.5}
+
+        /* Customer preview chip */
+        .customer-chip{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:white;padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;margin:16px 20px 0}
+        .customer-chip i{color:var(--gold-light)}
+
+        /* Quick templates */
+        .templates{padding:16px 20px;border-top:1px solid var(--gray-100)}
+        .templates-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+        .template-chips{display:flex;flex-wrap:wrap;gap:6px}
+        .template-chip{padding:6px 12px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;border:1px solid var(--gray-200);background:white;color:var(--gray-600)}
+        .template-chip:hover{border-color:var(--blue);color:var(--blue);background:#eff6ff}
+
+        /* Toast */
+        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy);color:white;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:1000;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:10px}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        .toast i{color:var(--green)}
+
+        /* Recent links table */
+        .recent-section{grid-column:1/-1;margin-top:8px}
+        .recent-table{width:100%;border-collapse:collapse}
+        .recent-table th{text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;padding:12px 16px;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+        .recent-table td{padding:12px 16px;font-size:13px;color:var(--gray-700);border-bottom:1px solid var(--gray-100)}
+        .recent-table td:first-child{font-weight:600;color:var(--navy)}
+        .recent-table .link-cell{color:var(--blue);font-family:monospace;font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .recent-table .time-cell{color:var(--gray-400);font-size:12px}
+        .recent-empty{padding:32px;text-align:center;font-size:13px;color:var(--gray-400)}
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-brand">
+            <div class="header-icon"><i class="fas fa-link"></i></div>
+            <div>
+                <div class="header-title">SendBillDocs <span>Link Generator</span></div>
+                <div class="header-subtitle">Internal Agent Tool — Bill Layne Insurance</div>
+            </div>
+        </div>
+        <div class="header-badge"><i class="fas fa-lock" style="margin-right:4px;"></i> Office Use Only</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- LEFT: Customer Info Form -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-user-edit"></i></div>
+                <h2>Customer Information</h2>
+            </div>
+            <div class="card-body">
+                <div class="field">
+                    <label class="field-label" for="agentName">Customer Name</label>
+                    <input type="text" id="agentName" class="field-input" placeholder="John Smith">
+                </div>
+                <div class="field">
+                    <label class="field-label" for="agentEmail">Customer Email</label>
+                    <input type="email" id="agentEmail" class="field-input" placeholder="john@example.com">
+                </div>
+                <div class="field">
+                    <label class="field-label" for="agentPhone">Customer Phone</label>
+                    <input type="tel" id="agentPhone" class="field-input" placeholder="(336) 555-1234">
+                </div>
+                <div class="field">
+                    <label class="field-label" for="agentDocType">What Do They Need to Send?</label>
+                    <select id="agentDocType" class="field-input">
+                        <option value="">— Don't prefill (let them choose) —</option>
+                        <option value="Photo of Damage">Photo of Damage</option>
+                        <option value="Tow Bill">Tow Bill / Towing Receipt</option>
+                        <option value="Estimate / Repair Bill">Estimate / Repair Bill</option>
+                        <option value="Letter or Notice">Letter or Notice</option>
+                        <option value="Declarations Page">Declarations Page / Current Policy</option>
+                        <option value="Drivers License">Driver's License</option>
+                        <option value="Vehicle Registration">Vehicle Registration</option>
+                        <option value="Application / Form">Application or Form</option>
+                        <option value="Proof of Prior Insurance">Proof of Prior Insurance</option>
+                        <option value="Other">Other Document</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label class="field-label" for="agentNotes">Pre-fill Notes <span style="font-weight:400;color:var(--gray-400);text-transform:none;">(optional)</span></label>
+                    <textarea id="agentNotes" class="field-input" placeholder="e.g., 'Photos of front bumper damage from 2/10 accident'" rows="2"></textarea>
+                </div>
+
+                <button class="generate-btn" onclick="generateLink()">
+                    <i class="fas fa-wand-magic-sparkles"></i> Generate Link & Text Message
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT: Output -->
+        <div class="output-card">
+            <!-- Empty state -->
+            <div id="outputEmpty" class="output-empty">
+                <div class="output-empty-icon"><i class="fas fa-paper-plane"></i></div>
+                <h3>Ready to Generate</h3>
+                <p>Fill in customer info and click generate to create<br>a prefilled link and text message.</p>
+            </div>
+
+            <!-- Filled state -->
+            <div id="outputFilled" class="output-filled">
+                <div id="customerChip" class="customer-chip"></div>
+
+                <!-- Text Message Preview -->
+                <div class="text-preview">
+                    <div class="text-preview-header">
+                        <div class="text-preview-label"><i class="fas fa-comment-dots"></i> Text Message — Ready to Send</div>
+                    </div>
+                    <div class="text-preview-body" id="textPreview"></div>
+                </div>
+
+                <!-- Copy Buttons -->
+                <div class="copy-row">
+                    <button class="copy-btn copy-btn-text" id="copyTextBtn" onclick="copyText()">
+                        <i class="fas fa-copy"></i> Copy Full Text
+                    </button>
+                    <button class="copy-btn copy-btn-link" id="copyLinkBtn" onclick="copyLink()">
+                        <i class="fas fa-link"></i> Copy Link Only
+                    </button>
+                </div>
+
+                <!-- Generated Link -->
+                <div class="link-section">
+                    <div class="link-box" id="linkDisplay"></div>
+                </div>
+
+                <!-- Quick text templates -->
+                <div class="templates">
+                    <div class="templates-label">Change text style:</div>
+                    <div class="template-chips">
+                        <div class="template-chip" onclick="setTemplate('friendly')">Friendly</div>
+                        <div class="template-chip" onclick="setTemplate('formal')">Professional</div>
+                        <div class="template-chip" onclick="setTemplate('reminder')">Reminder</div>
+                        <div class="template-chip" onclick="setTemplate('claims')">Claims</div>
+                        <div class="template-chip" onclick="setTemplate('quick')">Quick & Short</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Links -->
+        <div class="card recent-section">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:#fef3c7;color:var(--gold);"><i class="fas fa-clock-rotate-left"></i></div>
+                <h2>Recent Links (This Session)</h2>
+            </div>
+            <div id="recentBody">
+                <div class="recent-empty">No links generated yet this session.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastText">Copied!</span></div>
+
+    <script>
+        // ========================================
+        // CONFIG
+        // ========================================
+        const BASE_URL = 'https://www.sendbilldocs.com';
+        
+        let currentLink = '';
+        let currentText = '';
+        let currentTemplate = 'friendly';
+        let recentLinks = [];
+
+        // ========================================
+        // PHONE FORMATTING
+        // ========================================
+        document.getElementById('agentPhone').addEventListener('input', function(e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        // ========================================
+        // GENERATE LINK
+        // ========================================
+        function generateLink() {
+            var name = document.getElementById('agentName').value.trim();
+            var email = document.getElementById('agentEmail').value.trim();
+            var phone = document.getElementById('agentPhone').value.trim();
+            var docType = document.getElementById('agentDocType').value;
+            var notes = document.getElementById('agentNotes').value.trim();
+
+            // Build query params (only include non-empty fields)
+            var params = [];
+            if (name) params.push('name=' + encodeURIComponent(name));
+            if (email) params.push('email=' + encodeURIComponent(email));
+            if (phone) params.push('phone=' + encodeURIComponent(phone));
+            if (docType) params.push('doc=' + encodeURIComponent(docType));
+            if (notes) params.push('notes=' + encodeURIComponent(notes));
+
+            if (params.length === 0) {
+                currentLink = BASE_URL;
+            } else {
+                currentLink = BASE_URL + '?' + params.join('&');
+            }
+
+            // Generate text message
+            currentText = buildTextMessage(name, docType, currentLink, currentTemplate);
+
+            // Update UI
+            document.getElementById('outputEmpty').style.display = 'none';
+            document.getElementById('outputFilled').classList.add('active');
+            
+            var chipText = name || 'Customer';
+            if (docType) chipText += ' — ' + docType;
+            document.getElementById('customerChip').innerHTML = '<i class="fas fa-user"></i> ' + chipText;
+
+            updateTextPreview();
+            document.getElementById('linkDisplay').textContent = currentLink;
+
+            // Add to recent
+            recentLinks.unshift({
+                name: name || 'No name',
+                docType: docType || '—',
+                link: currentLink,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            if (recentLinks.length > 10) recentLinks.pop();
+            renderRecent();
+        }
+
+        // ========================================
+        // TEXT MESSAGE TEMPLATES
+        // ========================================
+        function buildTextMessage(name, docType, link, template) {
+            var firstName = name ? name.split(' ')[0] : '';
+            var docLabel = docType ? docType.toLowerCase() : 'document(s)';
+
+            switch (template) {
+                case 'friendly':
+                    return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
+                        'This is Bill Layne Insurance. ' +
+                        (docType ? 'We need your ' + docLabel + '. ' : '') +
+                        'You can send it to us securely using this link — just tap and follow the steps:\n\n' +
+                        link + '\n\n' +
+                        'It only takes about 60 seconds. Thanks! 😊';
+
+                case 'formal':
+                    return (firstName ? 'Hello ' + firstName + ', ' : 'Hello, ') +
+                        'this is Bill Layne Insurance Agency. ' +
+                        (docType ? 'We are requesting your ' + docLabel + '. ' : 'We need a document from you. ') +
+                        'Please use the secure link below to upload:\n\n' +
+                        link + '\n\n' +
+                        'If you have any questions, call us at (336) 835-1993.';
+
+                case 'reminder':
+                    return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
+                        'friendly reminder from Bill Layne Insurance — ' +
+                        (docType ? 'we still need your ' + docLabel + '. ' : 'we still need your document. ') +
+                        'You can upload it here in under a minute:\n\n' +
+                        link + '\n\n' +
+                        'Thanks! Let us know if you need help. 📞 (336) 835-1993';
+
+                case 'claims':
+                    return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
+                        'this is Bill Layne Insurance regarding your claim. ' +
+                        (docType ? 'We need your ' + docLabel + ' to move things forward. ' : 'We need some documents to process your claim. ') +
+                        'Please upload here:\n\n' +
+                        link + '\n\n' +
+                        'The sooner we get it, the faster we can get things moving! Call us if you need anything: (336) 835-1993';
+
+                case 'quick':
+                    return (firstName ? firstName + ' — ' : '') +
+                        'Bill Layne Insurance here. ' +
+                        (docType ? 'Please send your ' + docLabel + ': ' : 'Please upload your docs: ') +
+                        link;
+
+                default:
+                    return buildTextMessage(name, docType, link, 'friendly');
+            }
+        }
+
+        function setTemplate(template) {
+            currentTemplate = template;
+            var name = document.getElementById('agentName').value.trim();
+            var docType = document.getElementById('agentDocType').value;
+            currentText = buildTextMessage(name, docType, currentLink, template);
+            updateTextPreview();
+            showToast('Switched to ' + template + ' template');
+        }
+
+        function updateTextPreview() {
+            var preview = document.getElementById('textPreview');
+            // Highlight the link in the preview
+            var escaped = currentText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            escaped = escaped.replace(
+                currentLink,
+                '<span class="link-highlight">' + currentLink + '</span>'
+            );
+            preview.innerHTML = escaped;
+        }
+
+        // ========================================
+        // COPY FUNCTIONS
+        // ========================================
+        function copyText() {
+            navigator.clipboard.writeText(currentText).then(function() {
+                var btn = document.getElementById('copyTextBtn');
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                showToast('Text message copied — paste into your messaging app!');
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Copy Full Text';
+                }, 2500);
+            });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(currentLink).then(function() {
+                var btn = document.getElementById('copyLinkBtn');
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                showToast('Link copied!');
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fas fa-link"></i> Copy Link Only';
+                }, 2500);
+            });
+        }
+
+        // ========================================
+        // TOAST
+        // ========================================
+        function showToast(msg) {
+            var toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
+        }
+
+        // ========================================
+        // RECENT LINKS
+        // ========================================
+        function renderRecent() {
+            var body = document.getElementById('recentBody');
+            if (recentLinks.length === 0) {
+                body.innerHTML = '<div class="recent-empty">No links generated yet this session.</div>';
+                return;
+            }
+            var html = '<table class="recent-table"><thead><tr><th>Customer</th><th>Doc Type</th><th>Link</th><th>Time</th></tr></thead><tbody>';
+            for (var i = 0; i < recentLinks.length; i++) {
+                var r = recentLinks[i];
+                html += '<tr><td>' + r.name + '</td><td>' + r.docType + '</td><td class="link-cell">' + r.link + '</td><td class="time-cell">' + r.time + '</td></tr>';
+            }
+            html += '</tbody></table>';
+            body.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
