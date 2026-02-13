@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Send Documents | Bill Layne Insurance Agency</title>
+    <meta name="description" content="Securely upload documents, photos, and files to Bill Layne Insurance Agency in Elkin, NC. Snap a photo or upload a file — it's that easy.">
+    <link rel="icon" href="https://fav.farm/📄" />
+    <meta property="og:title" content="Send Documents | Bill Layne Insurance">
+    <meta property="og:description" content="Securely send documents to your insurance agent. Snap a photo or upload a file.">
+    <meta property="og:image" content="https://i.imgur.com/Z5MxmKE.png">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;--blue-glow:rgba(37,99,235,0.3);--gold:#f59e0b;--gold-light:#fbbf24;--green:#10b981;--green-light:#34d399;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12)}
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--gray-50);color:var(--gray-700);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        a,button,input,select,textarea,label,[role="button"]{-webkit-tap-highlight-color:rgba(37,99,235,0.15);touch-action:manipulation}
+
+        .hero{position:relative;min-height:380px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px 48px;overflow:hidden}
+        .hero-bg{position:absolute;inset:0;background:linear-gradient(165deg,rgba(15,39,68,0.92) 0%,rgba(26,58,92,0.88) 40%,rgba(37,99,235,0.75) 100%),url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80') center/cover no-repeat;z-index:0}
+        .hero-bg::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.5;pointer-events:none}
+        .hero-content{position:relative;z-index:2;max-width:600px}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:50px;font-size:11px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+        .hero-badge i{color:var(--green-light)}
+        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,7vw,44px);font-weight:900;color:white;line-height:1.1;margin-bottom:16px;letter-spacing:-0.5px}
+        .hero h1 span{color:var(--gold-light)}
+        .hero-sub{font-size:clamp(15px,3.5vw,18px);color:rgba(255,255,255,0.85);max-width:480px;margin:0 auto 28px;font-weight:500}
+        .hero-arrow{display:flex;align-items:center;justify-content:center;animation:bounce 2s infinite}
+        .hero-arrow a{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:20px;text-decoration:none;box-shadow:0 4px 20px rgba(245,158,11,0.4);transition:transform 0.3s}
+        .hero-arrow a:hover{transform:scale(1.1)}
+        @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}60%{transform:translateY(-6px)}}
+
+        .steps-section{padding:48px 20px 12px;max-width:680px;margin:0 auto}
+        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;text-align:center;color:var(--navy);margin-bottom:28px}
+        .steps-row{display:flex;gap:12px;justify-content:center;margin-bottom:8px}
+        .step-card{flex:1;max-width:200px;text-align:center;padding:20px 12px;background:white;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-100)}
+        .step-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+        .step-1 .step-icon{background:#eff6ff;color:var(--blue)}.step-2 .step-icon{background:#fef3c7;color:var(--gold)}.step-3 .step-icon{background:#d1fae5;color:var(--green)}
+        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-400);margin-bottom:4px}
+        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--navy)}
+
+        .trust-bar{padding:20px;text-align:center}
+        .trust-items{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;font-size:12px;font-weight:600;color:var(--gray-500)}
+        .trust-items span{display:flex;align-items:center;gap:5px}
+        .trust-items i.fa-lock{color:var(--green)}.trust-items i.fa-shield-halved{color:var(--blue)}.trust-items i.fa-clock{color:var(--gold)}
+
+        .form-section{padding:28px 16px 40px;max-width:560px;margin:0 auto}
+        .form-card{background:white;border-radius:var(--radius-lg);padding:32px 24px;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
+        .form-header{text-align:center;margin-bottom:28px}
+        .form-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px}
+        .form-header p{font-size:14px;color:var(--gray-500)}
+        .form-group{margin-bottom:20px}
+        .form-label{display:block;font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:8px;letter-spacing:0.3px}
+        .form-label .required{color:var(--red);margin-left:2px}
+        .form-input{width:100%;height:52px;padding:0 16px;font-size:16px;font-family:'DM Sans',sans-serif;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
+        .form-input:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 4px var(--blue-glow)}
+        .form-input::placeholder{color:var(--gray-400)}
+        select.form-input{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:44px}
+        textarea.form-input{height:auto;min-height:90px;padding:14px 16px;resize:vertical}
+        .form-error{font-size:12px;color:var(--red);margin-top:6px;display:none}
+        .form-input.error{border-color:var(--red)}
+
+        .upload-zone{position:relative;border:3px dashed var(--gray-300);border-radius:var(--radius);padding:40px 24px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--gray-50)}
+        .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:#eff6ff}
+        .upload-zone.has-files{border-color:var(--green);background:#f0fdf4;border-style:solid}
+        .upload-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#4f46e5);color:white;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(37,99,235,0.3)}
+        .upload-zone.has-files .upload-icon{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 8px 24px rgba(16,185,129,0.3)}
+        .upload-text-main{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:6px}
+        .upload-text-sub{font-size:13px;color:var(--gray-500);margin-bottom:16px}
+        .upload-buttons{display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;margin:0 auto}
+        .upload-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:0 24px;border-radius:50px;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.2s;width:100%}
+        .upload-btn-camera{height:60px;background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.35);font-size:17px}
+        .upload-btn-camera:hover{background:#e89209;transform:translateY(-1px)}.upload-btn-camera:active{transform:scale(0.98)}
+        .upload-btn-file{height:52px;background:white;color:var(--gray-600);border:2px solid var(--gray-200);font-size:15px}
+        .upload-btn-file:hover{border-color:var(--blue);color:var(--blue)}
+        .file-input{display:none}
+        .add-more-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;border:2px dashed var(--gray-300);background:var(--gray-50);color:var(--gray-500);cursor:pointer;transition:all 0.2s;margin-top:12px}
+        .add-more-btn:hover{border-color:var(--blue);color:var(--blue);background:#eff6ff}
+        .file-list{margin-top:16px}
+        .file-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-sm);margin-bottom:8px;animation:slideIn 0.3s ease}
+        @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        .file-item-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .file-item-icon.img{background:#ede9fe;color:#7c3aed}.file-item-icon.pdf{background:#fee2e2;color:var(--red)}.file-item-icon.doc{background:#dbeafe;color:var(--blue)}.file-item-icon.other{background:var(--gray-100);color:var(--gray-500)}
+        .file-item-info{flex:1;min-width:0}
+        .file-item-name{font-size:14px;font-weight:600;color:var(--gray-800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .file-item-size{font-size:12px;color:var(--gray-400)}
+        .file-item-remove{width:44px;height:44px;border:none;background:var(--gray-100);border-radius:50%;color:var(--gray-500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;font-size:16px}
+        .file-item-remove:hover{background:#fee2e2;color:var(--red)}
+
+        .submit-btn{width:100%;height:60px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 24px rgba(37,99,235,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;position:relative;overflow:hidden}
+        .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,0.45)}
+        .submit-btn:active:not(:disabled){transform:translateY(0)}
+        .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+        .submit-btn .shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.3),transparent);transform:skewX(-25deg);animation:btnshine 4s infinite}
+        @keyframes btnshine{0%,60%{left:-100%}100%{left:200%}}
+
+        .sending-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
+        .sending-section.active{display:block}
+        .sending-spinner{width:72px;height:72px;border:5px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 24px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .sending-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--navy);margin-bottom:12px}
+        .sending-section p{font-size:16px;color:var(--gray-500);line-height:1.7}
+        .sending-warning{display:flex;align-items:center;justify-content:center;gap:10px;background:#fef3c7;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:14px 20px;margin-top:24px;font-size:14px;font-weight:600;color:#92400e}
+
+        .success-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
+        .success-section.active{display:block}
+        .success-check{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);color:white;display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 24px;box-shadow:0 12px 36px rgba(16,185,129,0.35);animation:popIn 0.5s cubic-bezier(0.16,1,0.3,1)}
+        @keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+        .success-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--navy);margin-bottom:12px}
+        .success-section p{font-size:16px;color:var(--gray-600);margin-bottom:8px;line-height:1.7}
+        .confirmation-box{background:var(--navy);color:white;border-radius:var(--radius);padding:20px 24px;margin:20px 0;text-align:center}
+        .confirmation-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-light);margin-bottom:6px}
+        .confirmation-number{font-family:'Plus Jakarta Sans',monospace;font-size:28px;font-weight:900;letter-spacing:3px;color:white}
+        .confirmation-tip{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px}
+        .success-section .email-note{display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;padding:14px 20px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:#166534;margin:16px 0}
+        .success-actions{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+        .success-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .success-btn-primary{background:linear-gradient(135deg,var(--blue),#4338ca);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+        .success-btn-secondary{background:white;color:var(--gray-700);border:2px solid var(--gray-200)}
+        .success-btn:hover{transform:translateY(-1px)}
+
+        .help-section{padding:0 16px 40px;max-width:560px;margin:0 auto}
+        .help-card{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:var(--radius-lg);padding:32px 24px;text-align:center;box-shadow:0 8px 32px rgba(15,39,68,0.3);position:relative;overflow:hidden}
+        .help-card::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(37,99,235,0.15);border-radius:50%;pointer-events:none}
+        .help-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:white;margin-bottom:8px;position:relative}
+        .help-card p{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:24px;line-height:1.6;position:relative}
+        .help-actions{display:flex;flex-direction:column;gap:10px;position:relative}
+        .help-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .help-btn-call{background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.3)}
+        .help-btn-call:hover{background:var(--gold-light);transform:translateY(-1px)}
+        .help-btn-email{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
+        .help-btn-email:hover{background:rgba(255,255,255,0.15)}
+        .help-hours{font-size:12px;color:rgba(255,255,255,0.4);margin-top:16px;position:relative}
+
+        .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:40px 20px 100px;text-align:center}
+        .footer-logo{height:40px;opacity:0.6;margin-bottom:16px}
+        .footer-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:4px}
+        .footer-info{font-size:13px;line-height:1.8}
+        .footer-info a{color:rgba(255,255,255,0.6);text-decoration:none}
+        .footer-info a:hover{color:var(--gold-light)}
+        .footer-copy{margin-top:20px;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.4}
+
+        .mobile-dock{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gray-200);box-shadow:0 -4px 20px rgba(0,0,0,0.08);padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+        .dock-inner{display:flex;gap:10px}
+        .dock-btn{flex:1;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .dock-call{background:var(--gray-100);color:var(--gray-700)}.dock-upload{flex:2;background:linear-gradient(135deg,var(--blue),#4338ca);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3)}.dock-quote{background:var(--gold);color:var(--navy)}
+        @media(max-width:768px){.mobile-dock{display:block}.footer{padding-bottom:120px}}
+        @media(max-width:480px){.hero{min-height:320px;padding:48px 16px 40px}.form-card{padding:24px 18px}.steps-row{gap:8px}.step-card{padding:16px 8px}.step-icon{width:48px;height:48px;font-size:18px}.step-label{font-size:13px}.upload-zone{padding:36px 18px}.help-card{padding:24px 18px}}
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,4.5vw,24px);font-weight:900;color:white;letter-spacing:-0.3px;margin-bottom:16px;">Bill Layne <span style="color:var(--gold-light);">Insurance</span></div>
+            <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
+            <h1>Send Us Your<br><span>Documents</span></h1>
+            <p class="hero-sub">Need to send us a photo, letter, estimate, or any document? It takes less than 60 seconds.</p>
+            <div class="hero-arrow"><a href="#upload-form" aria-label="Scroll to upload form"><i class="fas fa-chevron-down"></i></a></div>
+        </div>
+    </header>
+
+    <section class="steps-section" id="stepsSection">
+        <h2 class="steps-title">It's Easy — Just 3 Steps</h2>
+        <div class="steps-row">
+            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i></div><div class="step-num">Step 1</div><div class="step-label">Your Info</div></div>
+            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i></div><div class="step-num">Step 2</div><div class="step-label">Snap or Upload</div></div>
+            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check-circle"></i></div><div class="step-num">Step 3</div><div class="step-label">Done!</div></div>
+        </div>
+    </section>
+
+    <div class="trust-bar" id="trustBar">
+        <div class="trust-items">
+            <span><i class="fas fa-lock"></i> 100% Secure</span>
+            <span><i class="fas fa-shield-halved"></i> Files Go Directly To Us</span>
+            <span><i class="fas fa-clock"></i> Takes Under 60 Seconds</span>
+        </div>
+    </div>
+
+    <section class="form-section" id="upload-form">
+        <div class="form-card">
+            <div class="form-header">
+                <h2><i class="fas fa-paper-plane" style="color:var(--blue);margin-right:8px;"></i> Upload Your Documents</h2>
+                <p>Fill in your info and attach your files below.</p>
+            </div>
+            <form id="docForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Your Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" class="form-input" placeholder="John Smith" required autocomplete="name">
+                    <div class="form-error" id="nameError">Please enter your name</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" class="form-input" placeholder="john@example.com" required autocomplete="email">
+                    <div class="form-error" id="emailError">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-input" placeholder="(336) 555-1234" autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="docType">What Are You Sending? <span class="required">*</span></label>
+                    <select id="docType" class="form-input" required>
+                        <option value="" disabled selected>Choose one...</option>
+                        <option value="Photo of Damage">Photo of Damage</option>
+                        <option value="Tow Bill">Tow Bill / Towing Receipt</option>
+                        <option value="Estimate / Repair Bill">Estimate / Repair Bill</option>
+                        <option value="Letter or Notice">Letter or Notice I Received</option>
+                        <option value="Declarations Page">Declarations Page / Current Policy</option>
+                        <option value="Drivers License">Driver's License</option>
+                        <option value="Vehicle Registration">Vehicle Registration</option>
+                        <option value="Application / Form">Application or Form</option>
+                        <option value="Proof of Prior Insurance">Proof of Prior Insurance</option>
+                        <option value="Other">Other Document</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="notes">Notes <span style="font-weight:400;color:var(--gray-400);">(optional)</span></label>
+                    <textarea id="notes" class="form-input" placeholder="Anything else we should know? (e.g., 'This is for my claim from last week' or 'Please call me back')" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Attach Files <span class="required">*</span> <span style="font-weight:400;color:var(--gray-400);">— You can add multiple</span></label>
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon" id="uploadIcon"><i class="fas fa-cloud-arrow-up"></i></div>
+                        <div class="upload-text-main" id="uploadTextMain">Tap to add your files</div>
+                        <div class="upload-text-sub">Photos, PDFs, documents — up to 10MB each</div>
+                        <div class="upload-buttons">
+                            <button type="button" class="upload-btn upload-btn-camera" onclick="openCamera()">
+                                <i class="fas fa-camera" style="font-size:20px;"></i> Take a Photo
+                            </button>
+                            <button type="button" class="upload-btn upload-btn-file" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-folder-open"></i> Browse My Files
+                            </button>
+                        </div>
+                        <!-- Camera: capture="environment" = rear camera on iOS & Android -->
+                        <input type="file" id="cameraInput" class="file-input" accept="image/*" capture="environment">
+                        <!-- Fallback for devices that don't support capture -->
+                        <input type="file" id="cameraFallback" class="file-input" accept="image/*" multiple>
+                        <!-- File browser: all types, multiple -->
+                        <input type="file" id="fileInput" class="file-input" accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.webp" multiple>
+                    </div>
+                    <div id="fileList" class="file-list"></div>
+                    <div id="addMoreContainer" style="display:none;">
+                        <button type="button" class="add-more-btn" onclick="openAddMore()">
+                            <i class="fas fa-plus-circle"></i> Add More Photos or Files
+                        </button>
+                    </div>
+                    <div class="form-error" id="fileError">Please attach at least one file</div>
+                </div>
+                <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+                    <span class="shine"></span><i class="fas fa-paper-plane"></i> Send Documents
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="sending-section" id="sendingSection">
+        <div class="sending-spinner"></div>
+        <h2>Sending Your Documents...</h2>
+        <p>We're securely uploading your files to our team.<br>This may take a moment depending on file size.</p>
+        <div class="sending-warning"><i class="fas fa-exclamation-triangle"></i> Please don't close this page until you see your confirmation.</div>
+    </section>
+
+    <section class="success-section" id="successSection">
+        <div class="success-check"><i class="fas fa-check"></i></div>
+        <h2>Documents Received!</h2>
+        <p>Thank you — we've got your files and our team is on it.</p>
+        <div class="confirmation-box">
+            <div class="confirmation-label">Your Confirmation Number</div>
+            <div class="confirmation-number" id="confirmationDisplay">—</div>
+            <div class="confirmation-tip">Save this number for your records</div>
+        </div>
+        <div class="email-note"><i class="fas fa-envelope-circle-check"></i> A confirmation email has been sent to you.</div>
+        <p style="font-size:14px;color:var(--gray-500);">We'll review your documents and reach out if we need anything else. Most requests are handled within one business day.</p>
+        <div class="success-actions">
+            <button class="success-btn success-btn-primary" onclick="resetForm()"><i class="fas fa-plus"></i> Send More Documents</button>
+            <a href="tel:3368351993" class="success-btn success-btn-secondary"><i class="fas fa-phone-alt"></i> Call Us: (336) 835-1993</a>
+            <a href="https://www.billlayneinsurance.com" class="success-btn success-btn-secondary"><i class="fas fa-globe"></i> Visit Our Website</a>
+        </div>
+    </section>
+
+    <section class="help-section" id="helpSection">
+        <div class="help-card">
+            <h3><i class="fas fa-headset" style="color:var(--gold-light);margin-right:8px;"></i> Need Help?</h3>
+            <p>Having trouble uploading? No worries — give us a call and we'll walk you through it or take your info over the phone.</p>
+            <div class="help-actions">
+                <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:20px;"></i> Call (336) 835-1993</a>
+                <a href="mailto:docs@billlayneinsurance.com" class="help-btn help-btn-email"><i class="fas fa-envelope"></i> Email Us</a>
+            </div>
+            <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon–Fri: 9am – 5pm</div>
+        </div>
+    </section>
+
+    <footer class="footer" id="footerSection">
+        <img src="https://i.imgur.com/Z5MxmKE.png" alt="Bill Layne Insurance" class="footer-logo">
+        <div class="footer-name">Bill Layne Insurance Agency</div>
+        <div class="footer-info">1283 N Bridge St, Elkin, NC 28621<br><a href="tel:3368351993">(336) 835-1993</a> &bull; <a href="mailto:Save@BillLayneInsurance.com">Save@BillLayneInsurance.com</a><br><a href="https://www.billlayneinsurance.com">www.BillLayneInsurance.com</a></div>
+        <div class="footer-copy">&copy; 2025 Bill Layne Insurance Agency</div>
+    </footer>
+
+    <div class="mobile-dock" id="mobileDock">
+        <div class="dock-inner">
+            <a href="tel:3368351993" class="dock-btn dock-call"><i class="fas fa-phone-alt"></i> Call</a>
+            <a href="#upload-form" class="dock-btn dock-upload" id="dockUpload"><i class="fas fa-cloud-arrow-up"></i> Upload Docs</a>
+            <a href="https://billlayneinsurance.com/get-quote" class="dock-btn dock-quote"><i class="fas fa-file-alt"></i> Quote</a>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIPn7fAAAc7n8LCRceQmXvJJ-X8_CnxuqAsXpZKN7hv-dvSVBXlKZtPw_YOmUD6re0SQ/exec';
+
+        function generateConfirmationNumber() {
+            const now = new Date();
+            const d = now.getFullYear().toString().slice(-2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+            const r = Math.random().toString(36).substring(2,6).toUpperCase();
+            return 'BL-' + d + '-' + r;
+        }
+
+        let selectedFiles = [];
+        const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+        function openCamera() {
+            // Try capture input first (works on iOS Safari, Android Chrome)
+            // If device doesn't support capture, it falls back to image picker which also offers camera
+            try {
+                document.getElementById('cameraInput').click();
+            } catch(e) {
+                document.getElementById('cameraFallback').click();
+            }
+        }
+
+        function openAddMore() {
+            document.getElementById('fileInput').click();
+        }
+
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const cameraInput = document.getElementById('cameraInput');
+        const cameraFallback = document.getElementById('cameraFallback');
+
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
+        uploadZone.addEventListener('drop', (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+
+        fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+        cameraInput.addEventListener('change', (e) => addFiles(e.target.files));
+        cameraFallback.addEventListener('change', (e) => addFiles(e.target.files));
+
+        function addFiles(fileList) {
+            for (let f of fileList) {
+                if (f.size > MAX_FILE_SIZE) { alert('"' + f.name + '" is too large. Maximum file size is 10MB.'); continue; }
+                if (selectedFiles.some(sf => sf.name === f.name && sf.size === f.size)) continue;
+                selectedFiles.push(f);
+            }
+            renderFileList();
+            fileInput.value = '';
+            cameraInput.value = '';
+            cameraFallback.value = '';
+        }
+
+        function removeFile(index) { selectedFiles.splice(index, 1); renderFileList(); }
+
+        function getFileIcon(file) {
+            if (file.type.startsWith('image/')) return { c: 'img', i: 'fa-image' };
+            if (file.type === 'application/pdf') return { c: 'pdf', i: 'fa-file-pdf' };
+            if (file.type.includes('word') || file.type.includes('document')) return { c: 'doc', i: 'fa-file-word' };
+            return { c: 'other', i: 'fa-file' };
+        }
+
+        function formatSize(b) { if(b<1024)return b+' B'; if(b<1048576)return(b/1024).toFixed(1)+' KB'; return(b/1048576).toFixed(1)+' MB'; }
+
+        function renderFileList() {
+            const list = document.getElementById('fileList');
+            const zone = document.getElementById('uploadZone');
+            const icon = document.getElementById('uploadIcon');
+            const mainText = document.getElementById('uploadTextMain');
+            const addMore = document.getElementById('addMoreContainer');
+
+            if (selectedFiles.length > 0) {
+                zone.classList.add('has-files');
+                icon.innerHTML = '<i class="fas fa-check"></i>';
+                mainText.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' ready to send';
+                addMore.style.display = 'block';
+            } else {
+                zone.classList.remove('has-files');
+                icon.innerHTML = '<i class="fas fa-cloud-arrow-up"></i>';
+                mainText.textContent = 'Tap to add your files';
+                addMore.style.display = 'none';
+            }
+
+            list.innerHTML = selectedFiles.map(function(f, i) {
+                var fi = getFileIcon(f);
+                return '<div class="file-item"><div class="file-item-icon '+fi.c+'"><i class="fas '+fi.i+'"></i></div><div class="file-item-info"><div class="file-item-name">'+f.name+'</div><div class="file-item-size">'+formatSize(f.size)+'</div></div><button type="button" class="file-item-remove" onclick="removeFile('+i+')" aria-label="Remove file"><i class="fas fa-xmark"></i></button></div>';
+            }).join('');
+
+            if (selectedFiles.length > 0) document.getElementById('fileError').style.display = 'none';
+        }
+
+        function validateForm() {
+            var valid = true;
+            var name = document.getElementById('fullName');
+            var email = document.getElementById('email');
+            var docType = document.getElementById('docType');
+            if (!name.value.trim()) { name.classList.add('error'); document.getElementById('nameError').style.display='block'; valid=false; }
+            else { name.classList.remove('error'); document.getElementById('nameError').style.display='none'; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.classList.add('error'); document.getElementById('emailError').style.display='block'; valid=false; }
+            else { email.classList.remove('error'); document.getElementById('emailError').style.display='none'; }
+            if (!docType.value) { docType.classList.add('error'); valid=false; } else { docType.classList.remove('error'); }
+            if (selectedFiles.length===0) { document.getElementById('fileError').style.display='block'; valid=false; }
+            else { document.getElementById('fileError').style.display='none'; }
+            return valid;
+        }
+
+        async function handleSubmit() {
+            if (!validateForm()) { var fe=document.querySelector('.form-input.error'); if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+            var confirmationNumber = generateConfirmationNumber();
+
+            // Show sending section
+            document.querySelector('.form-section').style.display = 'none';
+            document.getElementById('stepsSection').style.display = 'none';
+            document.getElementById('trustBar').style.display = 'none';
+            document.getElementById('helpSection').style.display = 'none';
+            var sending = document.getElementById('sendingSection');
+            sending.classList.add('active');
+            sending.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            var dockUpload = document.getElementById('dockUpload');
+            if (dockUpload) { dockUpload.style.pointerEvents='none'; dockUpload.style.opacity='0.5'; }
+
+            try {
+                var filesData = [];
+                for (var f of selectedFiles) {
+                    var base64 = await fileToBase64(f);
+                    filesData.push({ name: f.name, type: f.type, size: f.size, data: base64 });
+                }
+
+                var payload = {
+                    name: document.getElementById('fullName').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    docType: document.getElementById('docType').value,
+                    notes: document.getElementById('notes').value.trim(),
+                    confirmationNumber: confirmationNumber,
+                    files: filesData,
+                    timestamp: new Date().toISOString()
+                };
+
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
+                showSuccess(confirmationNumber);
+            } catch (error) {
+                console.error('Upload error:', error);
+                sending.classList.remove('active');
+                document.querySelector('.form-section').style.display = '';
+                document.getElementById('stepsSection').style.display = '';
+                document.getElementById('trustBar').style.display = '';
+                document.getElementById('helpSection').style.display = '';
+                if (dockUpload) { dockUpload.style.pointerEvents=''; dockUpload.style.opacity=''; }
+                alert('Something went wrong. Please try again or call us at (336) 835-1993.');
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise(function(resolve, reject) {
+                var reader = new FileReader();
+                reader.onload = function() { resolve(reader.result.split(',')[1]); };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function showSuccess(confirmationNumber) {
+            document.getElementById('sendingSection').classList.remove('active');
+            document.getElementById('confirmationDisplay').textContent = confirmationNumber;
+            var success = document.getElementById('successSection');
+            success.classList.add('active');
+            success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            var dockUpload = document.getElementById('dockUpload');
+            if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-check-circle"></i> Sent!'; dockUpload.style.background='linear-gradient(135deg,#10b981,#059669)'; dockUpload.style.pointerEvents=''; dockUpload.style.opacity=''; }
+        }
+
+        function resetForm() {
+            document.getElementById('docForm').reset();
+            selectedFiles = [];
+            renderFileList();
+            document.querySelector('.form-section').style.display = '';
+            document.getElementById('stepsSection').style.display = '';
+            document.getElementById('trustBar').style.display = '';
+            document.getElementById('helpSection').style.display = '';
+            document.getElementById('successSection').classList.remove('active');
+            document.getElementById('confirmationDisplay').textContent = '—';
+            var dockUpload = document.getElementById('dockUpload');
+            if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-cloud-arrow-up"></i> Upload Docs'; dockUpload.style.background=''; }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+            var x = e.target.value.replace(/\D/g,'').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '('+x[1]+') '+x[2]+(x[3]?'-'+x[3]:'');
+        });
+
+        document.querySelectorAll('.form-input').forEach(function(input) {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                var err = this.parentElement.querySelector('.form-error');
+                if (err) err.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
