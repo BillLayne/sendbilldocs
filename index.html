@@ -16,148 +16,249 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        :root{--navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;--blue-glow:rgba(37,99,235,0.3);--gold:#f59e0b;--gold-light:#fbbf24;--green:#10b981;--green-light:#34d399;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12)}
+        :root{
+            --navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;
+            --blue-glow:rgba(37,99,235,0.3);--gold:#f59e0b;--gold-light:#fbbf24;
+            --green:#10b981;--green-light:#34d399;--gray-50:#f8fafc;--gray-100:#f1f5f9;
+            --gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;
+            --gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;
+            --radius:16px;--radius-sm:12px;--radius-lg:24px;
+            --shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12)
+        }
         html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
         body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--gray-50);color:var(--gray-700);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
         a,button,input,select,textarea,label,[role="button"]{-webkit-tap-highlight-color:rgba(37,99,235,0.15);touch-action:manipulation}
 
-        .hero{position:relative;min-height:380px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px 48px;overflow:hidden}
+        /* ======= HERO ======= */
+        .hero{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;text-align:center;padding:56px 20px 44px;overflow:hidden}
         .hero-bg{position:absolute;inset:0;background:linear-gradient(165deg,rgba(15,39,68,0.92) 0%,rgba(26,58,92,0.88) 40%,rgba(37,99,235,0.75) 100%),url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80') center/cover no-repeat;z-index:0}
-        .hero-bg::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.5;pointer-events:none}
-        .hero-content{position:relative;z-index:2;max-width:600px}
-        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:50px;font-size:11px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+        .hero-content{position:relative;z-index:2;max-width:580px}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:50px;font-size:11px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
         .hero-badge i{color:var(--green-light)}
-        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,7vw,44px);font-weight:900;color:white;line-height:1.1;margin-bottom:16px;letter-spacing:-0.5px}
+        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px,7vw,42px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;letter-spacing:-0.5px}
         .hero h1 span{color:var(--gold-light)}
-        .hero-sub{font-size:clamp(15px,3.5vw,18px);color:rgba(255,255,255,0.85);max-width:480px;margin:0 auto 28px;font-weight:500}
+        .hero-sub{font-size:clamp(14px,3.5vw,17px);color:rgba(255,255,255,0.85);max-width:460px;margin:0 auto 24px;font-weight:500}
         .hero-arrow{display:flex;align-items:center;justify-content:center;animation:bounce 2s infinite}
-        .hero-arrow a{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:20px;text-decoration:none;box-shadow:0 4px 20px rgba(245,158,11,0.4);transition:transform 0.3s}
+        .hero-arrow a{display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:19px;text-decoration:none;box-shadow:0 4px 20px rgba(245,158,11,0.4);transition:transform 0.3s}
         .hero-arrow a:hover{transform:scale(1.1)}
         @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}60%{transform:translateY(-6px)}}
 
-        .steps-section{padding:48px 20px 12px;max-width:680px;margin:0 auto}
-        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;text-align:center;color:var(--navy);margin-bottom:28px}
-        .steps-row{display:flex;gap:12px;justify-content:center;margin-bottom:8px}
-        .step-card{flex:1;max-width:200px;text-align:center;padding:20px 12px;background:white;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-100)}
-        .step-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+        /* ======= STEPS ======= */
+        .steps-section{padding:44px 20px 10px;max-width:660px;margin:0 auto}
+        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;text-align:center;color:var(--navy);margin-bottom:24px}
+        .steps-row{display:flex;gap:10px;justify-content:center;margin-bottom:8px}
+        .step-card{flex:1;max-width:190px;text-align:center;padding:18px 10px;background:white;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-100)}
+        .step-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:20px}
         .step-1 .step-icon{background:#eff6ff;color:var(--blue)}.step-2 .step-icon{background:#fef3c7;color:var(--gold)}.step-3 .step-icon{background:#d1fae5;color:var(--green)}
-        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-400);margin-bottom:4px}
-        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--navy)}
+        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-400);margin-bottom:3px}
+        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--navy)}
 
-        .trust-bar{padding:20px;text-align:center}
-        .trust-items{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;font-size:12px;font-weight:600;color:var(--gray-500)}
+        /* ======= TRUST BAR ======= */
+        .trust-bar{padding:18px;text-align:center}
+        .trust-items{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-size:12px;font-weight:600;color:var(--gray-500)}
         .trust-items span{display:flex;align-items:center;gap:5px}
         .trust-items i.fa-lock{color:var(--green)}.trust-items i.fa-shield-halved{color:var(--blue)}.trust-items i.fa-clock{color:var(--gold)}
 
-        .form-section{padding:28px 16px 40px;max-width:560px;margin:0 auto}
-        .form-card{background:white;border-radius:var(--radius-lg);padding:32px 24px;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
-        .form-header{text-align:center;margin-bottom:28px}
-        .form-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px}
+        /* ======= FORM SECTION ======= */
+        .form-section{padding:24px 16px 36px;max-width:580px;margin:0 auto}
+        .form-card{background:white;border-radius:var(--radius-lg);padding:28px 22px;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
+        .form-header{text-align:center;margin-bottom:26px}
+        .form-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;color:var(--navy);margin-bottom:5px}
         .form-header p{font-size:14px;color:var(--gray-500)}
-        .form-group{margin-bottom:20px}
-        .form-label{display:block;font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:8px;letter-spacing:0.3px}
+        .form-group{margin-bottom:18px}
+        .form-label{display:block;font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:7px;letter-spacing:0.3px}
         .form-label .required{color:var(--red);margin-left:2px}
         .form-input{width:100%;height:52px;padding:0 16px;font-size:16px;font-family:'DM Sans',sans-serif;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
         .form-input:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 4px var(--blue-glow)}
         .form-input::placeholder{color:var(--gray-400)}
         select.form-input{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:44px}
-        textarea.form-input{height:auto;min-height:90px;padding:14px 16px;resize:vertical}
-        .form-error{font-size:12px;color:var(--red);margin-top:6px;display:none}
+        textarea.form-input{height:auto;min-height:80px;padding:14px 16px;resize:vertical}
+        .form-error{font-size:12px;color:var(--red);margin-top:5px;display:none}
         .form-input.error{border-color:var(--red)}
 
-        .upload-zone{position:relative;border:3px dashed var(--gray-300);border-radius:var(--radius);padding:40px 24px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--gray-50)}
+        /* ======= STANDARD UPLOAD ZONE (non-photo mode) ======= */
+        .upload-zone{position:relative;border:3px dashed var(--gray-300);border-radius:var(--radius);padding:36px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--gray-50)}
         .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:#eff6ff}
         .upload-zone.has-files{border-color:var(--green);background:#f0fdf4;border-style:solid}
-        .upload-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#4f46e5);color:white;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(37,99,235,0.3)}
+        .upload-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#4f46e5);color:white;display:flex;align-items:center;justify-content:center;font-size:29px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(37,99,235,0.3)}
         .upload-zone.has-files .upload-icon{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 8px 24px rgba(16,185,129,0.3)}
-        .upload-text-main{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:6px}
-        .upload-text-sub{font-size:13px;color:var(--gray-500);margin-bottom:16px}
-        .upload-buttons{display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;margin:0 auto}
-        .upload-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:0 24px;border-radius:50px;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.2s;width:100%}
-        .upload-btn-camera{height:60px;background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.35);font-size:17px}
-        .upload-btn-camera:hover{background:#e89209;transform:translateY(-1px)}.upload-btn-camera:active{transform:scale(0.98)}
-        .upload-btn-file{height:52px;background:white;color:var(--gray-600);border:2px solid var(--gray-200);font-size:15px}
+        .upload-text-main{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:5px}
+        .upload-text-sub{font-size:13px;color:var(--gray-500);margin-bottom:14px}
+        .upload-buttons{display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;margin:0 auto}
+        .upload-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:0 22px;border-radius:50px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.2s;width:100%}
+        .upload-btn-camera{height:58px;background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.35);font-size:16px}
+        .upload-btn-camera:hover{background:#e89209;transform:translateY(-1px)}
+        .upload-btn-file{height:50px;background:white;color:var(--gray-600);border:2px solid var(--gray-200);font-size:14px}
         .upload-btn-file:hover{border-color:var(--blue);color:var(--blue)}
         .file-input{display:none}
-        .add-more-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;border:2px dashed var(--gray-300);background:var(--gray-50);color:var(--gray-500);cursor:pointer;transition:all 0.2s;margin-top:12px}
+        .add-more-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:46px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;border:2px dashed var(--gray-300);background:var(--gray-50);color:var(--gray-500);cursor:pointer;transition:all 0.2s;margin-top:10px}
         .add-more-btn:hover{border-color:var(--blue);color:var(--blue);background:#eff6ff}
-        .file-list{margin-top:16px}
-        .file-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-sm);margin-bottom:8px;animation:slideIn 0.3s ease}
+        .file-list{margin-top:14px}
+        .file-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-sm);margin-bottom:7px;animation:slideIn 0.3s ease}
         @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-        .file-item-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .file-item-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
         .file-item-icon.img{background:#ede9fe;color:#7c3aed}.file-item-icon.pdf{background:#fee2e2;color:var(--red)}.file-item-icon.doc{background:#dbeafe;color:var(--blue)}.file-item-icon.other{background:var(--gray-100);color:var(--gray-500)}
         .file-item-info{flex:1;min-width:0}
-        .file-item-name{font-size:14px;font-weight:600;color:var(--gray-800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .file-item-size{font-size:12px;color:var(--gray-400)}
-        .file-item-remove{width:44px;height:44px;border:none;background:var(--gray-100);border-radius:50%;color:var(--gray-500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;font-size:16px}
+        .file-item-name{font-size:13px;font-weight:600;color:var(--gray-800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .file-item-size{font-size:11px;color:var(--gray-400)}
+        .file-item-remove{width:40px;height:40px;border:none;background:var(--gray-100);border-radius:50%;color:var(--gray-500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;font-size:15px}
         .file-item-remove:hover{background:#fee2e2;color:var(--red)}
 
-        .submit-btn{width:100%;height:60px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 24px rgba(37,99,235,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;position:relative;overflow:hidden}
+        /* ======= PHOTO INSPECTION MODE ======= */
+        .photo-mode-banner{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px;margin-bottom:22px}
+        .photo-mode-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold-light);flex-shrink:0}
+        .photo-mode-text h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:white;margin-bottom:3px}
+        .photo-mode-text p{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.4}
+
+        .photo-grid{display:flex;flex-direction:column;gap:14px}
+
+        /* Photo Card */
+        .photo-card{border-radius:var(--radius);border:2px solid var(--gray-200);background:white;overflow:hidden;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .photo-card.uploaded{border-color:var(--green);box-shadow:0 4px 16px rgba(16,185,129,0.15)}
+        .photo-card.required-missing{border-color:#fecaca}
+
+        .photo-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--gray-50);border-bottom:1px solid var(--gray-100)}
+        .photo-card.uploaded .photo-card-header{background:#f0fdf4;border-bottom-color:#bbf7d0}
+        .photo-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:#eff6ff;color:var(--blue)}
+        .photo-card.uploaded .photo-card-icon{background:#d1fae5;color:var(--green)}
+        .photo-card-title{flex:1;min-width:0}
+        .photo-card-title h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:2px}
+        .photo-card-title p{font-size:11px;color:var(--gray-500);line-height:1.3}
+        .photo-card-status{flex-shrink:0}
+        .status-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:50px;font-size:11px;font-weight:700}
+        .status-badge.needed{background:#fef3c7;color:#92400e}
+        .status-badge.done{background:#d1fae5;color:#065f46}
+        .status-badge.optional{background:var(--gray-100);color:var(--gray-500)}
+
+        /* Photo card body: sample + upload side by side */
+        .photo-card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+
+        .photo-sample{position:relative;background:var(--gray-800);overflow:hidden;min-height:160px;max-height:220px}
+        .photo-sample img{width:100%;height:100%;object-fit:cover;display:block}
+        .sample-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.3);display:flex;flex-direction:column;justify-content:flex-end;padding:10px 10px 10px}
+        .sample-label{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.7);color:white;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:50px;backdrop-filter:blur(4px)}
+        .sample-caption{font-size:10px;color:rgba(255,255,255,0.85);font-weight:600;line-height:1.3;text-align:center;width:100%}
+
+        .photo-upload-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 12px;gap:10px;border-left:1px solid var(--gray-100);background:white;min-height:160px;transition:background 0.2s}
+        .photo-card.uploaded .photo-upload-slot{background:#f0fdf4;border-left-color:#bbf7d0}
+
+        /* Preview thumbnail when photo uploaded */
+        .photo-preview{position:relative;width:100%;height:130px;border-radius:10px;overflow:hidden;background:var(--gray-100)}
+        .photo-preview img{width:100%;height:100%;object-fit:cover}
+        .photo-preview-remove{position:absolute;top:5px;right:5px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.6);border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:background 0.2s}
+        .photo-preview-remove:hover{background:var(--red)}
+        .photo-preview-name{font-size:10px;color:var(--gray-500);text-align:center;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;padding:0 4px}
+
+        /* Upload buttons inside slot */
+        .slot-empty-icon{width:44px;height:44px;border-radius:50%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gray-400)}
+        .slot-empty-text{font-size:11px;font-weight:600;color:var(--gray-400);text-align:center;line-height:1.3}
+        .slot-btn{display:flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:50px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;padding:0 16px;width:100%}
+        .slot-btn:active{transform:scale(0.97)}
+        .slot-btn-camera{height:52px;font-size:14px;background:var(--gold);color:var(--navy);box-shadow:0 4px 14px rgba(245,158,11,0.35)}
+        .slot-btn-camera:hover{background:#e89209}
+        .slot-btn-file{height:46px;font-size:13px;background:var(--gray-100);color:var(--gray-600);margin-top:4px}
+        .slot-btn-file:hover{background:var(--gray-200)}
+
+        .photo-check{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;box-shadow:0 4px 12px rgba(16,185,129,0.35);animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1)}
+        @keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+
+        /* Photo progress bar */
+        .photo-progress-bar{margin-bottom:22px}
+        .photo-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .photo-progress-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy)}
+        .photo-progress-count{font-size:13px;font-weight:700;color:var(--blue)}
+        .photo-progress-track{height:8px;background:var(--gray-200);border-radius:50px;overflow:hidden}
+        .photo-progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:50px;transition:width 0.4s cubic-bezier(0.16,1,0.3,1)}
+
+        /* ======= SUBMIT BTN ======= */
+        .submit-btn{width:100%;height:60px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 24px rgba(37,99,235,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;position:relative;overflow:hidden}
         .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,0.45)}
         .submit-btn:active:not(:disabled){transform:translateY(0)}
         .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
         .submit-btn .shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.3),transparent);transform:skewX(-25deg);animation:btnshine 4s infinite}
         @keyframes btnshine{0%,60%{left:-100%}100%{left:200%}}
 
+        /* ======= SENDING / SUCCESS ======= */
         .sending-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
         .sending-section.active{display:block}
-        .sending-spinner{width:72px;height:72px;border:5px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 24px}
+        .sending-spinner{width:70px;height:70px;border:5px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px}
         @keyframes spin{to{transform:rotate(360deg)}}
-        .sending-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--navy);margin-bottom:12px}
-        .sending-section p{font-size:16px;color:var(--gray-500);line-height:1.7}
-        .sending-warning{display:flex;align-items:center;justify-content:center;gap:10px;background:#fef3c7;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:14px 20px;margin-top:24px;font-size:14px;font-weight:600;color:#92400e}
+        .sending-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:23px;font-weight:800;color:var(--navy);margin-bottom:10px}
+        .sending-section p{font-size:15px;color:var(--gray-500);line-height:1.7}
+        .sending-warning{display:flex;align-items:center;justify-content:center;gap:10px;background:#fef3c7;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:14px 18px;margin-top:22px;font-size:14px;font-weight:600;color:#92400e}
 
         .success-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
         .success-section.active{display:block}
-        .success-check{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);color:white;display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 24px;box-shadow:0 12px 36px rgba(16,185,129,0.35);animation:popIn 0.5s cubic-bezier(0.16,1,0.3,1)}
-        @keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
-        .success-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--navy);margin-bottom:12px}
-        .success-section p{font-size:16px;color:var(--gray-600);margin-bottom:8px;line-height:1.7}
-        .confirmation-box{background:var(--navy);color:white;border-radius:var(--radius);padding:20px 24px;margin:20px 0;text-align:center}
-        .confirmation-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-light);margin-bottom:6px}
-        .confirmation-number{font-family:'Plus Jakarta Sans',monospace;font-size:28px;font-weight:900;letter-spacing:3px;color:white}
-        .confirmation-tip{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px}
-        .success-section .email-note{display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;padding:14px 20px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:#166534;margin:16px 0}
-        .success-actions{display:flex;flex-direction:column;gap:12px;margin-top:28px}
-        .success-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .success-check{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);color:white;display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 22px;box-shadow:0 12px 36px rgba(16,185,129,0.35);animation:popIn 0.5s cubic-bezier(0.16,1,0.3,1)}
+        .success-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:27px;font-weight:900;color:var(--navy);margin-bottom:10px}
+        .success-section p{font-size:15px;color:var(--gray-600);margin-bottom:8px;line-height:1.7}
+        .confirmation-box{background:var(--navy);color:white;border-radius:var(--radius);padding:18px 22px;margin:18px 0;text-align:center}
+        .confirmation-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-light);margin-bottom:5px}
+        .confirmation-number{font-family:'Plus Jakarta Sans',monospace;font-size:26px;font-weight:900;letter-spacing:3px;color:white}
+        .confirmation-tip{font-size:11px;color:rgba(255,255,255,0.5);margin-top:7px}
+        .success-section .email-note{display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:#166534;margin:14px 0}
+        .success-actions{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+        .success-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
         .success-btn-primary{background:linear-gradient(135deg,var(--blue),#4338ca);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
         .success-btn-secondary{background:white;color:var(--gray-700);border:2px solid var(--gray-200)}
         .success-btn:hover{transform:translateY(-1px)}
 
-        .help-section{padding:0 16px 40px;max-width:560px;margin:0 auto}
-        .help-card{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:var(--radius-lg);padding:32px 24px;text-align:center;box-shadow:0 8px 32px rgba(15,39,68,0.3);position:relative;overflow:hidden}
+        /* ======= HELP + FOOTER ======= */
+        .help-section{padding:0 16px 36px;max-width:580px;margin:0 auto}
+        .help-card{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:var(--radius-lg);padding:28px 22px;text-align:center;box-shadow:0 8px 32px rgba(15,39,68,0.3);position:relative;overflow:hidden}
         .help-card::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(37,99,235,0.15);border-radius:50%;pointer-events:none}
-        .help-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:white;margin-bottom:8px;position:relative}
-        .help-card p{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:24px;line-height:1.6;position:relative}
+        .help-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:white;margin-bottom:7px;position:relative}
+        .help-card p{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:22px;line-height:1.6;position:relative}
         .help-actions{display:flex;flex-direction:column;gap:10px;position:relative}
-        .help-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .help-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
         .help-btn-call{background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.3)}
         .help-btn-call:hover{background:var(--gold-light);transform:translateY(-1px)}
         .help-btn-email{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
         .help-btn-email:hover{background:rgba(255,255,255,0.15)}
-        .help-hours{font-size:12px;color:rgba(255,255,255,0.4);margin-top:16px;position:relative}
+        .help-hours{font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;position:relative}
 
-        .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:40px 20px 100px;text-align:center}
-        .footer-logo{height:40px;opacity:0.6;margin-bottom:16px}
-        .footer-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:4px}
-        .footer-info{font-size:13px;line-height:1.8}
+        .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:36px 20px 100px;text-align:center}
+        .footer-logo{height:38px;opacity:0.6;margin-bottom:14px}
+        .footer-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:4px}
+        .footer-info{font-size:12px;line-height:1.9}
         .footer-info a{color:rgba(255,255,255,0.6);text-decoration:none}
         .footer-info a:hover{color:var(--gold-light)}
-        .footer-copy{margin-top:20px;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.4}
+        .footer-copy{margin-top:18px;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.4}
 
-        .mobile-dock{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gray-200);box-shadow:0 -4px 20px rgba(0,0,0,0.08);padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+        /* ======= MOBILE DOCK ======= */
+        .mobile-dock{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gray-200);box-shadow:0 -4px 20px rgba(0,0,0,0.08);padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
         .dock-inner{display:flex;gap:10px}
-        .dock-btn{flex:1;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .dock-btn{flex:1;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
         .dock-call{background:var(--gray-100);color:var(--gray-700)}.dock-upload{flex:2;background:linear-gradient(135deg,var(--blue),#4338ca);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3)}.dock-quote{background:var(--gold);color:var(--navy)}
-        @media(max-width:768px){.mobile-dock{display:block}.footer{padding-bottom:120px}}
-        @media(max-width:480px){.hero{min-height:320px;padding:48px 16px 40px}.form-card{padding:24px 18px}.steps-row{gap:8px}.step-card{padding:16px 8px}.step-icon{width:48px;height:48px;font-size:18px}.step-label{font-size:13px}.upload-zone{padding:36px 18px}.help-card{padding:24px 18px}}
+        @media(max-width:768px){.mobile-dock{display:block}.footer{padding-bottom:110px}}
+        @media(max-width:480px){
+            .hero{min-height:300px;padding:44px 16px 36px}
+            .form-card{padding:22px 16px}
+            .steps-row{gap:7px}
+            .step-card{padding:14px 7px}
+            .step-icon{width:46px;height:46px;font-size:17px}
+            .step-label{font-size:12px}
+            .photo-card-body{grid-template-columns:1fr 1fr}
+            .photo-sample{min-height:140px;max-height:190px}
+            .photo-upload-slot{min-height:140px;padding:12px 10px}
+            .photo-preview{height:110px}
+        }
+        @media(max-width:360px){
+            .photo-card-body{grid-template-columns:1fr}
+            .photo-sample{min-height:180px;max-height:220px;border-radius:0}
+            .photo-upload-slot{border-left:none;border-top:1px solid var(--gray-100)}
+        }
     </style>
 </head>
 <body>
+
+    <!-- HERO -->
     <header class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,4.5vw,24px);font-weight:900;color:white;letter-spacing:-0.3px;margin-bottom:16px;">Bill Layne <span style="color:var(--gold-light);">Insurance</span></div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(17px,4vw,22px);font-weight:900;color:white;letter-spacing:-0.3px;margin-bottom:14px;">
+                Bill Layne <span style="color:var(--gold-light);">Insurance</span>
+            </div>
             <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
             <h1>Send Us Your<br><span>Documents</span></h1>
             <p class="hero-sub">Need to send us a photo, letter, estimate, or any document? It takes less than 60 seconds.</p>
@@ -165,6 +266,7 @@
         </div>
     </header>
 
+    <!-- STEPS -->
     <section class="steps-section" id="stepsSection">
         <h2 class="steps-title">It's Easy — Just 3 Steps</h2>
         <div class="steps-row">
@@ -174,36 +276,43 @@
         </div>
     </section>
 
+    <!-- TRUST BAR -->
     <div class="trust-bar" id="trustBar">
         <div class="trust-items">
             <span><i class="fas fa-lock"></i> 100% Secure</span>
             <span><i class="fas fa-shield-halved"></i> Files Go Directly To Us</span>
-            <span><i class="fas fa-clock"></i> Takes Under 60 Seconds</span>
+            <span><i class="fas fa-clock"></i> Under 60 Seconds</span>
         </div>
     </div>
 
+    <!-- MAIN FORM -->
     <section class="form-section" id="upload-form">
         <div class="form-card">
             <div class="form-header">
                 <h2><i class="fas fa-paper-plane" style="color:var(--blue);margin-right:8px;"></i> Upload Your Documents</h2>
                 <p>Fill in your info and attach your files below.</p>
             </div>
+
             <form id="docForm" onsubmit="return false;">
+
                 <div class="form-group">
                     <label class="form-label" for="fullName">Your Name <span class="required">*</span></label>
                     <input type="text" id="fullName" class="form-input" placeholder="John Smith" required autocomplete="name">
                     <div class="form-error" id="nameError">Please enter your name</div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="email">Email Address <span class="required">*</span></label>
                     <input type="email" id="email" class="form-input" placeholder="john@example.com" required autocomplete="email">
                     <div class="form-error" id="emailError">Please enter a valid email address</div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="phone">Phone Number</label>
                     <input type="tel" id="phone" class="form-input" placeholder="(336) 555-1234" autocomplete="tel">
                 </div>
-                <div class="form-group">
+
+                <div class="form-group" id="docTypeGroup">
                     <label class="form-label" for="docType">What Are You Sending? <span class="required">*</span></label>
                     <select id="docType" class="form-input" required>
                         <option value="" disabled selected>Choose one...</option>
@@ -216,49 +325,87 @@
                         <option value="Vehicle Registration">Vehicle Registration</option>
                         <option value="Application / Form">Application or Form</option>
                         <option value="Proof of Prior Insurance">Proof of Prior Insurance</option>
+                        <option value="Home Inspection Photos">Home Insurance Photos</option>
                         <option value="Other">Other Document</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label" for="notes">Notes <span style="font-weight:400;color:var(--gray-400);">(optional)</span></label>
-                    <textarea id="notes" class="form-input" placeholder="Anything else we should know? (e.g., 'This is for my claim from last week' or 'Please call me back')" rows="3"></textarea>
+                    <textarea id="notes" class="form-input" placeholder="Anything else we should know? (e.g., 'This is for my claim from last week')" rows="2"></textarea>
                 </div>
+
+                <!-- ===== UPLOAD AREA ===== -->
                 <div class="form-group">
-                    <label class="form-label">Attach Files <span class="required">*</span> <span style="font-weight:400;color:var(--gray-400);">— You can add multiple</span></label>
-                    <div class="upload-zone" id="uploadZone">
-                        <div class="upload-icon" id="uploadIcon"><i class="fas fa-cloud-arrow-up"></i></div>
-                        <div class="upload-text-main" id="uploadTextMain">Tap to add your files</div>
-                        <div class="upload-text-sub">Photos, PDFs, documents — up to 10MB each</div>
-                        <div class="upload-buttons">
-                            <button type="button" class="upload-btn upload-btn-camera" onclick="openCamera()">
-                                <i class="fas fa-camera" style="font-size:20px;"></i> Take a Photo
-                            </button>
-                            <button type="button" class="upload-btn upload-btn-file" onclick="document.getElementById('fileInput').click()">
-                                <i class="fas fa-folder-open"></i> Browse My Files
+                    <label class="form-label">
+                        Attach Files <span class="required">*</span>
+                        <span style="font-weight:400;color:var(--gray-400);"> — Multiple files OK</span>
+                    </label>
+
+                    <!-- STANDARD UPLOAD (shown by default, hidden in photo mode) -->
+                    <div id="standardUploadArea">
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="upload-icon" id="uploadIcon"><i class="fas fa-cloud-arrow-up"></i></div>
+                            <div class="upload-text-main" id="uploadTextMain">Tap to add your files</div>
+                            <div class="upload-text-sub">Photos, PDFs, documents — up to 10MB each</div>
+                            <div class="upload-buttons">
+                                <button type="button" class="upload-btn upload-btn-camera" onclick="openCamera('cameraInput')">
+                                    <i class="fas fa-camera" style="font-size:19px;"></i> Take a Photo
+                                </button>
+                                <button type="button" class="upload-btn upload-btn-file" onclick="document.getElementById('fileInput').click()">
+                                    <i class="fas fa-folder-open"></i> Browse My Files
+                                </button>
+                            </div>
+                            <input type="file" id="cameraInput" class="file-input" accept="image/*" capture="environment">
+                            <input type="file" id="fileInput" class="file-input" accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.webp" multiple>
+                        </div>
+                        <div id="fileList" class="file-list"></div>
+                        <div id="addMoreContainer" style="display:none;">
+                            <button type="button" class="add-more-btn" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-plus-circle"></i> Add More Photos or Files
                             </button>
                         </div>
-                        <!-- Camera: capture="environment" = rear camera on iOS & Android -->
-                        <input type="file" id="cameraInput" class="file-input" accept="image/*" capture="environment">
-                        <!-- Fallback for devices that don't support capture -->
-                        <input type="file" id="cameraFallback" class="file-input" accept="image/*" multiple>
-                        <!-- File browser: all types, multiple -->
-                        <input type="file" id="fileInput" class="file-input" accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.webp" multiple>
                     </div>
-                    <div id="fileList" class="file-list"></div>
-                    <div id="addMoreContainer" style="display:none;">
-                        <button type="button" class="add-more-btn" onclick="openAddMore()">
-                            <i class="fas fa-plus-circle"></i> Add More Photos or Files
-                        </button>
+
+                    <!-- PHOTO INSPECTION GRID (shown only in photo mode) -->
+                    <div id="photoInspectionArea" style="display:none;">
+                        <!-- Banner -->
+                        <div class="photo-mode-banner">
+                            <div class="photo-mode-icon"><i class="fas fa-camera-retro"></i></div>
+                            <div class="photo-mode-text">
+                                <h3>Home Insurance Photos Needed</h3>
+                                <p>Use the example photos as a guide. Tap the camera button on each card to snap your photo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Progress bar -->
+                        <div class="photo-progress-bar">
+                            <div class="photo-progress-header">
+                                <div class="photo-progress-label">Photos Uploaded</div>
+                                <div class="photo-progress-count" id="progressCount">0 of 0</div>
+                            </div>
+                            <div class="photo-progress-track">
+                                <div class="photo-progress-fill" id="progressFill" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cards injected here by JS -->
+                        <div class="photo-grid" id="photoGrid"></div>
                     </div>
+
                     <div class="form-error" id="fileError">Please attach at least one file</div>
                 </div>
+
                 <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
-                    <span class="shine"></span><i class="fas fa-paper-plane"></i> Send Documents
+                    <span class="shine"></span>
+                    <i class="fas fa-paper-plane"></i> Send Documents
                 </button>
+
             </form>
         </div>
     </section>
 
+    <!-- SENDING -->
     <section class="sending-section" id="sendingSection">
         <div class="sending-spinner"></div>
         <h2>Sending Your Documents...</h2>
@@ -266,6 +413,7 @@
         <div class="sending-warning"><i class="fas fa-exclamation-triangle"></i> Please don't close this page until you see your confirmation.</div>
     </section>
 
+    <!-- SUCCESS -->
     <section class="success-section" id="successSection">
         <div class="success-check"><i class="fas fa-check"></i></div>
         <h2>Documents Received!</h2>
@@ -276,7 +424,7 @@
             <div class="confirmation-tip">Save this number for your records</div>
         </div>
         <div class="email-note"><i class="fas fa-envelope-circle-check"></i> A confirmation email has been sent to you.</div>
-        <p style="font-size:14px;color:var(--gray-500);">We'll review your documents and reach out if we need anything else. Most requests are handled within one business day.</p>
+        <p style="font-size:13px;color:var(--gray-500);">We'll review your documents and reach out if we need anything else. Most requests are handled within one business day.</p>
         <div class="success-actions">
             <button class="success-btn success-btn-primary" onclick="resetForm()"><i class="fas fa-plus"></i> Send More Documents</button>
             <a href="tel:3368351993" class="success-btn success-btn-secondary"><i class="fas fa-phone-alt"></i> Call Us: (336) 835-1993</a>
@@ -284,25 +432,32 @@
         </div>
     </section>
 
+    <!-- HELP -->
     <section class="help-section" id="helpSection">
         <div class="help-card">
             <h3><i class="fas fa-headset" style="color:var(--gold-light);margin-right:8px;"></i> Need Help?</h3>
-            <p>Having trouble uploading? No worries — give us a call and we'll walk you through it or take your info over the phone.</p>
+            <p>Having trouble uploading? Give us a call and we'll walk you through it or take your info over the phone.</p>
             <div class="help-actions">
-                <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:20px;"></i> Call (336) 835-1993</a>
+                <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:19px;"></i> Call (336) 835-1993</a>
                 <a href="mailto:docs@billlayneinsurance.com" class="help-btn help-btn-email"><i class="fas fa-envelope"></i> Email Us</a>
             </div>
             <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon–Fri: 9am – 5pm</div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer" id="footerSection">
         <img src="https://i.imgur.com/Z5MxmKE.png" alt="Bill Layne Insurance" class="footer-logo">
         <div class="footer-name">Bill Layne Insurance Agency</div>
-        <div class="footer-info">1283 N Bridge St, Elkin, NC 28621<br><a href="tel:3368351993">(336) 835-1993</a> &bull; <a href="mailto:Save@BillLayneInsurance.com">Save@BillLayneInsurance.com</a><br><a href="https://www.billlayneinsurance.com">www.BillLayneInsurance.com</a></div>
+        <div class="footer-info">
+            1283 N Bridge St, Elkin, NC 28621<br>
+            <a href="tel:3368351993">(336) 835-1993</a> &bull; <a href="mailto:Save@BillLayneInsurance.com">Save@BillLayneInsurance.com</a><br>
+            <a href="https://www.billlayneinsurance.com">www.BillLayneInsurance.com</a>
+        </div>
         <div class="footer-copy">&copy; 2025 Bill Layne Insurance Agency</div>
     </footer>
 
+    <!-- MOBILE DOCK -->
     <div class="mobile-dock" id="mobileDock">
         <div class="dock-inner">
             <a href="tel:3368351993" class="dock-btn dock-call"><i class="fas fa-phone-alt"></i> Call</a>
@@ -312,226 +467,545 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIPn7fAAAc7n8LCRceQmXvJJ-X8_CnxuqAsXpZKN7hv-dvSVBXlKZtPw_YOmUD6re0SQ/exec';
+    // =============================================
+    // GOOGLE SCRIPT URL
+    // =============================================
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIPn7fAAAc7n8LCRceQmXvJJ-X8_CnxuqAsXpZKN7hv-dvSVBXlKZtPw_YOmUD6re0SQ/exec';
 
-        function generateConfirmationNumber() {
-            const now = new Date();
-            const d = now.getFullYear().toString().slice(-2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
-            const r = Math.random().toString(36).substring(2,6).toUpperCase();
-            return 'BL-' + d + '-' + r;
+    // =============================================
+    // PHOTO TYPE DEFINITIONS
+    // Each key matches the URL param value
+    // =============================================
+    const PHOTO_TYPES = {
+        'bathroom': {
+            label: 'Bathroom',
+            hint: 'Full view of bathroom — tub, shower & fixtures',
+            icon: 'fa-bath',
+            sample: 'https://i.imgur.com/wGZfagl.jpeg',
+            caption: 'Show full bathroom including tub/shower'
+        },
+        'breaker_box': {
+            label: 'Breaker Box / Electrical Panel',
+            hint: 'Open panel with all breakers visible',
+            icon: 'fa-bolt',
+            sample: 'https://i.imgur.com/yY4Xcbo.jpeg',
+            caption: 'Open the door & show all breakers'
+        },
+        'hot_water_heater': {
+            label: 'Hot Water Heater',
+            hint: 'Full unit — include brand & age sticker',
+            icon: 'fa-fire',
+            sample: 'https://i.imgur.com/G6lFX7G.jpeg',
+            caption: 'Show the full unit with the age sticker'
+        },
+        'kitchen': {
+            label: 'Kitchen',
+            hint: 'Wide view showing appliances & counters',
+            icon: 'fa-utensils',
+            sample: 'https://i.imgur.com/HC2yn6G.jpeg',
+            caption: 'Full kitchen — show stove, fridge & counters'
+        },
+        'living_room': {
+            label: 'Living Room',
+            hint: 'Wide view of the main living area',
+            icon: 'fa-couch',
+            sample: 'https://i.imgur.com/LmrRRFq.jpeg',
+            caption: 'Capture the full room from a corner'
+        },
+        'outbuildings': {
+            label: 'Outbuildings / Shed',
+            hint: 'Exterior photo of any outbuildings',
+            icon: 'fa-warehouse',
+            sample: 'https://i.imgur.com/2kz7rAQ.jpeg',
+            caption: 'Show the full exterior of any sheds/garages'
+        },
+        'thermostat': {
+            label: 'Thermostat',
+            hint: 'Close-up showing model & current setting',
+            icon: 'fa-temperature-half',
+            sample: 'https://i.imgur.com/qi6MPc8.jpeg',
+            caption: 'Close-up showing brand & model info'
+        },
+        'under_bath_sink': {
+            label: 'Under Bathroom Sink',
+            hint: 'Open cabinet beneath the bathroom sink',
+            icon: 'fa-sink',
+            sample: 'https://i.imgur.com/jY7HV4e.jpeg',
+            caption: 'Open cabinet & show pipes & interior'
+        },
+        'under_kitchen_sink': {
+            label: 'Under Kitchen Sink',
+            hint: 'Open cabinet beneath the kitchen sink',
+            icon: 'fa-faucet',
+            sample: 'https://i.imgur.com/yKXsPdq.jpeg',
+            caption: 'Open cabinet & show pipes & interior'
         }
+    };
 
-        let selectedFiles = [];
-        const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    // All photo types for "Home Insurance Photos" doc type
+    const ALL_PHOTO_KEYS = Object.keys(PHOTO_TYPES);
 
-        function openCamera() {
-            // Try capture input first (works on iOS Safari, Android Chrome)
-            // If device doesn't support capture, it falls back to image picker which also offers camera
-            try {
-                document.getElementById('cameraInput').click();
-            } catch(e) {
-                document.getElementById('cameraFallback').click();
-            }
+    // =============================================
+    // STATE
+    // =============================================
+    let selectedFiles = [];          // For standard uploads
+    let photoFiles = {};             // { photoKey: File } for photo mode
+    let photoMode = false;
+    let requiredPhotoKeys = [];      // Which photo cards to show
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    // =============================================
+    // PHONE FORMATTING
+    // =============================================
+    document.getElementById('phone').addEventListener('input', function(e) {
+        var x = e.target.value.replace(/\D/g,'').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '('+x[1]+') '+x[2]+(x[3]?'-'+x[3]:'');
+    });
+    document.querySelectorAll('.form-input').forEach(function(input) {
+        input.addEventListener('input', function() {
+            this.classList.remove('error');
+            var err = this.parentElement.querySelector('.form-error');
+            if (err) err.style.display = 'none';
+        });
+    });
+
+    // =============================================
+    // CAMERA OPEN
+    // =============================================
+    function openCamera(inputId) {
+        document.getElementById(inputId).click();
+    }
+
+    // =============================================
+    // STANDARD UPLOAD HANDLERS
+    // =============================================
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput  = document.getElementById('fileInput');
+    const cameraInput = document.getElementById('cameraInput');
+
+    uploadZone.addEventListener('dragover', function(e){ e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', function(){ uploadZone.classList.remove('dragover'); });
+    uploadZone.addEventListener('drop', function(e){ e.preventDefault(); uploadZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+    fileInput.addEventListener('change', function(e){ addFiles(e.target.files); });
+    cameraInput.addEventListener('change', function(e){ addFiles(e.target.files); });
+
+    function addFiles(fileList) {
+        for (var i = 0; i < fileList.length; i++) {
+            var f = fileList[i];
+            if (f.size > MAX_FILE_SIZE) { alert('"' + f.name + '" is too large. Max file size is 10MB.'); continue; }
+            if (selectedFiles.some(function(sf){ return sf.name === f.name && sf.size === f.size; })) continue;
+            selectedFiles.push(f);
         }
+        renderFileList();
+        fileInput.value = '';
+        cameraInput.value = '';
+    }
 
-        function openAddMore() {
-            document.getElementById('fileInput').click();
+    function removeFile(index) { selectedFiles.splice(index, 1); renderFileList(); }
+
+    function getFileIcon(file) {
+        if (file.type.startsWith('image/')) return { c:'img', i:'fa-image' };
+        if (file.type === 'application/pdf') return { c:'pdf', i:'fa-file-pdf' };
+        if (file.type.includes('word') || file.type.includes('document')) return { c:'doc', i:'fa-file-word' };
+        return { c:'other', i:'fa-file' };
+    }
+    function formatSize(b){ if(b<1024)return b+' B'; if(b<1048576)return(b/1024).toFixed(1)+' KB'; return(b/1048576).toFixed(1)+' MB'; }
+
+    function renderFileList() {
+        var list = document.getElementById('fileList');
+        var zone = document.getElementById('uploadZone');
+        var icon = document.getElementById('uploadIcon');
+        var mainText = document.getElementById('uploadTextMain');
+        var addMore = document.getElementById('addMoreContainer');
+        if (selectedFiles.length > 0) {
+            zone.classList.add('has-files');
+            icon.innerHTML = '<i class="fas fa-check"></i>';
+            mainText.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' ready to send';
+            addMore.style.display = 'block';
+        } else {
+            zone.classList.remove('has-files');
+            icon.innerHTML = '<i class="fas fa-cloud-arrow-up"></i>';
+            mainText.textContent = 'Tap to add your files';
+            addMore.style.display = 'none';
         }
+        list.innerHTML = selectedFiles.map(function(f, i) {
+            var fi = getFileIcon(f);
+            return '<div class="file-item"><div class="file-item-icon '+fi.c+'"><i class="fas '+fi.i+'"></i></div>' +
+                '<div class="file-item-info"><div class="file-item-name">'+escHtml(f.name)+'</div><div class="file-item-size">'+formatSize(f.size)+'</div></div>' +
+                '<button type="button" class="file-item-remove" onclick="removeFile('+i+')" aria-label="Remove file"><i class="fas fa-xmark"></i></button></div>';
+        }).join('');
+        if (selectedFiles.length > 0) document.getElementById('fileError').style.display = 'none';
+    }
 
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('fileInput');
-        const cameraInput = document.getElementById('cameraInput');
-        const cameraFallback = document.getElementById('cameraFallback');
+    // =============================================
+    // PHOTO INSPECTION MODE
+    // =============================================
+    function enterPhotoMode(keys) {
+        photoMode = true;
+        requiredPhotoKeys = keys.filter(function(k){ return !!PHOTO_TYPES[k]; });
+        if (requiredPhotoKeys.length === 0) { exitPhotoMode(); return; }
+        document.getElementById('standardUploadArea').style.display = 'none';
+        document.getElementById('photoInspectionArea').style.display = 'block';
+        renderPhotoGrid();
+        updatePhotoProgress();
+    }
 
-        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
-        uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
-        uploadZone.addEventListener('drop', (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+    function exitPhotoMode() {
+        photoMode = false;
+        requiredPhotoKeys = [];
+        photoFiles = {};
+        document.getElementById('standardUploadArea').style.display = 'block';
+        document.getElementById('photoInspectionArea').style.display = 'none';
+    }
 
-        fileInput.addEventListener('change', (e) => addFiles(e.target.files));
-        cameraInput.addEventListener('change', (e) => addFiles(e.target.files));
-        cameraFallback.addEventListener('change', (e) => addFiles(e.target.files));
+    function renderPhotoGrid() {
+        var grid = document.getElementById('photoGrid');
+        grid.innerHTML = '';
+        requiredPhotoKeys.forEach(function(key) {
+            var pt = PHOTO_TYPES[key];
+            if (!pt) return;
+            var card = document.createElement('div');
+            card.className = 'photo-card';
+            card.id = 'photocard-' + key;
+            card.innerHTML =
+                '<div class="photo-card-header">' +
+                    '<div class="photo-card-icon"><i class="fas ' + pt.icon + '"></i></div>' +
+                    '<div class="photo-card-title"><h4>' + pt.label + '</h4><p>' + pt.hint + '</p></div>' +
+                    '<div class="photo-card-status"><span class="status-badge needed" id="badge-'+key+'"><i class="fas fa-camera" style="margin-right:3px;"></i> Needed</span></div>' +
+                '</div>' +
+                '<div class="photo-card-body">' +
+                    '<div class="photo-sample">' +
+                        '<img src="' + pt.sample + '" alt="Example: ' + pt.label + '" loading="lazy">' +
+                        '<div class="sample-overlay">' +
+                            '<span class="sample-label">Example</span>' +
+                            '<span class="sample-caption">' + pt.caption + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="photo-upload-slot" id="slot-'+key+'">' +
+                        '<div class="slot-empty-icon"><i class="fas fa-camera"></i></div>' +
+                        '<div class="slot-empty-text">Tap below to<br>add your photo</div>' +
+                        '<button type="button" class="slot-btn slot-btn-camera" onclick="triggerPhotoInput(\''+key+'\')">' +
+                            '<i class="fas fa-camera"></i> Take Photo' +
+                        '</button>' +
+                        '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
+                            '<i class="fas fa-image"></i> From Gallery' +
+                        '</button>' +
+                        '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                        '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                    '</div>' +
+                '</div>';
+            grid.appendChild(card);
+        });
+    }
 
-        function addFiles(fileList) {
-            for (let f of fileList) {
-                if (f.size > MAX_FILE_SIZE) { alert('"' + f.name + '" is too large. Maximum file size is 10MB.'); continue; }
-                if (selectedFiles.some(sf => sf.name === f.name && sf.size === f.size)) continue;
-                selectedFiles.push(f);
-            }
-            renderFileList();
-            fileInput.value = '';
-            cameraInput.value = '';
-            cameraFallback.value = '';
+    function triggerPhotoInput(key) {
+        document.getElementById('photo-camera-' + key).click();
+    }
+    function triggerPhotoFilePicker(key) {
+        document.getElementById('photo-file-' + key).click();
+    }
+
+    function handlePhotoInput(key, inputEl) {
+        var file = inputEl.files[0];
+        if (!file) return;
+        if (file.size > MAX_FILE_SIZE) { alert('"' + file.name + '" is too large. Max file size is 10MB.'); inputEl.value=''; return; }
+        photoFiles[key] = file;
+        inputEl.value = '';
+        renderPhotoSlot(key, file);
+        updatePhotoProgress();
+        document.getElementById('fileError').style.display = 'none';
+    }
+
+    function renderPhotoSlot(key, file) {
+        var slot = document.getElementById('slot-' + key);
+        var card = document.getElementById('photocard-' + key);
+        var badge = document.getElementById('badge-' + key);
+        if (!slot || !card) return;
+
+        // Update card styling
+        card.classList.add('uploaded');
+        card.classList.remove('required-missing');
+        badge.className = 'status-badge done';
+        badge.innerHTML = '<i class="fas fa-check" style="margin-right:3px;"></i> Done!';
+
+        // Show preview in slot
+        if (file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                slot.innerHTML =
+                    '<div class="photo-check"><i class="fas fa-check"></i></div>' +
+                    '<div class="photo-preview">' +
+                        '<img src="' + e.target.result + '" alt="Your photo">' +
+                        '<button type="button" class="photo-preview-remove" onclick="removePhotoFile(\''+key+'\')" aria-label="Remove photo"><i class="fas fa-xmark"></i></button>' +
+                    '</div>' +
+                    '<div class="photo-preview-name">' + escHtml(file.name) + '</div>' +
+                    '<button type="button" class="slot-btn slot-btn-file" style="margin-top:6px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
+                        '<i class="fas fa-redo"></i> Retake' +
+                    '</button>' +
+                    '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                    '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            slot.innerHTML =
+                '<div class="photo-check"><i class="fas fa-check"></i></div>' +
+                '<div style="text-align:center;">' +
+                    '<i class="fas fa-file-pdf" style="font-size:36px;color:var(--red);margin-bottom:8px;display:block;"></i>' +
+                    '<div style="font-size:11px;color:var(--gray-600);font-weight:600;">' + escHtml(file.name) + '</div>' +
+                    '<div style="font-size:10px;color:var(--gray-400);">' + formatSize(file.size) + '</div>' +
+                '</div>' +
+                '<button type="button" class="slot-btn slot-btn-file" style="margin-top:8px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
+                    '<i class="fas fa-redo"></i> Replace' +
+                '</button>' +
+                '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
         }
+    }
 
-        function removeFile(index) { selectedFiles.splice(index, 1); renderFileList(); }
+    function removePhotoFile(key) {
+        delete photoFiles[key];
+        var card = document.getElementById('photocard-' + key);
+        var badge = document.getElementById('badge-' + key);
+        var pt = PHOTO_TYPES[key];
+        if (!pt || !card) return;
+        card.classList.remove('uploaded');
+        badge.className = 'status-badge needed';
+        badge.innerHTML = '<i class="fas fa-camera" style="margin-right:3px;"></i> Needed';
+        var slot = document.getElementById('slot-' + key);
+        slot.innerHTML =
+            '<div class="slot-empty-icon"><i class="fas fa-camera"></i></div>' +
+            '<div class="slot-empty-text">Tap below to<br>add your photo</div>' +
+            '<button type="button" class="slot-btn slot-btn-camera" onclick="triggerPhotoInput(\''+key+'\')">' +
+                '<i class="fas fa-camera"></i> Take Photo' +
+            '</button>' +
+            '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
+                '<i class="fas fa-image"></i> From Gallery' +
+            '</button>' +
+            '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+            '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+        updatePhotoProgress();
+    }
 
-        function getFileIcon(file) {
-            if (file.type.startsWith('image/')) return { c: 'img', i: 'fa-image' };
-            if (file.type === 'application/pdf') return { c: 'pdf', i: 'fa-file-pdf' };
-            if (file.type.includes('word') || file.type.includes('document')) return { c: 'doc', i: 'fa-file-word' };
-            return { c: 'other', i: 'fa-file' };
+    function updatePhotoProgress() {
+        var total = requiredPhotoKeys.length;
+        var done = Object.keys(photoFiles).length;
+        document.getElementById('progressCount').textContent = done + ' of ' + total;
+        document.getElementById('progressFill').style.width = (total > 0 ? Math.round((done/total)*100) : 0) + '%';
+    }
+
+    // =============================================
+    // DOC TYPE CHANGE → SWITCH MODES
+    // =============================================
+    document.getElementById('docType').addEventListener('change', function() {
+        if (this.value === 'Home Inspection Photos') {
+            enterPhotoMode(ALL_PHOTO_KEYS);
+        } else {
+            if (photoMode) exitPhotoMode();
         }
+    });
 
-        function formatSize(b) { if(b<1024)return b+' B'; if(b<1048576)return(b/1024).toFixed(1)+' KB'; return(b/1048576).toFixed(1)+' MB'; }
+    // =============================================
+    // URL PARAMS AUTO-FILL
+    // =============================================
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        if (params.has('name'))  document.getElementById('fullName').value = params.get('name');
+        if (params.has('email')) document.getElementById('email').value    = params.get('email');
+        if (params.has('phone')) document.getElementById('phone').value    = params.get('phone');
+        if (params.has('notes')) document.getElementById('notes').value    = params.get('notes');
 
-        function renderFileList() {
-            const list = document.getElementById('fileList');
-            const zone = document.getElementById('uploadZone');
-            const icon = document.getElementById('uploadIcon');
-            const mainText = document.getElementById('uploadTextMain');
-            const addMore = document.getElementById('addMoreContainer');
-
-            if (selectedFiles.length > 0) {
-                zone.classList.add('has-files');
-                icon.innerHTML = '<i class="fas fa-check"></i>';
-                mainText.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' ready to send';
-                addMore.style.display = 'block';
-            } else {
-                zone.classList.remove('has-files');
-                icon.innerHTML = '<i class="fas fa-cloud-arrow-up"></i>';
-                mainText.textContent = 'Tap to add your files';
-                addMore.style.display = 'none';
-            }
-
-            list.innerHTML = selectedFiles.map(function(f, i) {
-                var fi = getFileIcon(f);
-                return '<div class="file-item"><div class="file-item-icon '+fi.c+'"><i class="fas '+fi.i+'"></i></div><div class="file-item-info"><div class="file-item-name">'+f.name+'</div><div class="file-item-size">'+formatSize(f.size)+'</div></div><button type="button" class="file-item-remove" onclick="removeFile('+i+')" aria-label="Remove file"><i class="fas fa-xmark"></i></button></div>';
-            }).join('');
-
-            if (selectedFiles.length > 0) document.getElementById('fileError').style.display = 'none';
-        }
-
-        function validateForm() {
-            var valid = true;
-            var name = document.getElementById('fullName');
-            var email = document.getElementById('email');
-            var docType = document.getElementById('docType');
-            if (!name.value.trim()) { name.classList.add('error'); document.getElementById('nameError').style.display='block'; valid=false; }
-            else { name.classList.remove('error'); document.getElementById('nameError').style.display='none'; }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.classList.add('error'); document.getElementById('emailError').style.display='block'; valid=false; }
-            else { email.classList.remove('error'); document.getElementById('emailError').style.display='none'; }
-            if (!docType.value) { docType.classList.add('error'); valid=false; } else { docType.classList.remove('error'); }
-            if (selectedFiles.length===0) { document.getElementById('fileError').style.display='block'; valid=false; }
-            else { document.getElementById('fileError').style.display='none'; }
-            return valid;
-        }
-
-        async function handleSubmit() {
-            if (!validateForm()) { var fe=document.querySelector('.form-input.error'); if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'}); return; }
-
-            var confirmationNumber = generateConfirmationNumber();
-
-            // Show sending section
-            document.querySelector('.form-section').style.display = 'none';
-            document.getElementById('stepsSection').style.display = 'none';
-            document.getElementById('trustBar').style.display = 'none';
-            document.getElementById('helpSection').style.display = 'none';
-            var sending = document.getElementById('sendingSection');
-            sending.classList.add('active');
-            sending.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            var dockUpload = document.getElementById('dockUpload');
-            if (dockUpload) { dockUpload.style.pointerEvents='none'; dockUpload.style.opacity='0.5'; }
-
-            try {
-                var filesData = [];
-                for (var f of selectedFiles) {
-                    var base64 = await fileToBase64(f);
-                    filesData.push({ name: f.name, type: f.type, size: f.size, data: base64 });
+        // Handle doc type
+        if (params.has('doc')) {
+            var docSelect = document.getElementById('docType');
+            var docVal = params.get('doc');
+            for (var i = 0; i < docSelect.options.length; i++) {
+                if (docSelect.options[i].value === docVal) {
+                    docSelect.selectedIndex = i;
+                    break;
                 }
-
-                var payload = {
-                    name: document.getElementById('fullName').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    docType: document.getElementById('docType').value,
-                    notes: document.getElementById('notes').value.trim(),
-                    confirmationNumber: confirmationNumber,
-                    files: filesData,
-                    timestamp: new Date().toISOString()
-                };
-
-                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
-                showSuccess(confirmationNumber);
-            } catch (error) {
-                console.error('Upload error:', error);
-                sending.classList.remove('active');
-                document.querySelector('.form-section').style.display = '';
-                document.getElementById('stepsSection').style.display = '';
-                document.getElementById('trustBar').style.display = '';
-                document.getElementById('helpSection').style.display = '';
-                if (dockUpload) { dockUpload.style.pointerEvents=''; dockUpload.style.opacity=''; }
-                alert('Something went wrong. Please try again or call us at (336) 835-1993.');
+            }
+            // Trigger photo mode if applicable
+            if (docVal === 'Home Inspection Photos') {
+                enterPhotoMode(ALL_PHOTO_KEYS);
             }
         }
 
-        function fileToBase64(file) {
-            return new Promise(function(resolve, reject) {
-                var reader = new FileReader();
-                reader.onload = function() { resolve(reader.result.split(',')[1]); };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function showSuccess(confirmationNumber) {
-            document.getElementById('sendingSection').classList.remove('active');
-            document.getElementById('confirmationDisplay').textContent = confirmationNumber;
-            var success = document.getElementById('successSection');
-            success.classList.add('active');
-            success.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            var dockUpload = document.getElementById('dockUpload');
-            if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-check-circle"></i> Sent!'; dockUpload.style.background='linear-gradient(135deg,#10b981,#059669)'; dockUpload.style.pointerEvents=''; dockUpload.style.opacity=''; }
-        }
-
-        function resetForm() {
-            document.getElementById('docForm').reset();
-            selectedFiles = [];
-            renderFileList();
-            document.querySelector('.form-section').style.display = '';
-            document.getElementById('stepsSection').style.display = '';
-            document.getElementById('trustBar').style.display = '';
-            document.getElementById('helpSection').style.display = '';
-            document.getElementById('successSection').classList.remove('active');
-            document.getElementById('confirmationDisplay').textContent = '—';
-            var dockUpload = document.getElementById('dockUpload');
-            if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-cloud-arrow-up"></i> Upload Docs'; dockUpload.style.background=''; }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        document.getElementById('phone').addEventListener('input', function(e) {
-            var x = e.target.value.replace(/\D/g,'').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '('+x[1]+') '+x[2]+(x[3]?'-'+x[3]:'');
-        });
-
-        document.querySelectorAll('.form-input').forEach(function(input) {
-            input.addEventListener('input', function() {
-                this.classList.remove('error');
-                var err = this.parentElement.querySelector('.form-error');
-                if (err) err.style.display = 'none';
-            });
-        });
-
-        // ========================================
-        // AUTO-FILL FROM URL PARAMS (Agent Links)
-        // ========================================
-        (function() {
-            var params = new URLSearchParams(window.location.search);
-            if (params.has('name')) document.getElementById('fullName').value = params.get('name');
-            if (params.has('email')) document.getElementById('email').value = params.get('email');
-            if (params.has('phone')) document.getElementById('phone').value = params.get('phone');
-            if (params.has('doc')) {
+        // Handle specific photos list: ?photos=bathroom,kitchen,breaker_box
+        if (params.has('photos')) {
+            var photoKeys = params.get('photos').split(',').map(function(k){ return k.trim(); });
+            if (photoKeys.length > 0) {
+                // Set doc type
                 var docSelect = document.getElementById('docType');
-                var docVal = params.get('doc');
-                for (var i = 0; i < docSelect.options.length; i++) {
-                    if (docSelect.options[i].value === docVal) {
-                        docSelect.selectedIndex = i;
-                        break;
+                for (var j = 0; j < docSelect.options.length; j++) {
+                    if (docSelect.options[j].value === 'Home Inspection Photos') {
+                        docSelect.selectedIndex = j; break;
                     }
                 }
+                enterPhotoMode(photoKeys);
             }
-            if (params.has('notes')) document.getElementById('notes').value = params.get('notes');
-        })();
+        }
+    })();
+
+    // =============================================
+    // VALIDATION
+    // =============================================
+    function validateForm() {
+        var valid = true;
+        var name = document.getElementById('fullName');
+        var email = document.getElementById('email');
+        var docType = document.getElementById('docType');
+
+        if (!name.value.trim()) {
+            name.classList.add('error');
+            document.getElementById('nameError').style.display = 'block';
+            valid = false;
+        } else { name.classList.remove('error'); document.getElementById('nameError').style.display = 'none'; }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+            email.classList.add('error');
+            document.getElementById('emailError').style.display = 'block';
+            valid = false;
+        } else { email.classList.remove('error'); document.getElementById('emailError').style.display = 'none'; }
+
+        if (!docType.value) { docType.classList.add('error'); valid = false; }
+        else { docType.classList.remove('error'); }
+
+        if (photoMode) {
+            if (Object.keys(photoFiles).length === 0) {
+                document.getElementById('fileError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('fileError').style.display = 'none'; }
+        } else {
+            if (selectedFiles.length === 0) {
+                document.getElementById('fileError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('fileError').style.display = 'none'; }
+        }
+        return valid;
+    }
+
+    // =============================================
+    // SUBMIT
+    // =============================================
+    function generateConfirmationNumber() {
+        var now = new Date();
+        var d = now.getFullYear().toString().slice(-2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+        var r = Math.random().toString(36).substring(2,6).toUpperCase();
+        return 'BL-' + d + '-' + r;
+    }
+
+    async function handleSubmit() {
+        if (!validateForm()) {
+            var fe = document.querySelector('.form-input.error');
+            if (fe) fe.scrollIntoView({ behavior:'smooth', block:'center' });
+            return;
+        }
+        var confirmationNumber = generateConfirmationNumber();
+
+        // Switch to sending view
+        document.querySelector('.form-section').style.display = 'none';
+        document.getElementById('stepsSection').style.display  = 'none';
+        document.getElementById('trustBar').style.display      = 'none';
+        document.getElementById('helpSection').style.display   = 'none';
+        var sending = document.getElementById('sendingSection');
+        sending.classList.add('active');
+        sending.scrollIntoView({ behavior:'smooth', block:'start' });
+
+        var dockUpload = document.getElementById('dockUpload');
+        if (dockUpload) { dockUpload.style.pointerEvents='none'; dockUpload.style.opacity='0.5'; }
+
+        try {
+            // Build file list
+            var filesToUpload = [];
+            if (photoMode) {
+                for (var key in photoFiles) {
+                    var f = photoFiles[key];
+                    var label = PHOTO_TYPES[key] ? PHOTO_TYPES[key].label : key;
+                    var b64 = await fileToBase64(f);
+                    filesToUpload.push({ name: label + ' — ' + f.name, type: f.type, size: f.size, data: b64 });
+                }
+            } else {
+                for (var i = 0; i < selectedFiles.length; i++) {
+                    var sf = selectedFiles[i];
+                    var b64s = await fileToBase64(sf);
+                    filesToUpload.push({ name: sf.name, type: sf.type, size: sf.size, data: b64s });
+                }
+            }
+
+            var payload = {
+                name: document.getElementById('fullName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                docType: document.getElementById('docType').value,
+                notes: document.getElementById('notes').value.trim(),
+                confirmationNumber: confirmationNumber,
+                files: filesToUpload,
+                timestamp: new Date().toISOString()
+            };
+
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(payload)
+            });
+
+            showSuccess(confirmationNumber);
+        } catch(error) {
+            console.error('Upload error:', error);
+            sending.classList.remove('active');
+            document.querySelector('.form-section').style.display = '';
+            document.getElementById('stepsSection').style.display  = '';
+            document.getElementById('trustBar').style.display      = '';
+            document.getElementById('helpSection').style.display   = '';
+            if (dockUpload) { dockUpload.style.pointerEvents=''; dockUpload.style.opacity=''; }
+            alert('Something went wrong. Please try again or call us at (336) 835-1993.');
+        }
+    }
+
+    function fileToBase64(file) {
+        return new Promise(function(resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function() { resolve(reader.result.split(',')[1]); };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function showSuccess(confirmationNumber) {
+        document.getElementById('sendingSection').classList.remove('active');
+        document.getElementById('confirmationDisplay').textContent = confirmationNumber;
+        var success = document.getElementById('successSection');
+        success.classList.add('active');
+        success.scrollIntoView({ behavior:'smooth', block:'start' });
+        var dockUpload = document.getElementById('dockUpload');
+        if (dockUpload) {
+            dockUpload.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
+            dockUpload.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+            dockUpload.style.pointerEvents = '';
+            dockUpload.style.opacity = '';
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('docForm').reset();
+        selectedFiles = [];
+        photoFiles = {};
+        renderFileList();
+        exitPhotoMode();
+        document.querySelector('.form-section').style.display = '';
+        document.getElementById('stepsSection').style.display  = '';
+        document.getElementById('trustBar').style.display      = '';
+        document.getElementById('helpSection').style.display   = '';
+        document.getElementById('successSection').classList.remove('active');
+        document.getElementById('confirmationDisplay').textContent = '—';
+        var dockUpload = document.getElementById('dockUpload');
+        if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-cloud-arrow-up"></i> Upload Docs'; dockUpload.style.background=''; }
+        window.scrollTo({ top:0, behavior:'smooth' });
+    }
+
+    function escHtml(str) {
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
     </script>
 </body>
 </html>

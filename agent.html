@@ -11,7 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        :root{--navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;--gold:#f59e0b;--gold-light:#fbbf24;--green:#10b981;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;--radius:14px;--radius-sm:10px;--radius-lg:20px}
+        :root{
+            --navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;
+            --gold:#f59e0b;--gold-light:#fbbf24;--green:#10b981;
+            --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;
+            --gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;
+            --gray-800:#1e293b;--red:#ef4444;
+            --radius:14px;--radius-sm:10px;--radius-lg:20px
+        }
         html{scroll-behavior:smooth}
         body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f4f8;color:var(--gray-700);line-height:1.6;min-height:100vh}
 
@@ -45,18 +52,18 @@
         .header-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px}
 
         /* Main layout */
-        .main{max-width:1100px;margin:0 auto;padding:32px 20px 60px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-        @media(max-width:768px){.main{grid-template-columns:1fr;gap:20px}}
+        .main{max-width:1200px;margin:0 auto;padding:32px 20px 60px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+        @media(max-width:800px){.main{grid-template-columns:1fr;gap:20px}}
 
         /* Cards */
         .card{background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
-        .card-header{padding:20px 24px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:10px}
+        .card-header{padding:18px 22px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:10px}
         .card-header-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
         .card-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--navy)}
-        .card-body{padding:24px}
+        .card-body{padding:22px}
 
         /* Form fields */
-        .field{margin-bottom:18px}
+        .field{margin-bottom:16px}
         .field:last-child{margin-bottom:0}
         .field-label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
         .field-input{width:100%;height:46px;padding:0 14px;font-size:15px;font-family:'DM Sans',sans-serif;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
@@ -65,8 +72,42 @@
         select.field-input{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:40px}
         textarea.field-input{height:auto;min-height:70px;padding:12px 14px;resize:vertical}
 
+        /* ======= PHOTO CHECKLIST ======= */
+        .photo-checklist-section{margin-top:4px;display:none}
+        .photo-checklist-section.active{display:block}
+
+        .photo-checklist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+        .photo-checklist-label{font-size:12px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:0.5px}
+        .photo-quick-actions{display:flex;gap:8px}
+        .photo-quick-btn{padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;border:1px solid var(--gray-200);background:white;color:var(--gray-600);cursor:pointer;transition:all 0.15s}
+        .photo-quick-btn:hover{border-color:var(--blue);color:var(--blue)}
+        .photo-quick-btn.select-all:hover{border-color:var(--green);color:var(--green)}
+        .photo-quick-btn.clear-all:hover{border-color:var(--red);color:var(--red)}
+
+        .photo-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        @media(max-width:480px){.photo-check-grid{grid-template-columns:1fr}}
+
+        .photo-check-item{position:relative}
+        .photo-check-item input[type="checkbox"]{position:absolute;opacity:0;width:0;height:0}
+        .photo-check-tile{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);cursor:pointer;transition:all 0.2s;background:white;user-select:none}
+        .photo-check-tile:hover{border-color:var(--blue-light);background:#f8faff}
+        .photo-check-item input:checked + .photo-check-tile{border-color:var(--blue);background:#eff6ff;box-shadow:0 2px 8px rgba(37,99,235,0.12)}
+
+        .photo-check-thumb{width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;border:1px solid var(--gray-200)}
+        .photo-check-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+        .photo-check-info{flex:1;min-width:0}
+        .photo-check-name{font-size:12px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:1px}
+        .photo-check-hint{font-size:10px;color:var(--gray-400);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .photo-check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;background:white}
+        .photo-check-item input:checked + .photo-check-tile .photo-check-box{background:var(--blue);border-color:var(--blue)}
+        .photo-check-item input:checked + .photo-check-tile .photo-check-box i{display:block}
+        .photo-check-box i{display:none;font-size:11px;color:white}
+
+        .photo-count-badge{display:inline-flex;align-items:center;gap:5px;background:#eff6ff;color:var(--blue);padding:5px 12px;border-radius:50px;font-size:12px;font-weight:700;margin-top:10px}
+        .photo-count-badge.has-count{background:var(--blue);color:white}
+
         /* Generate button */
-        .generate-btn{width:100%;height:52px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+        .generate-btn{width:100%;height:52px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
         .generate-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.4)}
         .generate-btn:active{transform:translateY(0)}
 
@@ -76,21 +117,27 @@
         .output-empty-icon{width:64px;height:64px;border-radius:50%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;color:var(--gray-400)}
         .output-empty h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--gray-400);margin-bottom:6px}
         .output-empty p{font-size:13px;color:var(--gray-400)}
-
         .output-filled{display:none}
         .output-filled.active{display:block}
 
         /* Text message preview */
-        .text-preview{margin:0}
-        .text-preview-header{padding:16px 20px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+        .text-preview-header{padding:14px 18px;background:var(--gray-50);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between}
         .text-preview-label{font-size:12px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:6px}
         .text-preview-label i{color:var(--green)}
-        .text-preview-body{padding:20px;font-size:15px;color:var(--gray-800);line-height:1.7;white-space:pre-wrap;word-break:break-word;background:white;min-height:120px;border-bottom:1px solid var(--gray-100)}
+        .text-preview-body{padding:18px;font-size:14px;color:var(--gray-800);line-height:1.7;white-space:pre-wrap;word-break:break-word;background:white;min-height:110px;border-bottom:1px solid var(--gray-100)}
         .text-preview-body .link-highlight{color:var(--blue);font-weight:600;text-decoration:underline}
 
+        /* Photo summary in output */
+        .photo-summary{padding:12px 18px;background:#eff6ff;border-bottom:1px solid #dbeafe;display:none}
+        .photo-summary.active{display:block}
+        .photo-summary-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--blue);margin-bottom:8px}
+        .photo-summary-chips{display:flex;flex-wrap:wrap;gap:5px}
+        .photo-chip{display:inline-flex;align-items:center;gap:4px;background:white;border:1px solid #bfdbfe;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:600;color:var(--navy)}
+        .photo-chip i{font-size:9px;color:var(--blue)}
+
         /* Copy buttons */
-        .copy-row{padding:16px 20px;display:flex;gap:10px;flex-wrap:wrap}
-        .copy-btn{flex:1;min-width:140px;height:46px;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+        .copy-row{padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap}
+        .copy-btn{flex:1;min-width:130px;height:44px;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px}
         .copy-btn-text{background:var(--green);color:white;box-shadow:0 2px 8px rgba(16,185,129,0.3)}
         .copy-btn-text:hover{background:#059669}
         .copy-btn-link{background:var(--gray-100);color:var(--gray-700);border:1px solid var(--gray-200)}
@@ -98,54 +145,57 @@
         .copy-btn.copied{background:var(--navy)!important;color:white!important}
 
         /* Link display */
-        .link-section{padding:0 20px 20px}
-        .link-box{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--blue);word-break:break-all;font-family:monospace;line-height:1.5}
+        .link-section{padding:0 18px 18px}
+        .link-box{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:10px 12px;font-size:12px;color:var(--blue);word-break:break-all;font-family:monospace;line-height:1.5}
 
-        /* Customer preview chip */
-        .customer-chip{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:white;padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;margin:16px 20px 0}
+        /* Customer chip */
+        .customer-chip{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:white;padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;margin:14px 18px 0}
         .customer-chip i{color:var(--gold-light)}
 
         /* Quick templates */
-        .templates{padding:16px 20px;border-top:1px solid var(--gray-100)}
-        .templates-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+        .templates{padding:14px 18px;border-top:1px solid var(--gray-100)}
+        .templates-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
         .template-chips{display:flex;flex-wrap:wrap;gap:6px}
-        .template-chip{padding:6px 12px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;border:1px solid var(--gray-200);background:white;color:var(--gray-600)}
+        .template-chip{padding:5px 11px;border-radius:50px;font-size:11px;font-weight:600;cursor:pointer;transition:all 0.2s;border:1px solid var(--gray-200);background:white;color:var(--gray-600)}
         .template-chip:hover{border-color:var(--blue);color:var(--blue);background:#eff6ff}
 
         /* Toast */
-        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy);color:white;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:1000;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:10px}
+        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy);color:white;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:700;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:1000;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:10px}
         .toast.show{transform:translateX(-50%) translateY(0)}
         .toast i{color:var(--green)}
 
-        /* Recent links table */
+        /* Recent links */
         .recent-section{grid-column:1/-1;margin-top:8px}
         .recent-table{width:100%;border-collapse:collapse}
-        .recent-table th{text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;padding:12px 16px;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
-        .recent-table td{padding:12px 16px;font-size:13px;color:var(--gray-700);border-bottom:1px solid var(--gray-100)}
+        .recent-table th{text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;padding:11px 14px;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+        .recent-table td{padding:10px 14px;font-size:12px;color:var(--gray-700);border-bottom:1px solid var(--gray-100);vertical-align:middle}
         .recent-table td:first-child{font-weight:600;color:var(--navy)}
-        .recent-table .link-cell{color:var(--blue);font-family:monospace;font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .recent-table .time-cell{color:var(--gray-400);font-size:12px}
+        .recent-table .link-cell{color:var(--blue);font-family:monospace;font-size:11px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .recent-table .time-cell{color:var(--gray-400);font-size:11px}
+        .recent-table .photos-cell{font-size:10px;color:var(--gray-500)}
         .recent-empty{padding:32px;text-align:center;font-size:13px;color:var(--gray-400)}
+        .recent-copy-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--gray-200);background:white;color:var(--gray-600);cursor:pointer;transition:all 0.15s}
+        .recent-copy-btn:hover{border-color:var(--blue);color:var(--blue)}
     </style>
 </head>
 <body>
 
-    <!-- PASSCODE LOCK SCREEN -->
-    <div class="lock-screen" id="lockScreen">
-        <div class="lock-card">
-            <div class="lock-icon"><i class="fas fa-lock"></i></div>
-            <div class="lock-title">Agent Access</div>
-            <div class="lock-sub">Enter the office passcode to continue</div>
-            <input type="password" id="passcodeInput" class="lock-input" maxlength="6" placeholder="••••" autofocus
-                   onkeydown="if(event.key==='Enter')checkPasscode()">
-            <button class="lock-btn" onclick="checkPasscode()"><i class="fas fa-arrow-right" style="margin-right:8px;"></i> Enter</button>
-            <div class="lock-error" id="lockError">Incorrect passcode. Try again.</div>
-            <label class="lock-remember"><input type="checkbox" id="rememberMe"> Remember me on this device</label>
-        </div>
+<!-- PASSCODE LOCK SCREEN -->
+<div class="lock-screen" id="lockScreen">
+    <div class="lock-card">
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <div class="lock-title">Agent Access</div>
+        <div class="lock-sub">Enter the office passcode to continue</div>
+        <input type="password" id="passcodeInput" class="lock-input" maxlength="6" placeholder="••••" autofocus
+               onkeydown="if(event.key==='Enter')checkPasscode()">
+        <button class="lock-btn" onclick="checkPasscode()"><i class="fas fa-arrow-right" style="margin-right:8px;"></i> Enter</button>
+        <div class="lock-error" id="lockError">Incorrect passcode. Try again.</div>
+        <label class="lock-remember"><input type="checkbox" id="rememberMe"> Remember me on this device</label>
     </div>
+</div>
 
-    <!-- APP CONTENT (hidden until passcode entered) -->
-    <div class="app-content" id="appContent">
+<!-- APP CONTENT -->
+<div class="app-content" id="appContent">
 
     <!-- Header -->
     <div class="header">
@@ -183,7 +233,7 @@
                 </div>
                 <div class="field">
                     <label class="field-label" for="agentDocType">What Do They Need to Send?</label>
-                    <select id="agentDocType" class="field-input">
+                    <select id="agentDocType" class="field-input" onchange="handleDocTypeChange()">
                         <option value="">— Don't prefill (let them choose) —</option>
                         <option value="Photo of Damage">Photo of Damage</option>
                         <option value="Tow Bill">Tow Bill / Towing Receipt</option>
@@ -194,10 +244,31 @@
                         <option value="Vehicle Registration">Vehicle Registration</option>
                         <option value="Application / Form">Application or Form</option>
                         <option value="Proof of Prior Insurance">Proof of Prior Insurance</option>
+                        <option value="Home Inspection Photos">Home Insurance Photos 📸</option>
                         <option value="Other">Other Document</option>
                     </select>
                 </div>
-                <div class="field">
+
+                <!-- ===== PHOTO CHECKLIST (shown when Home Inspection Photos selected) ===== -->
+                <div class="photo-checklist-section" id="photoChecklistSection">
+                    <div class="photo-checklist-header">
+                        <div class="photo-checklist-label"><i class="fas fa-camera" style="margin-right:5px;color:var(--blue);"></i>Select Photos Needed</div>
+                        <div class="photo-quick-actions">
+                            <button class="photo-quick-btn select-all" onclick="selectAllPhotos()">All</button>
+                            <button class="photo-quick-btn clear-all" onclick="clearAllPhotos()">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="photo-check-grid" id="photoCheckGrid">
+                        <!-- Injected by JS -->
+                    </div>
+
+                    <div class="photo-count-badge" id="photoCountBadge">
+                        <i class="fas fa-camera"></i> <span id="photoCountText">0 photos selected</span>
+                    </div>
+                </div>
+
+                <div class="field" style="margin-top:16px;">
                     <label class="field-label" for="agentNotes">Pre-fill Notes <span style="font-weight:400;color:var(--gray-400);text-transform:none;">(optional)</span></label>
                     <textarea id="agentNotes" class="field-input" placeholder="e.g., 'Photos of front bumper damage from 2/10 accident'" rows="2"></textarea>
                 </div>
@@ -214,20 +285,24 @@
             <div id="outputEmpty" class="output-empty">
                 <div class="output-empty-icon"><i class="fas fa-paper-plane"></i></div>
                 <h3>Ready to Generate</h3>
-                <p>Fill in customer info and click generate to create<br>a prefilled link and text message.</p>
+                <p>Fill in customer info and click generate<br>to create a prefilled link and text message.</p>
             </div>
 
             <!-- Filled state -->
             <div id="outputFilled" class="output-filled">
                 <div id="customerChip" class="customer-chip"></div>
 
-                <!-- Text Message Preview -->
-                <div class="text-preview">
-                    <div class="text-preview-header">
-                        <div class="text-preview-label"><i class="fas fa-comment-dots"></i> Text Message — Ready to Send</div>
-                    </div>
-                    <div class="text-preview-body" id="textPreview"></div>
+                <!-- Photo summary strip (shown when photo mode) -->
+                <div class="photo-summary" id="photoSummary">
+                    <div class="photo-summary-label"><i class="fas fa-camera" style="margin-right:4px;"></i> Photos Requested</div>
+                    <div class="photo-summary-chips" id="photoSummaryChips"></div>
                 </div>
+
+                <!-- Text Message Preview -->
+                <div class="text-preview-header">
+                    <div class="text-preview-label"><i class="fas fa-comment-dots"></i> Text Message — Ready to Send</div>
+                </div>
+                <div class="text-preview-body" id="textPreview"></div>
 
                 <!-- Copy Buttons -->
                 <div class="copy-row">
@@ -252,6 +327,7 @@
                         <div class="template-chip" onclick="setTemplate('formal')">Professional</div>
                         <div class="template-chip" onclick="setTemplate('reminder')">Reminder</div>
                         <div class="template-chip" onclick="setTemplate('claims')">Claims</div>
+                        <div class="template-chip" onclick="setTemplate('photos')">Photo Request</div>
                         <div class="template-chip" onclick="setTemplate('quick')">Quick & Short</div>
                     </div>
                 </div>
@@ -270,241 +346,359 @@
         </div>
     </div>
 
-    <!-- Toast notification -->
+    <!-- Toast -->
     <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastText">Copied!</span></div>
 
-    </div><!-- END app-content -->
+</div><!-- END app-content -->
 
-    <script>
-        // ========================================
-        // PASSCODE GATE
-        // ========================================
-        // CHANGE THIS to your office passcode:
-        var OFFICE_PASSCODE = '1993';
-        var STORAGE_KEY = 'sbd_agent_auth';
+<script>
+// =============================================
+// PASSCODE GATE
+// =============================================
+var OFFICE_PASSCODE = '1993';
+var STORAGE_KEY = 'sbd_agent_auth';
 
-        // Check if already authenticated
-        (function() {
-            if (localStorage.getItem(STORAGE_KEY) === OFFICE_PASSCODE) {
-                unlockApp();
-            }
-        })();
+(function() {
+    if (localStorage.getItem(STORAGE_KEY) === OFFICE_PASSCODE) unlockApp();
+})();
 
-        function checkPasscode() {
-            var input = document.getElementById('passcodeInput');
-            var val = input.value.trim();
-            if (val === OFFICE_PASSCODE) {
-                if (document.getElementById('rememberMe').checked) {
-                    localStorage.setItem(STORAGE_KEY, OFFICE_PASSCODE);
-                }
-                unlockApp();
-            } else {
-                input.classList.add('error');
-                document.getElementById('lockError').classList.add('show');
-                input.value = '';
-                input.focus();
-                setTimeout(function() { input.classList.remove('error'); }, 500);
-            }
-        }
+function checkPasscode() {
+    var input = document.getElementById('passcodeInput');
+    var val = input.value.trim();
+    if (val === OFFICE_PASSCODE) {
+        if (document.getElementById('rememberMe').checked) localStorage.setItem(STORAGE_KEY, OFFICE_PASSCODE);
+        unlockApp();
+    } else {
+        input.classList.add('error');
+        document.getElementById('lockError').classList.add('show');
+        input.value = '';
+        input.focus();
+        setTimeout(function(){ input.classList.remove('error'); }, 500);
+    }
+}
+function unlockApp() {
+    document.getElementById('lockScreen').classList.add('hidden');
+    document.getElementById('appContent').classList.add('unlocked');
+}
 
-        function unlockApp() {
-            document.getElementById('lockScreen').classList.add('hidden');
-            document.getElementById('appContent').classList.add('unlocked');
-        }
-        // ========================================
-        // CONFIG
-        // ========================================
-        const BASE_URL = 'https://www.sendbilldocs.com';
-        
-        let currentLink = '';
-        let currentText = '';
-        let currentTemplate = 'friendly';
-        let recentLinks = [];
+// =============================================
+// PHOTO TYPES DEFINITION
+// =============================================
+var PHOTO_TYPES = [
+    { key:'bathroom',           label:'Bathroom',                icon:'fa-bath',             sample:'https://i.imgur.com/wGZfagl.jpeg',  hint:'Full bathroom view' },
+    { key:'breaker_box',        label:'Breaker Box',             icon:'fa-bolt',             sample:'https://i.imgur.com/yY4Xcbo.jpeg',  hint:'Open panel, all breakers' },
+    { key:'hot_water_heater',   label:'Hot Water Heater',        icon:'fa-fire',             sample:'https://i.imgur.com/G6lFX7G.jpeg',  hint:'Full unit with age sticker' },
+    { key:'kitchen',            label:'Kitchen',                 icon:'fa-utensils',         sample:'https://i.imgur.com/HC2yn6G.jpeg',  hint:'Appliances & counters' },
+    { key:'living_room',        label:'Living Room',             icon:'fa-couch',            sample:'https://i.imgur.com/LmrRRFq.jpeg',  hint:'Wide view, full room' },
+    { key:'outbuildings',       label:'Outbuildings / Shed',     icon:'fa-warehouse',        sample:'https://i.imgur.com/2kz7rAQ.jpeg',  hint:'Full exterior view' },
+    { key:'thermostat',         label:'Thermostat',              icon:'fa-temperature-half', sample:'https://i.imgur.com/qi6MPc8.jpeg',  hint:'Close-up, brand visible' },
+    { key:'under_bath_sink',    label:'Under Bath Sink',         icon:'fa-sink',             sample:'https://i.imgur.com/jY7HV4e.jpeg',  hint:'Open cabinet, pipes visible' },
+    { key:'under_kitchen_sink', label:'Under Kitchen Sink',      icon:'fa-faucet',           sample:'https://i.imgur.com/yKXsPdq.jpeg',  hint:'Open cabinet, pipes visible' }
+];
 
-        // ========================================
-        // PHONE FORMATTING
-        // ========================================
-        document.getElementById('agentPhone').addEventListener('input', function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+// =============================================
+// BUILD PHOTO CHECKLIST
+// =============================================
+(function buildPhotoGrid() {
+    var grid = document.getElementById('photoCheckGrid');
+    PHOTO_TYPES.forEach(function(pt) {
+        var item = document.createElement('div');
+        item.className = 'photo-check-item';
+        item.innerHTML =
+            '<input type="checkbox" id="photo_' + pt.key + '" value="' + pt.key + '" onchange="updatePhotoCount()">' +
+            '<label class="photo-check-tile" for="photo_' + pt.key + '">' +
+                '<div class="photo-check-thumb"><img src="' + pt.sample + '" alt="' + pt.label + '" loading="lazy"></div>' +
+                '<div class="photo-check-info">' +
+                    '<div class="photo-check-name">' + pt.label + '</div>' +
+                    '<div class="photo-check-hint">' + pt.hint + '</div>' +
+                '</div>' +
+                '<div class="photo-check-box"><i class="fas fa-check"></i></div>' +
+            '</label>';
+        grid.appendChild(item);
+    });
+})();
+
+function selectAllPhotos() {
+    PHOTO_TYPES.forEach(function(pt){ document.getElementById('photo_' + pt.key).checked = true; });
+    updatePhotoCount();
+}
+function clearAllPhotos() {
+    PHOTO_TYPES.forEach(function(pt){ document.getElementById('photo_' + pt.key).checked = false; });
+    updatePhotoCount();
+}
+function getSelectedPhotoKeys() {
+    return PHOTO_TYPES.filter(function(pt){ return document.getElementById('photo_' + pt.key).checked; }).map(function(pt){ return pt.key; });
+}
+function updatePhotoCount() {
+    var keys = getSelectedPhotoKeys();
+    var badge = document.getElementById('photoCountBadge');
+    var text  = document.getElementById('photoCountText');
+    text.textContent = keys.length === 0 ? '0 photos selected' : keys.length + ' photo' + (keys.length > 1 ? 's' : '') + ' selected';
+    badge.className = 'photo-count-badge' + (keys.length > 0 ? ' has-count' : '');
+}
+
+// =============================================
+// DOC TYPE CHANGE
+// =============================================
+function handleDocTypeChange() {
+    var val = document.getElementById('agentDocType').value;
+    var section = document.getElementById('photoChecklistSection');
+    if (val === 'Home Inspection Photos') {
+        section.classList.add('active');
+    } else {
+        section.classList.remove('active');
+    }
+}
+
+// =============================================
+// PHONE FORMATTING
+// =============================================
+document.getElementById('agentPhone').addEventListener('input', function(e) {
+    var x = e.target.value.replace(/\D/g,'').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    e.target.value = !x[2] ? x[1] : '('+x[1]+') '+x[2]+(x[3]?'-'+x[3]:'');
+});
+
+// =============================================
+// CONFIG
+// =============================================
+var BASE_URL = 'https://www.sendbilldocs.com';
+var currentLink = '';
+var currentText = '';
+var currentTemplate = 'friendly';
+var recentLinks = [];
+var lastSelectedPhotoKeys = [];
+
+// =============================================
+// GENERATE LINK
+// =============================================
+function generateLink() {
+    var name    = document.getElementById('agentName').value.trim();
+    var email   = document.getElementById('agentEmail').value.trim();
+    var phone   = document.getElementById('agentPhone').value.trim();
+    var docType = document.getElementById('agentDocType').value;
+    var notes   = document.getElementById('agentNotes').value.trim();
+    var photoKeys = docType === 'Home Inspection Photos' ? getSelectedPhotoKeys() : [];
+
+    // Build query params
+    var params = [];
+    if (name)    params.push('name='  + encodeURIComponent(name));
+    if (email)   params.push('email=' + encodeURIComponent(email));
+    if (phone)   params.push('phone=' + encodeURIComponent(phone));
+    if (docType) params.push('doc='   + encodeURIComponent(docType));
+    if (notes)   params.push('notes=' + encodeURIComponent(notes));
+
+    // Photo keys override — use ?photos= instead of doc= when specific photos are selected
+    if (photoKeys.length > 0) {
+        // Remove the doc param and add photos param
+        params = params.filter(function(p){ return !p.startsWith('doc='); });
+        params.push('photos=' + photoKeys.join(','));
+    }
+
+    currentLink = params.length > 0 ? BASE_URL + '?' + params.join('&') : BASE_URL;
+    lastSelectedPhotoKeys = photoKeys;
+
+    // Pick default template for photo requests
+    if (photoKeys.length > 0 && currentTemplate === 'friendly') currentTemplate = 'photos';
+
+    currentText = buildTextMessage(name, docType, photoKeys, currentLink, currentTemplate);
+
+    // Show output
+    document.getElementById('outputEmpty').style.display = 'none';
+    document.getElementById('outputFilled').classList.add('active');
+
+    var chipText = name || 'Customer';
+    if (docType) chipText += ' — ' + docType;
+    document.getElementById('customerChip').innerHTML = '<i class="fas fa-user"></i> ' + chipText;
+
+    // Photo summary
+    var summaryDiv  = document.getElementById('photoSummary');
+    var summaryChips = document.getElementById('photoSummaryChips');
+    if (photoKeys.length > 0) {
+        summaryDiv.classList.add('active');
+        summaryChips.innerHTML = photoKeys.map(function(k) {
+            var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
+            return '<span class="photo-chip"><i class="fas fa-check"></i>' + (pt ? pt.label : k) + '</span>';
+        }).join('');
+    } else {
+        summaryDiv.classList.remove('active');
+        summaryChips.innerHTML = '';
+    }
+
+    updateTextPreview();
+    document.getElementById('linkDisplay').textContent = currentLink;
+
+    // Add to recent
+    recentLinks.unshift({
+        name:     name || 'No name',
+        docType:  docType || '—',
+        photos:   photoKeys,
+        link:     currentLink,
+        time:     new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
+    });
+    if (recentLinks.length > 10) recentLinks.pop();
+    renderRecent();
+}
+
+// =============================================
+// TEXT MESSAGE TEMPLATES
+// =============================================
+function buildTextMessage(name, docType, photoKeys, link, template) {
+    var firstName = name ? name.split(' ')[0] : '';
+    var docLabel  = docType ? docType.toLowerCase() : 'document(s)';
+    var isPhotos  = photoKeys && photoKeys.length > 0;
+
+    // Build photo list for templates
+    var photoList = '';
+    if (isPhotos) {
+        var photoNames = photoKeys.map(function(k){
+            var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
+            return pt ? pt.label : k;
         });
+        photoList = '\n\nPhotos needed:\n' + photoNames.map(function(n){ return '  • ' + n; }).join('\n');
+    }
 
-        // ========================================
-        // GENERATE LINK
-        // ========================================
-        function generateLink() {
-            var name = document.getElementById('agentName').value.trim();
-            var email = document.getElementById('agentEmail').value.trim();
-            var phone = document.getElementById('agentPhone').value.trim();
-            var docType = document.getElementById('agentDocType').value;
-            var notes = document.getElementById('agentNotes').value.trim();
+    switch (template) {
+        case 'photos':
+            return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
+                'This is Bill Layne Insurance. We need a few photos of your home to complete your policy.' +
+                photoList + '\n\n' +
+                'Just tap the link — each photo has an example image to show you exactly what we need:\n\n' +
+                link + '\n\n' +
+                'Takes about 2 minutes. Thanks! 📸';
 
-            // Build query params (only include non-empty fields)
-            var params = [];
-            if (name) params.push('name=' + encodeURIComponent(name));
-            if (email) params.push('email=' + encodeURIComponent(email));
-            if (phone) params.push('phone=' + encodeURIComponent(phone));
-            if (docType) params.push('doc=' + encodeURIComponent(docType));
-            if (notes) params.push('notes=' + encodeURIComponent(notes));
+        case 'friendly':
+            return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
+                'This is Bill Layne Insurance. ' +
+                (docType ? 'We need your ' + docLabel + '. ' : '') +
+                'You can send it to us securely using this link — just tap and follow the steps:\n\n' +
+                link + '\n\n' +
+                'It only takes about 60 seconds. Thanks! 😊';
 
-            if (params.length === 0) {
-                currentLink = BASE_URL;
-            } else {
-                currentLink = BASE_URL + '?' + params.join('&');
-            }
+        case 'formal':
+            return (firstName ? 'Hello ' + firstName + ', ' : 'Hello, ') +
+                'this is Bill Layne Insurance Agency. ' +
+                (isPhotos ? 'We are requesting home photos for your policy.' + photoList + '\n\nPlease use the secure link below:' :
+                 docType ? 'We are requesting your ' + docLabel + '. Please use the secure link below to upload:' :
+                 'We need a document from you. Please use the secure link below:') + '\n\n' +
+                link + '\n\n' +
+                'If you have any questions, call us at (336) 835-1993.';
 
-            // Generate text message
-            currentText = buildTextMessage(name, docType, currentLink, currentTemplate);
+        case 'reminder':
+            return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
+                'friendly reminder from Bill Layne Insurance — ' +
+                (isPhotos ? 'we still need those home photos for your policy. ' :
+                 docType  ? 'we still need your ' + docLabel + '. ' :
+                 'we still need your document. ') +
+                'You can upload here:\n\n' +
+                link + '\n\n' +
+                'Thanks! Let us know if you need help. 📞 (336) 835-1993';
 
-            // Update UI
-            document.getElementById('outputEmpty').style.display = 'none';
-            document.getElementById('outputFilled').classList.add('active');
-            
-            var chipText = name || 'Customer';
-            if (docType) chipText += ' — ' + docType;
-            document.getElementById('customerChip').innerHTML = '<i class="fas fa-user"></i> ' + chipText;
+        case 'claims':
+            return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
+                'this is Bill Layne Insurance regarding your claim. ' +
+                (docType ? 'We need your ' + docLabel + ' to move things forward. ' : 'We need some documents to process your claim. ') +
+                'Please upload here:\n\n' +
+                link + '\n\n' +
+                'The sooner we get it, the faster we can help! Call us: (336) 835-1993';
 
-            updateTextPreview();
-            document.getElementById('linkDisplay').textContent = currentLink;
+        case 'quick':
+            return (firstName ? firstName + ' — ' : '') +
+                'Bill Layne Insurance here. ' +
+                (isPhotos ? 'Please send home photos: ' :
+                 docType  ? 'Please send your ' + docLabel + ': ' :
+                 'Please upload your docs: ') +
+                link;
 
-            // Add to recent
-            recentLinks.unshift({
-                name: name || 'No name',
-                docType: docType || '—',
-                link: currentLink,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            });
-            if (recentLinks.length > 10) recentLinks.pop();
-            renderRecent();
-        }
+        default:
+            return buildTextMessage(name, docType, photoKeys, link, 'friendly');
+    }
+}
 
-        // ========================================
-        // TEXT MESSAGE TEMPLATES
-        // ========================================
-        function buildTextMessage(name, docType, link, template) {
-            var firstName = name ? name.split(' ')[0] : '';
-            var docLabel = docType ? docType.toLowerCase() : 'document(s)';
+function setTemplate(template) {
+    currentTemplate = template;
+    var name      = document.getElementById('agentName').value.trim();
+    var docType   = document.getElementById('agentDocType').value;
+    var photoKeys = lastSelectedPhotoKeys;
+    currentText   = buildTextMessage(name, docType, photoKeys, currentLink, template);
+    updateTextPreview();
+    showToast('Switched to ' + template + ' template');
+}
 
-            switch (template) {
-                case 'friendly':
-                    return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
-                        'This is Bill Layne Insurance. ' +
-                        (docType ? 'We need your ' + docLabel + '. ' : '') +
-                        'You can send it to us securely using this link — just tap and follow the steps:\n\n' +
-                        link + '\n\n' +
-                        'It only takes about 60 seconds. Thanks! 😊';
+function updateTextPreview() {
+    var preview  = document.getElementById('textPreview');
+    var escaped  = currentText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // Highlight the URL
+    var safeLink = currentLink.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    escaped = escaped.replace(safeLink, '<span class="link-highlight">' + safeLink + '</span>');
+    preview.innerHTML = escaped;
+}
 
-                case 'formal':
-                    return (firstName ? 'Hello ' + firstName + ', ' : 'Hello, ') +
-                        'this is Bill Layne Insurance Agency. ' +
-                        (docType ? 'We are requesting your ' + docLabel + '. ' : 'We need a document from you. ') +
-                        'Please use the secure link below to upload:\n\n' +
-                        link + '\n\n' +
-                        'If you have any questions, call us at (336) 835-1993.';
+// =============================================
+// COPY
+// =============================================
+function copyText() {
+    navigator.clipboard.writeText(currentText).then(function() {
+        var btn = document.getElementById('copyTextBtn');
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        showToast('Text message copied — paste into your messaging app!');
+        setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<i class="fas fa-copy"></i> Copy Full Text'; }, 2500);
+    });
+}
+function copyLink() {
+    navigator.clipboard.writeText(currentLink).then(function() {
+        var btn = document.getElementById('copyLinkBtn');
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        showToast('Link copied!');
+        setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<i class="fas fa-link"></i> Copy Link Only'; }, 2500);
+    });
+}
 
-                case 'reminder':
-                    return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
-                        'friendly reminder from Bill Layne Insurance — ' +
-                        (docType ? 'we still need your ' + docLabel + '. ' : 'we still need your document. ') +
-                        'You can upload it here in under a minute:\n\n' +
-                        link + '\n\n' +
-                        'Thanks! Let us know if you need help. 📞 (336) 835-1993';
+// =============================================
+// TOAST
+// =============================================
+function showToast(msg) {
+    var toast = document.getElementById('toast');
+    document.getElementById('toastText').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 3000);
+}
 
-                case 'claims':
-                    return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
-                        'this is Bill Layne Insurance regarding your claim. ' +
-                        (docType ? 'We need your ' + docLabel + ' to move things forward. ' : 'We need some documents to process your claim. ') +
-                        'Please upload here:\n\n' +
-                        link + '\n\n' +
-                        'The sooner we get it, the faster we can get things moving! Call us if you need anything: (336) 835-1993';
+// =============================================
+// RECENT LINKS
+// =============================================
+function renderRecent() {
+    var body = document.getElementById('recentBody');
+    if (recentLinks.length === 0) {
+        body.innerHTML = '<div class="recent-empty">No links generated yet this session.</div>';
+        return;
+    }
+    var html = '<table class="recent-table"><thead><tr><th>Customer</th><th>Doc Type</th><th>Photos</th><th>Link</th><th>Time</th><th></th></tr></thead><tbody>';
+    for (var i = 0; i < recentLinks.length; i++) {
+        var r = recentLinks[i];
+        var photoText = r.photos && r.photos.length > 0 ? r.photos.length + ' photo' + (r.photos.length > 1 ? 's' : '') : '—';
+        html += '<tr>' +
+            '<td>' + esc(r.name) + '</td>' +
+            '<td>' + esc(r.docType) + '</td>' +
+            '<td class="photos-cell">' + photoText + '</td>' +
+            '<td class="link-cell">' + esc(r.link) + '</td>' +
+            '<td class="time-cell">' + r.time + '</td>' +
+            '<td><button class="recent-copy-btn" onclick="copyRecentLink(\'' + i + '\')"><i class="fas fa-copy"></i></button></td>' +
+            '</tr>';
+    }
+    html += '</tbody></table>';
+    body.innerHTML = html;
+}
 
-                case 'quick':
-                    return (firstName ? firstName + ' — ' : '') +
-                        'Bill Layne Insurance here. ' +
-                        (docType ? 'Please send your ' + docLabel + ': ' : 'Please upload your docs: ') +
-                        link;
+function copyRecentLink(index) {
+    var link = recentLinks[parseInt(index)].link;
+    navigator.clipboard.writeText(link).then(function(){ showToast('Link copied!'); });
+}
 
-                default:
-                    return buildTextMessage(name, docType, link, 'friendly');
-            }
-        }
-
-        function setTemplate(template) {
-            currentTemplate = template;
-            var name = document.getElementById('agentName').value.trim();
-            var docType = document.getElementById('agentDocType').value;
-            currentText = buildTextMessage(name, docType, currentLink, template);
-            updateTextPreview();
-            showToast('Switched to ' + template + ' template');
-        }
-
-        function updateTextPreview() {
-            var preview = document.getElementById('textPreview');
-            // Highlight the link in the preview
-            var escaped = currentText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            escaped = escaped.replace(
-                currentLink,
-                '<span class="link-highlight">' + currentLink + '</span>'
-            );
-            preview.innerHTML = escaped;
-        }
-
-        // ========================================
-        // COPY FUNCTIONS
-        // ========================================
-        function copyText() {
-            navigator.clipboard.writeText(currentText).then(function() {
-                var btn = document.getElementById('copyTextBtn');
-                btn.classList.add('copied');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                showToast('Text message copied — paste into your messaging app!');
-                setTimeout(function() {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Copy Full Text';
-                }, 2500);
-            });
-        }
-
-        function copyLink() {
-            navigator.clipboard.writeText(currentLink).then(function() {
-                var btn = document.getElementById('copyLinkBtn');
-                btn.classList.add('copied');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                showToast('Link copied!');
-                setTimeout(function() {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = '<i class="fas fa-link"></i> Copy Link Only';
-                }, 2500);
-            });
-        }
-
-        // ========================================
-        // TOAST
-        // ========================================
-        function showToast(msg) {
-            var toast = document.getElementById('toast');
-            document.getElementById('toastText').textContent = msg;
-            toast.classList.add('show');
-            setTimeout(function() { toast.classList.remove('show'); }, 3000);
-        }
-
-        // ========================================
-        // RECENT LINKS
-        // ========================================
-        function renderRecent() {
-            var body = document.getElementById('recentBody');
-            if (recentLinks.length === 0) {
-                body.innerHTML = '<div class="recent-empty">No links generated yet this session.</div>';
-                return;
-            }
-            var html = '<table class="recent-table"><thead><tr><th>Customer</th><th>Doc Type</th><th>Link</th><th>Time</th></tr></thead><tbody>';
-            for (var i = 0; i < recentLinks.length; i++) {
-                var r = recentLinks[i];
-                html += '<tr><td>' + r.name + '</td><td>' + r.docType + '</td><td class="link-cell">' + r.link + '</td><td class="time-cell">' + r.time + '</td></tr>';
-            }
-            html += '</tbody></table>';
-            body.innerHTML = html;
-        }
-    </script>
+function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 </body>
 </html>
