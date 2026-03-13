@@ -73,6 +73,16 @@
         textarea.field-input{height:auto;min-height:70px;padding:12px 14px;resize:vertical}
 
         /* ======= PHOTO CHECKLIST ======= */
+        /* Custom request section (Other doc type) */
+        .custom-request-section{margin-top:4px;display:none}
+        .custom-request-section.active{display:block;animation:fadeSlide 0.2s ease}
+        .custom-request-section .field{margin-bottom:12px}
+        .custom-request-section .field-label{font-size:12px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+        .ref-image-preview{margin-top:8px;border-radius:10px;overflow:hidden;border:2px solid var(--gray-200);max-width:280px;display:none}
+        .ref-image-preview.active{display:block}
+        .ref-image-preview img{width:100%;height:auto;display:block}
+        .ref-image-preview .ref-label{padding:6px 10px;background:var(--gray-50);font-size:11px;color:var(--gray-500);text-align:center;font-weight:600}
+
         .photo-checklist-section{margin-top:4px;display:none}
         .photo-checklist-section.active{display:block}
 
@@ -259,6 +269,22 @@
                         <option value="Home Inspection Photos">Home Insurance Photos 📸</option>
                         <option value="Other">Other Document</option>
                     </select>
+                </div>
+
+                <!-- ===== CUSTOM REQUEST (shown when Other selected) ===== -->
+                <div class="custom-request-section" id="customRequestSection">
+                    <div class="field">
+                        <label class="field-label" for="customDocDesc"><i class="fas fa-pen" style="color:var(--blue);"></i> What are you requesting?</label>
+                        <textarea id="customDocDesc" class="field-input" placeholder="e.g., 'Photo of the large oak tree near the power lines on the left side of the house'" rows="2"></textarea>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="refImageUrl"><i class="fas fa-image" style="color:var(--blue);"></i> Reference Image URL <span style="font-weight:400;color:var(--gray-400);text-transform:none;">(optional)</span></label>
+                        <input type="url" id="refImageUrl" class="field-input" placeholder="Paste image link to show customer what you need" oninput="previewRefImage()">
+                        <div class="ref-image-preview" id="refImagePreview">
+                            <img id="refImagePreviewImg" src="" alt="Reference image preview">
+                            <div class="ref-label"><i class="fas fa-eye" style="margin-right:4px;"></i> Customer will see this image</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ===== PHOTO CHECKLIST (shown when Home Inspection Photos selected) ===== -->
@@ -459,11 +485,31 @@ function updatePhotoCount() {
 // =============================================
 function handleDocTypeChange() {
     var val = document.getElementById('agentDocType').value;
-    var section = document.getElementById('photoChecklistSection');
+    var photoSection = document.getElementById('photoChecklistSection');
+    var customSection = document.getElementById('customRequestSection');
     if (val === 'Home Inspection Photos') {
-        section.classList.add('active');
+        photoSection.classList.add('active');
+        customSection.classList.remove('active');
+    } else if (val === 'Other') {
+        customSection.classList.add('active');
+        photoSection.classList.remove('active');
     } else {
-        section.classList.remove('active');
+        photoSection.classList.remove('active');
+        customSection.classList.remove('active');
+    }
+}
+
+function previewRefImage() {
+    var url = document.getElementById('refImageUrl').value.trim();
+    var preview = document.getElementById('refImagePreview');
+    var img = document.getElementById('refImagePreviewImg');
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        img.src = url;
+        img.onload = function(){ preview.classList.add('active'); };
+        img.onerror = function(){ preview.classList.remove('active'); };
+    } else {
+        preview.classList.remove('active');
+        img.src = '';
     }
 }
 
@@ -495,6 +541,8 @@ function generateLink() {
     var docType = document.getElementById('agentDocType').value;
     var notes   = document.getElementById('agentNotes').value.trim();
     var photoKeys = docType === 'Home Inspection Photos' ? getSelectedPhotoKeys() : [];
+    var customDocDesc = docType === 'Other' ? document.getElementById('customDocDesc').value.trim() : '';
+    var refImageUrl   = docType === 'Other' ? document.getElementById('refImageUrl').value.trim() : '';
 
     // Build query params
     var params = [];
@@ -503,6 +551,10 @@ function generateLink() {
     if (phone)   params.push('phone=' + encodeURIComponent(phone));
     if (docType) params.push('doc='   + encodeURIComponent(docType));
     if (notes)   params.push('notes=' + encodeURIComponent(notes));
+
+    // Custom request fields for "Other" doc type
+    if (customDocDesc) params.push('customDoc=' + encodeURIComponent(customDocDesc));
+    if (refImageUrl)   params.push('refImg='    + encodeURIComponent(refImageUrl));
 
     // Photo keys override — use ?photos= instead of doc= when specific photos are selected
     if (photoKeys.length > 0) {
@@ -517,7 +569,7 @@ function generateLink() {
     // Pick default template for photo requests
     if (photoKeys.length > 0 && currentTemplate === 'friendly') currentTemplate = 'photos';
 
-    currentText = buildTextMessage(name, docType, photoKeys, currentLink, currentTemplate);
+    currentText = buildTextMessage(name, docType, photoKeys, currentLink, currentTemplate, customDocDesc);
 
     // Show output
     document.getElementById('outputEmpty').style.display = 'none';
@@ -559,10 +611,11 @@ function generateLink() {
 // =============================================
 // TEXT MESSAGE TEMPLATES
 // =============================================
-function buildTextMessage(name, docType, photoKeys, link, template) {
+function buildTextMessage(name, docType, photoKeys, link, template, customDocDesc) {
     var firstName = name ? name.split(' ')[0] : '';
     var docLabel  = docType ? docType.toLowerCase() : 'document(s)';
     var isPhotos  = photoKeys && photoKeys.length > 0;
+    var isCustom  = docType === 'Other' && customDocDesc;
 
     // Build photo list for templates
     var photoList = '';
@@ -586,7 +639,8 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
         case 'friendly':
             return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
                 'This is Bill Layne Insurance. ' +
-                (docType ? 'We need your ' + docLabel + '. ' : '') +
+                (isCustom ? 'We need the following: ' + customDocDesc + '. ' :
+                 docType  ? 'We need your ' + docLabel + '. ' : '') +
                 'You can send it to us securely using this link — just tap and follow the steps:\n\n' +
                 link + '\n\n' +
                 'It only takes about 60 seconds. Thanks! 😊';
@@ -595,7 +649,8 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
             return (firstName ? 'Hello ' + firstName + ', ' : 'Hello, ') +
                 'this is Bill Layne Insurance Agency. ' +
                 (isPhotos ? 'We are requesting home photos for your policy.' + photoList + '\n\nPlease use the secure link below:' :
-                 docType ? 'We are requesting your ' + docLabel + '. Please use the secure link below to upload:' :
+                 isCustom ? 'We are requesting the following: ' + customDocDesc + '. Please use the secure link below to upload:' :
+                 docType  ? 'We are requesting your ' + docLabel + '. Please use the secure link below to upload:' :
                  'We need a document from you. Please use the secure link below:') + '\n\n' +
                 link + '\n\n' +
                 'If you have any questions, call us at (336) 835-1993.';
@@ -604,6 +659,7 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
             return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
                 'friendly reminder from Bill Layne Insurance — ' +
                 (isPhotos ? 'we still need those home photos for your policy. ' :
+                 isCustom ? 'we still need the following: ' + customDocDesc + '. ' :
                  docType  ? 'we still need your ' + docLabel + '. ' :
                  'we still need your document. ') +
                 'You can upload here:\n\n' +
@@ -613,7 +669,9 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
         case 'claims':
             return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
                 'this is Bill Layne Insurance regarding your claim. ' +
-                (docType ? 'We need your ' + docLabel + ' to move things forward. ' : 'We need some documents to process your claim. ') +
+                (isCustom ? 'We need the following: ' + customDocDesc + '. ' :
+                 docType  ? 'We need your ' + docLabel + ' to move things forward. ' :
+                 'We need some documents to process your claim. ') +
                 'Please upload here:\n\n' +
                 link + '\n\n' +
                 'The sooner we get it, the faster we can help! Call us: (336) 835-1993';
@@ -622,6 +680,7 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
             return (firstName ? firstName + ' — ' : '') +
                 'Bill Layne Insurance here. ' +
                 (isPhotos ? 'Please send home photos: ' :
+                 isCustom ? 'We need: ' + customDocDesc + '. Upload here: ' :
                  docType  ? 'Please send your ' + docLabel + ': ' :
                  'Please upload your docs: ') +
                 link;
@@ -644,13 +703,14 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
                 'Le escribimos de Bill Layne Insurance. ' +
                 (isPhotos ? 'Necesitamos unas fotos de su hogar para completar su póliza.' + spanishPhotoList + '\n\n' +
                     'Solo toque el enlace — cada foto tiene una imagen de ejemplo para mostrarle exactamente lo que necesitamos:\n\n' :
-                 docType ? 'Necesitamos su ' + docLabel + '. Puede enviarlo de forma segura usando este enlace — solo toque y siga los pasos:\n\n' :
+                 isCustom ? 'Necesitamos lo siguiente: ' + customDocDesc + '. Puede enviarlo de forma segura usando este enlace:\n\n' :
+                 docType  ? 'Necesitamos su ' + docLabel + '. Puede enviarlo de forma segura usando este enlace — solo toque y siga los pasos:\n\n' :
                  'Necesitamos un documento suyo. Puede enviarlo de forma segura usando este enlace:\n\n') +
                 link + '\n\n' +
                 'Solo toma unos minutos. ¡Gracias! 😊';
 
         default:
-            return buildTextMessage(name, docType, photoKeys, link, 'friendly');
+            return buildTextMessage(name, docType, photoKeys, link, 'friendly', customDocDesc);
     }
 }
 

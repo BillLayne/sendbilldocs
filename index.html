@@ -76,6 +76,17 @@
         .form-error{font-size:12px;color:var(--red);margin-top:5px;display:none}
         .form-input.error{border-color:var(--red)}
 
+        /* ======= CUSTOM REQUEST BANNER ======= */
+        .custom-request-banner{display:none;margin:0 0 20px;border-radius:var(--radius);overflow:hidden;border:2px solid #f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7)}
+        .custom-request-banner.active{display:block}
+        .custom-request-header{padding:14px 16px;display:flex;align-items:center;gap:10px}
+        .custom-request-header i{font-size:20px;color:#d97706}
+        .custom-request-header .crb-title{font-weight:700;font-size:15px;color:#92400e}
+        .custom-request-desc{padding:0 16px 14px;font-size:14px;color:#78350f;line-height:1.5}
+        .custom-request-ref{padding:0 16px 16px}
+        .custom-request-ref img{width:100%;max-width:400px;border-radius:10px;border:2px solid #fbbf24;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+        .custom-request-ref .ref-caption{margin-top:6px;font-size:11px;color:#a16207;font-weight:600;text-align:center}
+
         /* ======= STANDARD UPLOAD ZONE (non-photo mode) ======= */
         .upload-zone{position:relative;border:3px dashed var(--gray-300);border-radius:var(--radius);padding:36px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--gray-50)}
         .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:#eff6ff}
@@ -336,6 +347,19 @@
                 <div class="form-group">
                     <label class="form-label" for="notes">Notes <span style="font-weight:400;color:var(--gray-400);">(optional)</span></label>
                     <textarea id="notes" class="form-input" placeholder="Anything else we should know? (e.g., 'This is for my claim from last week')" rows="2"></textarea>
+                </div>
+
+                <!-- ===== CUSTOM REQUEST BANNER (shown when agent sends custom request) ===== -->
+                <div class="custom-request-banner" id="customRequestBanner">
+                    <div class="custom-request-header">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="crb-title">Your agent is requesting:</span>
+                    </div>
+                    <div class="custom-request-desc" id="customRequestDesc"></div>
+                    <div class="custom-request-ref" id="customRequestRef" style="display:none;">
+                        <img id="customRequestRefImg" src="" alt="Reference image from your agent">
+                        <div class="ref-caption"><i class="fas fa-info-circle" style="margin-right:3px;"></i> Reference image from your agent</div>
+                    </div>
                 </div>
 
                 <!-- ===== UPLOAD AREA ===== -->
@@ -847,6 +871,21 @@
                     }
                 }
                 enterPhotoMode(photoKeys);
+            }
+        }
+
+        // Handle custom request: ?customDoc=...&refImg=...
+        if (params.has('customDoc')) {
+            var desc = params.get('customDoc');
+            document.getElementById('customRequestDesc').textContent = desc;
+            document.getElementById('customRequestBanner').classList.add('active');
+        }
+        if (params.has('refImg')) {
+            var refUrl = params.get('refImg');
+            if (refUrl && (refUrl.startsWith('http://') || refUrl.startsWith('https://'))) {
+                var refImg = document.getElementById('customRequestRefImg');
+                refImg.src = refUrl;
+                refImg.onload = function(){ document.getElementById('customRequestRef').style.display = 'block'; };
             }
         }
     })();
