@@ -215,6 +215,8 @@
         .help-btn-call:hover{background:var(--gold-light);transform:translateY(-1px)}
         .help-btn-email{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
         .help-btn-email:hover{background:rgba(255,255,255,0.15)}
+        .help-btn-messenger{background:linear-gradient(135deg,#0078FF,#00C6FF);color:white;box-shadow:0 4px 16px rgba(0,120,255,0.3)}
+        .help-btn-messenger:hover{background:linear-gradient(135deg,#0066DD,#00B0EE);transform:translateY(-1px)}
         .help-hours{font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;position:relative}
 
         .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:36px 20px 100px;text-align:center}
@@ -225,13 +227,6 @@
         .footer-info a:hover{color:var(--gold-light)}
         .footer-copy{margin-top:18px;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.4}
 
-        /* ======= MESSENGER FLOAT ======= */
-        .messenger-float{position:fixed;bottom:24px;right:20px;z-index:95;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#0078FF,#00C6FF);color:white;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(0,120,255,0.4);text-decoration:none;transition:all 0.25s;cursor:pointer}
-        .messenger-float:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,120,255,0.5)}
-        .messenger-float:active{transform:scale(0.95)}
-        .messenger-float .pulse-ring{position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid rgba(0,120,255,0.4);animation:msgPulse 2.5s ease-out infinite}
-        @keyframes msgPulse{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.6);opacity:0}}
-        @media(max-width:768px){.messenger-float{bottom:80px;right:14px;width:54px;height:54px;font-size:24px}}
 
         /* ======= MOBILE DOCK ======= */
         .mobile-dock{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gray-200);box-shadow:0 -4px 20px rgba(0,0,0,0.08);padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
@@ -448,6 +443,7 @@
             <div class="help-actions">
                 <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:19px;"></i> Call (336) 835-1993</a>
                 <a href="mailto:docs@billlayneinsurance.com" class="help-btn help-btn-email"><i class="fas fa-envelope"></i> Email Us</a>
+                <a href="https://m.me/dollarbillagency" target="_blank" class="help-btn help-btn-messenger"><i class="fab fa-facebook-messenger"></i> Message Us</a>
             </div>
             <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon–Fri: 9am – 5pm</div>
         </div>
@@ -465,11 +461,6 @@
         <div class="footer-copy">&copy; 2026 Bill Layne Insurance Agency</div>
     </footer>
 
-    <!-- MESSENGER FLOAT -->
-    <a href="https://m.me/dollarbillagency" target="_blank" class="messenger-float" aria-label="Chat with us on Messenger">
-        <span class="pulse-ring"></span>
-        <i class="fab fa-facebook-messenger"></i>
-    </a>
 
     <!-- MOBILE DOCK -->
     <div class="mobile-dock" id="mobileDock">

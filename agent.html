@@ -176,6 +176,18 @@
         .recent-empty{padding:32px;text-align:center;font-size:13px;color:var(--gray-400)}
         .recent-copy-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--gray-200);background:white;color:var(--gray-600);cursor:pointer;transition:all 0.15s}
         .recent-copy-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+        /* Send Text Button */
+        .send-btn{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;box-shadow:0 2px 8px rgba(124,58,237,0.3)}
+        .send-btn:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6);box-shadow:0 4px 16px rgba(124,58,237,0.4)}
+        .send-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none!important}
+        .send-btn.sent{background:var(--green)!important;box-shadow:0 2px 8px rgba(16,185,129,0.3)!important}
+        .send-btn.send-error{background:var(--red)!important;box-shadow:0 2px 8px rgba(239,68,68,0.3)!important}
+        .sms-status{padding:8px 18px;font-size:12px;font-weight:600;display:none}
+        .sms-status.active{display:block}
+        .sms-status.success{color:var(--green);background:#ecfdf5;border-bottom:1px solid #d1fae5}
+        .sms-status.error{color:var(--red);background:#fef2f2;border-bottom:1px solid #fecaca}
+        .sms-status i{margin-right:5px}
     </style>
 </head>
 <body>
@@ -304,15 +316,19 @@
                 </div>
                 <div class="text-preview-body" id="textPreview"></div>
 
-                <!-- Copy Buttons -->
+                <!-- Copy & Send Buttons -->
                 <div class="copy-row">
                     <button class="copy-btn copy-btn-text" id="copyTextBtn" onclick="copyText()">
-                        <i class="fas fa-copy"></i> Copy Full Text
+                        <i class="fas fa-copy"></i> Copy Text
                     </button>
                     <button class="copy-btn copy-btn-link" id="copyLinkBtn" onclick="copyLink()">
-                        <i class="fas fa-link"></i> Copy Link Only
+                        <i class="fas fa-link"></i> Copy Link
+                    </button>
+                    <button class="copy-btn send-btn" id="sendTextBtn" onclick="sendTextMessage()">
+                        <i class="fas fa-paper-plane"></i> Send Text
                     </button>
                 </div>
+                <div class="sms-status" id="smsStatus"></div>
 
                 <!-- Generated Link -->
                 <div class="link-section">
@@ -329,6 +345,7 @@
                         <div class="template-chip" onclick="setTemplate('claims')">Claims</div>
                         <div class="template-chip" onclick="setTemplate('photos')">Photo Request</div>
                         <div class="template-chip" onclick="setTemplate('quick')">Quick & Short</div>
+                        <div class="template-chip" onclick="setTemplate('spanish')" style="border-color:#f59e0b;color:#d97706;">🇲🇽 Español</div>
                     </div>
                 </div>
             </div>
@@ -609,6 +626,29 @@ function buildTextMessage(name, docType, photoKeys, link, template) {
                  'Please upload your docs: ') +
                 link;
 
+        case 'spanish':
+            var spanishPhotoList = '';
+            if (isPhotos) {
+                var spanishPhotoNames = photoKeys.map(function(k){
+                    var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
+                    var spanishLabels = {
+                        'bathroom':'Baño','breaker_box':'Caja de Breakers','hot_water_heater':'Calentador de Agua',
+                        'kitchen':'Cocina','living_room':'Sala','outbuildings':'Edificios Externos / Cobertizo',
+                        'thermostat':'Termostato','under_bath_sink':'Debajo del Lavabo del Baño','under_kitchen_sink':'Debajo del Fregadero'
+                    };
+                    return spanishLabels[k] || (pt ? pt.label : k);
+                });
+                spanishPhotoList = '\n\nFotos necesarias:\n' + spanishPhotoNames.map(function(n){ return '  • ' + n; }).join('\n');
+            }
+            return (firstName ? '¡Hola ' + firstName + '! ' : '¡Hola! ') +
+                'Le escribimos de Bill Layne Insurance. ' +
+                (isPhotos ? 'Necesitamos unas fotos de su hogar para completar su póliza.' + spanishPhotoList + '\n\n' +
+                    'Solo toque el enlace — cada foto tiene una imagen de ejemplo para mostrarle exactamente lo que necesitamos:\n\n' :
+                 docType ? 'Necesitamos su ' + docLabel + '. Puede enviarlo de forma segura usando este enlace — solo toque y siga los pasos:\n\n' :
+                 'Necesitamos un documento suyo. Puede enviarlo de forma segura usando este enlace:\n\n') +
+                link + '\n\n' +
+                'Solo toma unos minutos. ¡Gracias! 😊';
+
         default:
             return buildTextMessage(name, docType, photoKeys, link, 'friendly');
     }
@@ -652,6 +692,67 @@ function copyLink() {
         btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
         showToast('Link copied!');
         setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<i class="fas fa-link"></i> Copy Link Only'; }, 2500);
+    });
+}
+
+// =============================================
+// SEND TEXT VIA TWILIO
+// =============================================
+var TWILIO_WORKER_URL = 'https://sendbilldocs-sms.bill-7e3.workers.dev';
+
+function sendTextMessage() {
+    var phone = document.getElementById('agentPhone').value.trim();
+    var btn = document.getElementById('sendTextBtn');
+    var status = document.getElementById('smsStatus');
+
+    if (!phone) {
+        showToast('Enter a phone number first!');
+        document.getElementById('agentPhone').focus();
+        return;
+    }
+    if (!currentText) {
+        showToast('Generate a message first!');
+        return;
+    }
+
+    // Disable button while sending
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    fetch(TWILIO_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            to: phone,
+            message: currentText,
+            passcode: OFFICE_PASSCODE
+        })
+    })
+    .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
+    .then(function(result) {
+        if (result.ok && result.data.success) {
+            btn.classList.add('sent');
+            btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+            status.className = 'sms-status active success';
+            status.innerHTML = '<i class="fas fa-check-circle"></i> Text sent to ' + phone;
+            showToast('Text message sent to ' + phone + '!');
+        } else {
+            throw new Error(result.data.detail || result.data.error || 'Send failed');
+        }
+    })
+    .catch(function(err) {
+        btn.classList.add('send-error');
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed';
+        status.className = 'sms-status active error';
+        status.innerHTML = '<i class="fas fa-times-circle"></i> ' + err.message;
+        showToast('Failed to send: ' + err.message);
+    })
+    .finally(function() {
+        setTimeout(function() {
+            btn.disabled = false;
+            btn.classList.remove('sent', 'send-error');
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Text';
+        }, 3000);
     });
 }
 
