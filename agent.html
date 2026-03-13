@@ -381,10 +381,14 @@
         <div class="card recent-section">
             <div class="card-header">
                 <div class="card-header-icon" style="background:#fef3c7;color:var(--gold);"><i class="fas fa-clock-rotate-left"></i></div>
-                <h2>Recent Links (This Session)</h2>
+                <h2>Recent Links</h2>
+                <div style="display:flex;gap:8px;margin-left:auto">
+                    <button class="recent-copy-btn" onclick="exportCSV()" title="Export to CSV"><i class="fas fa-file-csv"></i> Export</button>
+                    <button class="recent-copy-btn" onclick="clearHistory()" title="Clear history" style="color:var(--red);border-color:var(--red)"><i class="fas fa-trash"></i> Clear</button>
+                </div>
             </div>
             <div id="recentBody">
-                <div class="recent-empty">No links generated yet this session.</div>
+                <div class="recent-empty">No links generated yet.</div>
             </div>
         </div>
     </div>
@@ -528,8 +532,21 @@ var BASE_URL = 'https://www.sendbilldocs.com';
 var currentLink = '';
 var currentText = '';
 var currentTemplate = 'friendly';
-var recentLinks = [];
+var RECENT_STORAGE_KEY = 'sbd_recent_links';
+var RECENT_MAX = 50;
+var recentLinks = loadRecentLinks();
 var lastSelectedPhotoKeys = [];
+
+// Load recent links from localStorage on startup
+function loadRecentLinks() {
+    try {
+        var data = localStorage.getItem(RECENT_STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+    } catch(e) { return []; }
+}
+function saveRecentLinks() {
+    try { localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recentLinks)); } catch(e) {}
+}
 
 // =============================================
 // GENERATE LINK
@@ -596,15 +613,18 @@ function generateLink() {
     updateTextPreview();
     document.getElementById('linkDisplay').textContent = currentLink;
 
-    // Add to recent
+    // Add to recent (persisted to localStorage)
     recentLinks.unshift({
         name:     name || 'No name',
         docType:  docType || '—',
         photos:   photoKeys,
         link:     currentLink,
-        time:     new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
+        date:     new Date().toLocaleDateString(),
+        time:     new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }),
+        timestamp: Date.now()
     });
-    if (recentLinks.length > 10) recentLinks.pop();
+    if (recentLinks.length > RECENT_MAX) recentLinks.pop();
+    saveRecentLinks();
     renderRecent();
 }
 
@@ -832,10 +852,10 @@ function showToast(msg) {
 function renderRecent() {
     var body = document.getElementById('recentBody');
     if (recentLinks.length === 0) {
-        body.innerHTML = '<div class="recent-empty">No links generated yet this session.</div>';
+        body.innerHTML = '<div class="recent-empty">No links generated yet.</div>';
         return;
     }
-    var html = '<table class="recent-table"><thead><tr><th>Customer</th><th>Doc Type</th><th>Photos</th><th>Link</th><th>Time</th><th></th></tr></thead><tbody>';
+    var html = '<table class="recent-table"><thead><tr><th>Customer</th><th>Doc Type</th><th>Photos</th><th>Link</th><th>Date</th><th>Time</th><th></th></tr></thead><tbody>';
     for (var i = 0; i < recentLinks.length; i++) {
         var r = recentLinks[i];
         var photoText = r.photos && r.photos.length > 0 ? r.photos.length + ' photo' + (r.photos.length > 1 ? 's' : '') : '—';
@@ -844,6 +864,7 @@ function renderRecent() {
             '<td>' + esc(r.docType) + '</td>' +
             '<td class="photos-cell">' + photoText + '</td>' +
             '<td class="link-cell">' + esc(r.link) + '</td>' +
+            '<td class="time-cell">' + (r.date || '—') + '</td>' +
             '<td class="time-cell">' + r.time + '</td>' +
             '<td><button class="recent-copy-btn" onclick="copyRecentLink(\'' + i + '\')"><i class="fas fa-copy"></i></button></td>' +
             '</tr>';
@@ -852,9 +873,59 @@ function renderRecent() {
     body.innerHTML = html;
 }
 
+// Render saved history on page load
+(function(){ if (recentLinks.length > 0) renderRecent(); })();
+
 function copyRecentLink(index) {
     var link = recentLinks[parseInt(index)].link;
     navigator.clipboard.writeText(link).then(function(){ showToast('Link copied!'); });
+}
+
+// =============================================
+// EXPORT CSV
+// =============================================
+function exportCSV() {
+    if (recentLinks.length === 0) { showToast('No links to export!'); return; }
+    var rows = [['Customer','Doc Type','Photos Requested','Link','Date','Time']];
+    for (var i = 0; i < recentLinks.length; i++) {
+        var r = recentLinks[i];
+        var photoNames = '';
+        if (r.photos && r.photos.length > 0) {
+            photoNames = r.photos.map(function(k){
+                var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
+                return pt ? pt.label : k;
+            }).join('; ');
+        }
+        rows.push([
+            '"' + (r.name || '').replace(/"/g,'""') + '"',
+            '"' + (r.docType || '').replace(/"/g,'""') + '"',
+            '"' + photoNames.replace(/"/g,'""') + '"',
+            '"' + (r.link || '') + '"',
+            r.date || '',
+            r.time || ''
+        ]);
+    }
+    var csv = rows.map(function(r){ return r.join(','); }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'sendbilldocs-history-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Exported ' + recentLinks.length + ' links to CSV!');
+}
+
+// =============================================
+// CLEAR HISTORY
+// =============================================
+function clearHistory() {
+    if (recentLinks.length === 0) { showToast('Nothing to clear!'); return; }
+    if (!confirm('Clear all ' + recentLinks.length + ' saved links? This cannot be undone.')) return;
+    recentLinks = [];
+    saveRecentLinks();
+    renderRecent();
+    showToast('History cleared!');
 }
 
 function esc(str) {
