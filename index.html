@@ -9,7 +9,12 @@
     <meta property="og:title" content="Send Documents | Bill Layne Insurance">
     <meta property="og:description" content="Securely send documents to your insurance agent. Snap a photo or upload a file.">
     <meta property="og:image" content="https://i.imgur.com/lxu9nfT.png">
+    <meta property="og:url" content="https://sendbilldocs.com">
     <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Send Documents | Bill Layne Insurance">
+    <meta name="twitter:description" content="Securely send documents to your insurance agent. Snap a photo or upload a file.">
+    <meta name="twitter:image" content="https://i.imgur.com/lxu9nfT.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -374,7 +379,7 @@
                         <div class="upload-zone" id="uploadZone">
                             <div class="upload-icon" id="uploadIcon"><i class="fas fa-cloud-arrow-up"></i></div>
                             <div class="upload-text-main" id="uploadTextMain">Tap to add your files</div>
-                            <div class="upload-text-sub">Photos, PDFs, documents — up to 10MB each</div>
+                            <div class="upload-text-sub">Photos, PDFs, documents — most phone photos work great!</div>
                             <div class="upload-buttons">
                                 <button type="button" class="upload-btn upload-btn-camera" onclick="openCamera('cameraInput')">
                                     <i class="fas fa-camera" style="font-size:19px;"></i> Take a Photo
@@ -615,6 +620,15 @@
     uploadZone.addEventListener('dragover', function(e){ e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', function(){ uploadZone.classList.remove('dragover'); });
     uploadZone.addEventListener('drop', function(e){ e.preventDefault(); uploadZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+    // Tapping the zone background (not on a button) opens camera on mobile, file picker on desktop
+    uploadZone.addEventListener('click', function(e){
+        if (e.target.closest('.upload-btn') || e.target.closest('.file-input')) return; // let button clicks pass through
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            cameraInput.click(); // mobile → open camera
+        } else {
+            fileInput.click(); // desktop → file picker
+        }
+    });
     fileInput.addEventListener('change', function(e){ addFiles(e.target.files); });
     cameraInput.addEventListener('change', function(e){ addFiles(e.target.files); });
 
@@ -887,6 +901,13 @@
                 refImg.src = refUrl;
                 refImg.onload = function(){ document.getElementById('customRequestRef').style.display = 'block'; };
             }
+        }
+
+        // Auto-scroll to form when agent sends prefilled link
+        if (params.has('name') || params.has('doc') || params.has('photos') || params.has('customDoc')) {
+            setTimeout(function() {
+                document.getElementById('upload-form').scrollIntoView({ behavior:'smooth', block:'start' });
+            }, 600);
         }
     })();
 
