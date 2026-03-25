@@ -903,10 +903,13 @@
             }
         }
 
-        // Auto-scroll to form when agent sends prefilled link
+        // Auto-scroll to upload zone when agent sends prefilled link
         if (params.has('name') || params.has('doc') || params.has('photos') || params.has('customDoc')) {
             setTimeout(function() {
-                document.getElementById('upload-form').scrollIntoView({ behavior:'smooth', block:'start' });
+                var target = document.getElementById('uploadZone') || document.getElementById('photoInspectionArea');
+                if (target) {
+                    target.scrollIntoView({ behavior:'smooth', block:'center' });
+                }
             }, 600);
         }
     })();
