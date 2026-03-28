@@ -388,8 +388,8 @@
                                     <i class="fas fa-folder-open"></i> Browse My Files
                                 </button>
                             </div>
-                            <input type="file" id="cameraInput" class="file-input" accept="image/*" capture="environment">
-                            <input type="file" id="fileInput" class="file-input" accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.webp" multiple>
+                            <input type="file" id="cameraInput" class="file-input" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment">
+                            <input type="file" id="fileInput" class="file-input" accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.heif,.webp,image/heic,image/heif" multiple>
                         </div>
                         <div id="fileList" class="file-list"></div>
                         <div id="addMoreContainer" style="display:none;">
@@ -646,8 +646,14 @@
 
     function removeFile(index) { selectedFiles.splice(index, 1); renderFileList(); }
 
+    function isImageFile(file) {
+        if (!file) return false;
+        if (file.type && file.type.startsWith('image/')) return true;
+        return /\.(heic|heif|jpg|jpeg|png|gif|bmp|tiff|tif|webp)$/i.test(file.name || '');
+    }
+
     function getFileIcon(file) {
-        if (file.type.startsWith('image/')) return { c:'img', i:'fa-image' };
+        if (isImageFile(file)) return { c:'img', i:'fa-image' };
         if (file.type === 'application/pdf') return { c:'pdf', i:'fa-file-pdf' };
         if (file.type.includes('word') || file.type.includes('document')) return { c:'doc', i:'fa-file-word' };
         return { c:'other', i:'fa-file' };
@@ -733,8 +739,8 @@
                         '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
                             '<i class="fas fa-image"></i> From Gallery' +
                         '</button>' +
-                        '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-                        '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                        '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                        '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">' +
                     '</div>' +
                 '</div>';
             grid.appendChild(card);
@@ -772,7 +778,7 @@
         badge.innerHTML = '<i class="fas fa-check" style="margin-right:3px;"></i> Done!';
 
         // Show preview in slot
-        if (file.type.startsWith('image/')) {
+        if (isImageFile(file)) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 slot.innerHTML =
@@ -785,8 +791,8 @@
                     '<button type="button" class="slot-btn slot-btn-file" style="margin-top:6px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
                         '<i class="fas fa-redo"></i> Retake' +
                     '</button>' +
-                    '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-                    '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+                    '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                    '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
             };
             reader.readAsDataURL(file);
         } else {
@@ -800,8 +806,8 @@
                 '<button type="button" class="slot-btn slot-btn-file" style="margin-top:8px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
                     '<i class="fas fa-redo"></i> Replace' +
                 '</button>' +
-                '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-                '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+                '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
         }
     }
 
@@ -824,8 +830,8 @@
             '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
                 '<i class="fas fa-image"></i> From Gallery' +
             '</button>' +
-            '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-            '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+            '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+            '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
         updatePhotoProgress();
     }
 
