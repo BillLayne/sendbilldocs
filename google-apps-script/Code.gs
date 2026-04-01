@@ -378,8 +378,8 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<tr><td style="padding:28px 28px 20px;text-align:center;">',
     '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="140" style="display:block;margin:0 auto 12px;max-width:140px;height:auto;opacity:0.9;">',
     '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:14px;color:#e2e8f0;">Bill Layne Insurance Agency</p>',
-    '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;">127 CC Camp Rd, Elkin, NC 28621</p>',
-    '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;"><a href="tel:3368351993" style="color:#60a5fa;text-decoration:none;">(336) 835-1993</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:bill@billlayneinsurance.com" style="color:#60a5fa;text-decoration:none;">bill@billlayneinsurance.com</a></p>',
+    '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;">1283 N Bridge St, Elkin, NC 28621</p>',
+    '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;"><a href="tel:3368351993" style="color:#60a5fa;text-decoration:none;">(336) 835-1993</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:docs@billlayneinsurance.com" style="color:#60a5fa;text-decoration:none;">docs@billlayneinsurance.com</a></p>',
     '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr>',
     '<td style="padding:0 6px;"><a href="https://www.billlayneinsurance.com" style="color:#60a5fa;font-family:Arial,sans-serif;font-size:12px;text-decoration:none;">Website</a></td>',
     '<td style="color:#475569;font-size:12px;">|</td>',
@@ -435,9 +435,9 @@ function buildCustomerPlainBody_(runtime, submission, savedFiles) {
     'Or visit ' + APP_CONFIG.officeWebsite,
     '',
     'Bill Layne Insurance Agency',
-    '127 CC Camp Rd, Elkin, NC 28621',
+    '1283 N Bridge St, Elkin, NC 28621',
     APP_CONFIG.officePhone,
-    'bill@billlayneinsurance.com'
+    'docs@billlayneinsurance.com'
   ].join('\n');
 }
 
