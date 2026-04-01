@@ -430,7 +430,7 @@
 
                 <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
                     <span class="shine"></span>
-                    <i class="fas fa-paper-plane"></i> Send Documents
+                    <i class="fas fa-paper-plane"></i> Send Photos
                 </button>
 
             </form>
@@ -495,7 +495,7 @@
     <div class="mobile-dock" id="mobileDock">
         <div class="dock-inner">
             <a href="tel:3368351993" class="dock-btn dock-call"><i class="fas fa-phone-alt"></i> Call</a>
-            <a href="#upload-form" class="dock-btn dock-upload" id="dockUpload"><i class="fas fa-cloud-arrow-up"></i> Upload Docs</a>
+            <button type="button" class="dock-btn dock-upload" id="dockUpload" onclick="dockUploadAction()"><i class="fas fa-cloud-arrow-up"></i> Send Photos</button>
             <a href="https://billlayneinsurance.com/get-quote" class="dock-btn dock-quote"><i class="fas fa-file-alt"></i> Quote</a>
         </div>
     </div>
@@ -969,6 +969,18 @@
         return 'BL-' + d + '-' + r;
     }
 
+
+    // Dock button: scroll to form if no files yet, submit if files are ready
+    function dockUploadAction() {
+        var hasFiles = photoMode ? Object.keys(photoFiles).length > 0 : selectedFiles.length > 0;
+        if (hasFiles) {
+            handleSubmit();
+        } else {
+            var target = document.getElementById('upload-form') || document.getElementById('uploadZone');
+            if (target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+    }
+
     async function handleSubmit() {
         if (!validateForm()) {
             var fe = document.querySelector('.form-input.error');
@@ -1074,7 +1086,7 @@
         document.getElementById('successSection').classList.remove('active');
         document.getElementById('confirmationDisplay').textContent = '—';
         var dockUpload = document.getElementById('dockUpload');
-        if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-cloud-arrow-up"></i> Upload Docs'; dockUpload.style.background=''; }
+        if (dockUpload) { dockUpload.innerHTML='<i class="fas fa-cloud-arrow-up"></i> Send Photos'; dockUpload.style.background=''; }
         window.scrollTo({ top:0, behavior:'smooth' });
     }
 
