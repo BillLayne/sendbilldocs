@@ -288,13 +288,16 @@ function buildOfficePlainBody_(submission, folder, savedFiles, skippedFiles) {
   ].join('\n');
 }
 
+// SENDBILLDOCS — ELITE GMAIL TEMPLATE
+// buildCustomerPlainBody_ functions. Replace these two functions
+
 function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
   var fileRows = savedFiles.map(function(file) {
     var icon = '&#128196;';
     var lower = file.name.toLowerCase();
     if (lower.match(/\.(jpg|jpeg|png|gif|webp|heic|heif|bmp|tiff)$/)) icon = '&#128247;';
     else if (lower.match(/\.pdf$/)) icon = '&#128203;';
-    return '<tr><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;font-family:Arial,sans-serif;font-size:14px;color:#334155;">' + icon + '&nbsp;&nbsp;' + htmlEscape_(file.name) + '</td><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;text-align:right;white-space:nowrap;">' + htmlEscape_(formatFileSize_(file.sizeBytes)) + '</td></tr>';
+    return '<tr><td style="padding: 12px 20px; border-bottom: 1px solid #e2e8f0;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-size: 14px; color: #334155; font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif; line-height: 1.5;">' + icon + '&nbsp;&nbsp;' + htmlEscape_(file.name) + '</td><td align="right" style="font-size: 13px; color: #64748b; font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif; white-space: nowrap;">' + htmlEscape_(formatFileSize_(file.sizeBytes)) + '</td></tr></table></td></tr>';
   }).join('');
 
   var localTime = '';
@@ -305,99 +308,186 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     localTime = submission.timestamp;
   }
 
+  var firstName = (submission.name || 'there').split(' ')[0];
+  var fs = "font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;";
+
   return [
-    '<!DOCTYPE html>',
-    '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>',
-    '<body style="margin:0;padding:0;background-color:#f1f5f9;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">',
-    '<!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:600px;margin:0 auto;">',
+    '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Photos Received - Bill Layne Insurance</title>',
+    '<!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->',
+    '</head><body style="margin: 0; padding: 0; width: 100%; background-color: #f1f5f9; ' + fs + ' -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">',
 
-    '<tr><td style="padding:0;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:linear-gradient(135deg,#003f87 0%,#0076d3 100%);border-radius:0 0 16px 16px;">',
-    '<tr><td style="padding:36px 30px 28px;text-align:center;">',
-    '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="180" style="display:block;margin:0 auto 16px;max-width:180px;height:auto;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background-color:rgba(255,255,255,0.15);border-radius:20px;padding:6px 16px;"><span style="font-family:Arial,sans-serif;font-size:13px;color:rgba(255,255,255,0.9);letter-spacing:0.3px;">&#10003; Photos Received Successfully</span></td></tr></table>',
-    '</td></tr>',
-    '</table>',
+    // Wrapper
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 0; padding: 0; background-color: #f1f5f9; min-width: 100%;"><tr><td align="center" valign="top" style="padding: 40px 16px;">',
+
+    // Preheader
+    '<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">We received your photos - confirmation ' + htmlEscape_(submission.confirmationNumber) + ' - copies saved securely</div>',
+
+    // MSO wrapper
+    '<!--[if mso]><table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;"><tr><td align="center" valign="top" width="600" style="width:600px;"><![endif]-->',
+
+    // 600px container
+    '<table align="center" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; width: 100%; margin: 0 auto;">',
+
+    // ── TOP ACCENT BAR ──
+    '<tr><td style="height: 6px; background: linear-gradient(90deg, #003f87 0%, #0076d3 50%, #10b981 100%); border-radius: 8px 8px 0 0;"></td></tr>',
+
+    // ── CARD 1: HERO HEADER ──
+    '<tr><td style="background: linear-gradient(135deg, #003f87 0%, #0052a3 50%, #0076d3 100%); border-radius: 0; box-shadow: 0 25px 50px -12px rgba(0, 63, 135, 0.25);">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="padding: 36px 40px; text-align: center;">',
+
+    // Logo
+    '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="180" style="display: block; margin: 0 auto 16px; max-width: 180px; height: auto; border: 0;">',
+
+    // Status Badge
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;"><tr><td style="background-color: #ecfdf5; border-radius: 20px; padding: 6px 14px;">',
+    '<span style="font-size: 13px; color: #059669; font-weight: 600; ' + fs + '">&#10003; Photos Received Successfully</span>',
+    '</td></tr></table>',
+
+    '</td></tr></table></td></tr>',
+
+    // ── SPACER ──
+    '<tr><td style="height: 16px;"></td></tr>',
+
+    // ── CARD 2: GREETING + DETAILS ──
+    '<tr><td style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%">',
+
+    // Greeting
+    '<tr><td style="padding: 32px 40px 0 40px;">',
+    '<p style="margin: 0 0 4px 0; font-size: 12px; color: #64748b; ' + fs + ' letter-spacing: 1.5px; text-transform: uppercase;">CONFIRMATION</p>',
+    '<p style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800; color: #0f172a; ' + fs + '">Hi ' + htmlEscape_(firstName) + ', we got your photos!</p>',
+    '<p style="margin: 0 0 24px 0; font-size: 15px; color: #334155; ' + fs + ' line-height: 1.6;">We have your photos and they\'re saved securely. Our team will review them and reach out if we need anything else.</p>',
     '</td></tr>',
 
-    '<tr><td style="padding:20px 16px 0;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#ffffff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">',
+    // Confirmation Details - Nested Card
+    '<tr><td style="padding: 0 40px 24px 40px;">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">',
+    '<tr><td style="padding: 20px;">',
+    '<p style="margin: 0 0 12px 0; font-size: 12px; color: #64748b; ' + fs + ' letter-spacing: 1.5px; text-transform: uppercase;">DETAILS</p>',
 
-    '<tr><td style="padding:28px 28px 0;">',
-    '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:22px;font-weight:700;color:#0f2744;">Hi ' + htmlEscape_(submission.name.split(' ')[0]) + ',</p>',
-    '<p style="margin:0;font-family:Arial,sans-serif;font-size:15px;color:#64748b;line-height:1.5;">We have your photos. Our team will review them and reach out if we need anything else.</p>',
+    // Confirmation #
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 8px;"><tr>',
+    '<td style="font-size: 14px; color: #64748b; ' + fs + '">Confirmation #</td>',
+    '<td align="right" style="font-size: 14px; font-weight: 700; color: #0f172a; ' + fs + '">' + htmlEscape_(submission.confirmationNumber) + '</td>',
+    '</tr></table>',
+
+    // Doc Type
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 8px;"><tr>',
+    '<td style="font-size: 14px; color: #64748b; ' + fs + '">Document Type</td>',
+    '<td align="right" style="font-size: 14px; color: #0f172a; ' + fs + '">' + htmlEscape_(submission.docType) + '</td>',
+    '</tr></table>',
+
+    // Received
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>',
+    '<td style="font-size: 14px; color: #64748b; ' + fs + '">Received</td>',
+    '<td align="right" style="font-size: 14px; color: #0f172a; ' + fs + '">' + htmlEscape_(localTime) + '</td>',
+    '</tr></table>',
+
+    '</td></tr></table>',
     '</td></tr>',
 
-    '<tr><td style="padding:20px 28px 0;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f0f9ff;border-radius:12px;border:1px solid #bae6fd;">',
-    '<tr><td style="padding:16px 20px;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">',
-    '<tr><td style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;padding-bottom:8px;">Confirmation Details</td></tr>',
-    '<tr><td style="padding-bottom:6px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Confirmation #</td><td style="font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#0f2744;text-align:right;">' + htmlEscape_(submission.confirmationNumber) + '</td></tr></table></td></tr>',
-    '<tr><td style="padding-bottom:6px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Document Type</td><td style="font-family:Arial,sans-serif;font-size:14px;color:#0f2744;text-align:right;">' + htmlEscape_(submission.docType) + '</td></tr></table></td></tr>',
-    '<tr><td><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Received</td><td style="font-family:Arial,sans-serif;font-size:14px;color:#0f2744;text-align:right;">' + htmlEscape_(localTime) + '</td></tr></table></td></tr>',
-    '</table>',
-    '</td></tr>',
-    '</table>',
-    '</td></tr>',
-
-    '<tr><td style="padding:20px 28px 0;">',
-    '<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#0f2744;text-transform:uppercase;letter-spacing:0.5px;">Files Received (' + savedFiles.length + ')</p>',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8fafc;border-radius:10px;overflow:hidden;">',
+    // Files List
+    '<tr><td style="padding: 0 40px 24px 40px;">',
+    '<p style="margin: 0 0 8px 0; font-size: 12px; color: #64748b; ' + fs + ' letter-spacing: 1.5px; text-transform: uppercase;">FILES RECEIVED (' + savedFiles.length + ')</p>',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">',
     fileRows,
     '</table>',
     '</td></tr>',
 
-    '<tr><td style="padding:24px 28px 0;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">',
-    '<tr><td style="padding:16px 20px;">',
-    '<p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:0.5px;">What Happens Next</p>',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0">',
-    '<tr><td style="padding:3px 0;font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.5;">&#10004;&#65039; Your photos are securely stored</td></tr>',
-    '<tr><td style="padding:3px 0;font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.5;">&#128269; Our team will review your submission</td></tr>',
-    '<tr><td style="padding:3px 0;font-family:Arial,sans-serif;font-size:14px;color:#334155;line-height:1.5;">&#128222; We will contact you if anything else is needed</td></tr>',
-    '</table>',
-    '</td></tr>',
-    '</table>',
-    '</td></tr>',
+    '</table></td></tr>',
 
-    '<tr><td style="padding:24px 28px;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">',
-    '<tr><td style="text-align:center;">',
-    '<a href="' + htmlEscape_(APP_CONFIG.officeWebsite) + '" target="_blank" style="display:inline-block;background-color:#0076d3;color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:700;text-decoration:none;padding:14px 36px;border-radius:12px;">Visit Our Website</a>',
-    '</td></tr>',
-    '</table>',
-    '</td></tr>',
+    // ── SPACER ──
+    '<tr><td style="height: 16px;"></td></tr>',
 
-    '</table>',
-    '</td></tr>',
+    // ── CARD 3: WHAT HAPPENS NEXT ──
+    '<tr><td style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 16px; border-left: 4px solid #10b981; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="padding: 32px 40px;">',
 
-    '<tr><td style="padding:20px 16px 0;">',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#0f172a;border-radius:16px;">',
-    '<tr><td style="padding:28px 28px 20px;text-align:center;">',
-    '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="140" style="display:block;margin:0 auto 12px;max-width:140px;height:auto;opacity:0.9;">',
-    '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:14px;color:#e2e8f0;">Bill Layne Insurance Agency</p>',
-    '<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;">1283 N Bridge St, Elkin, NC 28621</p>',
-    '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:13px;color:#94a3b8;"><a href="tel:3368351993" style="color:#60a5fa;text-decoration:none;">(336) 835-1993</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:Save@BillLayneInsurance.com" style="color:#60a5fa;text-decoration:none;">Save@BillLayneInsurance.com</a></p>',
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr>',
-    '<td style="padding:0 6px;"><a href="https://www.billlayneinsurance.com" style="color:#60a5fa;font-family:Arial,sans-serif;font-size:12px;text-decoration:none;">Website</a></td>',
-    '<td style="color:#475569;font-size:12px;">|</td>',
-    '<td style="padding:0 6px;"><a href="https://www.facebook.com/dollarbillagency" style="color:#60a5fa;font-family:Arial,sans-serif;font-size:12px;text-decoration:none;">Facebook</a></td>',
-    '<td style="color:#475569;font-size:12px;">|</td>',
-    '<td style="padding:0 6px;"><a href="https://billlayneinsurance.com/get-quote" style="color:#60a5fa;font-family:Arial,sans-serif;font-size:12px;text-decoration:none;">Get a Quote</a></td>',
+    '<p style="margin: 0 0 4px 0; font-size: 12px; color: #64748b; ' + fs + ' letter-spacing: 1.5px; text-transform: uppercase;">NEXT STEPS</p>',
+    '<p style="margin: 0 0 20px 0; font-size: 20px; font-weight: 800; color: #0f172a; ' + fs + '">What Happens Next</p>',
+
+    // Steps
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%">',
+    buildStepRow_('1', '&#10004;&#65039;', 'Securely stored', 'Your photos are saved in our system'),
+    buildStepRow_('2', '&#128269;', 'Team review', 'Our team will review your submission'),
+    buildStepRow_('3', '&#128222;', 'We\'ll be in touch', 'We\'ll contact you if anything else is needed'),
+    '</table>',
+
+    '</td></tr></table></td></tr>',
+
+    // ── SPACER ──
+    '<tr><td style="height: 16px;"></td></tr>',
+
+    // ── CARD 4: CTA ──
+    '<tr><td style="background: linear-gradient(135deg, #003f87 0%, #0052a3 50%, #0076d3 100%); border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 63, 135, 0.25);">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="padding: 32px 40px; text-align: center;">',
+
+    '<p style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #ffffff; ' + fs + '">Need help? We\'re here for you.</p>',
+
+    // Call Button
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 12px auto;"><tr>',
+    '<td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50px; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);">',
+    '<a href="tel:3368351993" style="display: inline-block; padding: 16px 40px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; ' + fs + '">&#128222;&nbsp;&nbsp;Call (336) 835-1993</a>',
+    '</td></tr></table>',
+
+    // Website Button
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;"><tr>',
+    '<td style="background-color: #ffffff; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">',
+    '<a href="https://www.billlayneinsurance.com" style="display: inline-block; padding: 14px 32px; color: #003f87; text-decoration: none; font-weight: 700; font-size: 14px; ' + fs + '">Visit Our Website</a>',
+    '</td></tr></table>',
+
+    '</td></tr></table></td></tr>',
+
+    // ── SPACER ──
+    '<tr><td style="height: 24px;"></td></tr>',
+
+    // ── CARD 5: DARK FOOTER ──
+    '<tr><td style="background-color: #0f172a; border-radius: 16px;">',
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="padding: 32px 40px; text-align: center;">',
+
+    '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="140" style="display: block; margin: 0 auto 16px; max-width: 140px; height: auto; border: 0;">',
+
+    '<p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #e2e8f0; ' + fs + '">Bill Layne Insurance Agency</p>',
+    '<p style="margin: 0 0 4px 0; font-size: 13px; color: #94a3b8; ' + fs + '">1283 N Bridge St &bull; Elkin, NC 28621</p>',
+    '<p style="margin: 0 0 16px 0; font-size: 13px; color: #94a3b8; ' + fs + '"><a href="tel:3368351993" style="color: #60a5fa; text-decoration: none;">(336) 835-1993</a> &bull; <a href="mailto:Save@BillLayneInsurance.com" style="color: #60a5fa; text-decoration: none;">Save@BillLayneInsurance.com</a></p>',
+
+    // Social Links
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 16px auto;"><tr>',
+    '<td style="padding: 0 6px;"><a href="https://www.facebook.com/dollarbillagency" style="color: #60a5fa; font-size: 12px; ' + fs + ' text-decoration: none; font-weight: 600;">Facebook</a></td>',
+    '<td style="color: #475569; font-size: 12px;">|</td>',
+    '<td style="padding: 0 6px;"><a href="https://www.youtube.com/@ncautoandhome" style="color: #60a5fa; font-size: 12px; ' + fs + ' text-decoration: none; font-weight: 600;">YouTube</a></td>',
+    '<td style="color: #475569; font-size: 12px;">|</td>',
+    '<td style="padding: 0 6px;"><a href="https://sendbilldocs.com" style="color: #60a5fa; font-size: 12px; ' + fs + ' text-decoration: none; font-weight: 600;">Send Documents</a></td>',
     '</tr></table>',
-    '</td></tr>',
-    '<tr><td style="padding:0 28px 20px;text-align:center;"><p style="margin:0;font-family:Arial,sans-serif;font-size:11px;color:#475569;">&copy; 2026 Bill Layne Insurance Agency. All rights reserved.</p></td></tr>',
-    '</table>',
-    '</td></tr>',
 
-    '<tr><td style="padding:20px 0;">&nbsp;</td></tr>',
+    // Google Reviews
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 16px auto;"><tr><td style="background-color: #1e293b; border-radius: 8px; padding: 8px 14px;">',
+    '<p style="margin: 0; font-size: 12px; font-weight: 700; color: #e2e8f0; ' + fs + '">4.9 &#11088;&#11088;&#11088;&#11088;&#11088; <span style="font-weight: 400; color: #94a3b8;">100+ Google Reviews</span></p>',
+    '</td></tr></table>',
+
+    '<p style="margin: 0; font-size: 11px; color: #475569; ' + fs + '">&copy; 2026 Bill Layne Insurance Agency &bull; Est. 2005</p>',
+
+    '</td></tr></table></td></tr>',
+
+    // ── BOTTOM ACCENT BAR ──
+    '<tr><td style="height: 6px; background: linear-gradient(90deg, #003f87 0%, #0076d3 50%, #10b981 100%); border-radius: 0 0 8px 8px;"></td></tr>',
 
     '</table>',
+
+    // Close MSO + wrapper
     '<!--[if mso]></td></tr></table><![endif]-->',
+    '</td></tr></table>',
+
     '</body></html>'
   ].join('');
+}
+
+function buildStepRow_(num, icon, title, desc) {
+  var fs = "font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;";
+  return '<tr><td style="padding-bottom: 16px;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>' +
+    '<td width="40" valign="top"><table cellpadding="0" cellspacing="0" border="0" width="32" height="32"><tr><td width="32" height="32" align="center" valign="middle" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; font-size: 14px; font-weight: 700; color: #ffffff; ' + fs + ' line-height: 32px;">' + num + '</td></tr></table></td>' +
+    '<td style="padding-left: 12px; vertical-align: top;"><p style="margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #0f172a; ' + fs + '">' + title + '</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + fs + ' line-height: 1.5;">' + desc + '</p></td>' +
+    '</tr></table></td></tr>';
 }
 
 function buildCustomerPlainBody_(runtime, submission, savedFiles) {
@@ -427,16 +517,16 @@ function buildCustomerPlainBody_(runtime, submission, savedFiles) {
     fileLines,
     '',
     '--- WHAT HAPPENS NEXT ---',
-    '  * Your photos are securely stored',
-    '  * Our team will review your submission',
-    '  * We will contact you if anything else is needed',
+    '  1. Your photos are securely stored',
+    '  2. Our team will review your submission',
+    '  3. We\'ll contact you if anything else is needed',
     '',
-    'Questions? Call us at ' + APP_CONFIG.officePhone,
-    'Or visit ' + APP_CONFIG.officeWebsite,
+    'Questions? Call us at (336) 835-1993',
+    'Or visit https://www.billlayneinsurance.com',
     '',
     'Bill Layne Insurance Agency',
     '1283 N Bridge St, Elkin, NC 28621',
-    APP_CONFIG.officePhone,
+    '(336) 835-1993',
     'Save@BillLayneInsurance.com'
   ].join('\n');
 }
