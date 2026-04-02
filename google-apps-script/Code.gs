@@ -190,7 +190,7 @@ function sendOfficeNotification_(runtime, submission, folder, savedFiles) {
 }
 
 function sendCustomerConfirmation_(runtime, submission, folder, savedFiles) {
-  const subject = 'Photos Received - ' + submission.confirmationNumber + ' | Bill Layne Insurance';
+  const subject = '📸 Photos Received - ' + submission.confirmationNumber + ' | Bill Layne Insurance';
   const htmlBody = buildCustomerHtmlBody_(runtime, submission, savedFiles);
   const plainBody = buildCustomerPlainBody_(runtime, submission, savedFiles);
 
@@ -293,10 +293,10 @@ function buildOfficePlainBody_(submission, folder, savedFiles, skippedFiles) {
 
 function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
   var fileRows = savedFiles.map(function(file) {
-    var icon = '&#128196;';
+    var icon = '📄';
     var lower = file.name.toLowerCase();
-    if (lower.match(/\.(jpg|jpeg|png|gif|webp|heic|heif|bmp|tiff)$/)) icon = '&#128247;';
-    else if (lower.match(/\.pdf$/)) icon = '&#128203;';
+    if (lower.match(/\.(jpg|jpeg|png|gif|webp|heic|heif|bmp|tiff)$/)) icon = '📸';
+    else if (lower.match(/\.pdf$/)) icon = '📋';
     return '<tr><td style="padding: 14px 20px; border-bottom: 1px solid #f1f5f9;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-size: 14px; color: #334155; font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif; line-height: 1.5;">' + icon + '&nbsp;&nbsp;' + htmlEscape_(file.name) + '</td><td align="right" style="font-size: 13px; color: #64748b; font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif; white-space: nowrap;">' + htmlEscape_(formatFileSize_(file.sizeBytes)) + '</td></tr></table></td></tr>';
   }).join('');
 
@@ -336,7 +336,7 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="padding: 32px 24px; text-align: center;">',
     '<img src="https://i.imgur.com/lxu9nfT.png" alt="Bill Layne Insurance" width="180" style="display: block; margin: 0 auto 20px; max-width: 180px; height: auto; border: 0;">',
     '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;"><tr><td style="background-color: #ecfdf5; border-radius: 20px; padding: 8px 18px;">',
-    '<span style="font-size: 14px; color: #059669; font-weight: 600; ' + f + '">&#10003; Photos Received Successfully</span>',
+    '<span style="font-size: 14px; color: #059669; font-weight: 600; ' + f + '">✅ Photos Received Successfully</span>',
     '</td></tr></table>',
     '</td></tr></table></td></tr>',
 
@@ -408,19 +408,19 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     // Step 1
     '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;"><tr>',
     '<td width="44" valign="top" style="padding-right: 16px;"><table cellpadding="0" cellspacing="0" border="0" width="36" height="36"><tr><td width="36" height="36" align="center" valign="middle" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; font-size: 15px; font-weight: 700; color: #ffffff; ' + f + ' line-height: 36px;">1</td></tr></table></td>',
-    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">Securely stored</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">Your photos are saved in our system</p></td>',
+    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">🔒 Securely stored</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">Your photos are saved in our system</p></td>',
     '</tr></table>',
 
     // Step 2
     '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;"><tr>',
     '<td width="44" valign="top" style="padding-right: 16px;"><table cellpadding="0" cellspacing="0" border="0" width="36" height="36"><tr><td width="36" height="36" align="center" valign="middle" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; font-size: 15px; font-weight: 700; color: #ffffff; ' + f + ' line-height: 36px;">2</td></tr></table></td>',
-    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">Team review</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">Our team will review your submission</p></td>',
+    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">📋 Team review</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">Our team will review your submission</p></td>',
     '</tr></table>',
 
     // Step 3
     '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>',
     '<td width="44" valign="top" style="padding-right: 16px;"><table cellpadding="0" cellspacing="0" border="0" width="36" height="36"><tr><td width="36" height="36" align="center" valign="middle" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; font-size: 15px; font-weight: 700; color: #ffffff; ' + f + ' line-height: 36px;">3</td></tr></table></td>',
-    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">We\'ll be in touch</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">We\'ll contact you if anything else is needed</p></td>',
+    '<td valign="top"><p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #0f172a; ' + f + '">📞 We'll be in touch</p><p style="margin: 0; font-size: 14px; color: #64748b; ' + f + ' line-height: 1.5;">We\'ll contact you if anything else is needed</p></td>',
     '</tr></table>',
 
     '</td></tr></table></td></tr>',
@@ -437,7 +437,7 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     // Call button
     '<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 16px auto;"><tr>',
     '<td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50px;">',
-    '<a href="tel:3368351993" style="display: inline-block; padding: 16px 40px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; ' + f + '">&#128222;&nbsp;&nbsp;Call (336) 835-1993</a>',
+    '<a href="tel:3368351993" style="display: inline-block; padding: 16px 40px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; ' + f + '">📞&nbsp;&nbsp;Call (336) 835-1993</a>',
     '</td></tr></table>',
 
     // Website button
