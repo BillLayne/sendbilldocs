@@ -190,20 +190,81 @@ function sendOfficeNotification_(runtime, submission, folder, savedFiles) {
 }
 
 function sendCustomerConfirmation_(runtime, submission, folder, savedFiles) {
-  const subject = '📸 Photos Received - ' + submission.confirmationNumber + ' | Bill Layne Insurance';
-  const htmlBody = buildCustomerHtmlBody_(runtime, submission, savedFiles);
-  const plainBody = buildCustomerPlainBody_(runtime, submission, savedFiles);
+  var subject = '\uD83D\uDCF8 Photos Received - ' + submission.confirmationNumber + ' | Bill Layne Insurance';
+  var htmlBody = buildCustomerHtmlBody_(runtime, submission, savedFiles);
+  var plainBody = buildCustomerPlainBody_(runtime, submission, savedFiles);
 
-  MailApp.sendEmail({
-    to: submission.email,
-    subject: subject,
-    name: runtime.fromName,
-    replyTo: runtime.customerReplyTo,
-    htmlBody: htmlBody,
-    body: plainBody
-  });
+  // Use raw MIME to preserve <style> blocks, @media queries, and Inter font
+  sendRawMimeEmail_(submission.email, subject, htmlBody, plainBody);
 
   return { sent: true };
+}
+
+// ============================================================
+// GMAIL API RAW MIME — PRESERVES ALL HTML STYLING
+// ============================================================
+// Replaces MailApp.sendEmail() which strips <style>, @media, @import.
+// SETUP: In Apps Script editor > Services (+) > Add "Gmail API" (v1)
+// ============================================================
+
+function sendRawMimeEmail_(to, subject, htmlBody, textBody) {
+  var bcc = 'Save@BillLayneInsurance.com';
+
+  if (!textBody) {
+    textBody = stripHtmlToText_(htmlBody);
+  }
+
+  var boundary = 'boundary_' + Utilities.getUuid().replace(/-/g, '');
+
+  var mimeLines = [
+    'MIME-Version: 1.0',
+    'To: ' + to,
+    'Bcc: ' + bcc,
+    'Subject: =?UTF-8?B?' + Utilities.base64Encode(subject, Utilities.Charset.UTF_8) + '?=',
+    'Content-Type: multipart/alternative; boundary="' + boundary + '"',
+    '',
+    '--' + boundary,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: base64',
+    '',
+    Utilities.base64Encode(textBody, Utilities.Charset.UTF_8),
+    '',
+    '--' + boundary,
+    'Content-Type: text/html; charset="UTF-8"',
+    'Content-Transfer-Encoding: base64',
+    '',
+    Utilities.base64Encode(htmlBody, Utilities.Charset.UTF_8),
+    '',
+    '--' + boundary + '--'
+  ];
+
+  var rawMessage = mimeLines.join('\r\n');
+  var encodedMessage = Utilities.base64EncodeWebSafe(rawMessage);
+
+  var result = Gmail.Users.Messages.send(
+    { raw: encodedMessage },
+    'me'
+  );
+
+  Logger.log('Raw MIME sent: ' + result.id + ' to: ' + to);
+  return result;
+}
+
+function stripHtmlToText_(html) {
+  var text = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+  text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+  text = text.replace(/<br\s*\/?>/gi, '\n');
+  text = text.replace(/<\/(p|div|h[1-6]|tr|li)>/gi, '\n');
+  text = text.replace(/<[^>]+>/g, '');
+  text = text.replace(/&nbsp;/g, ' ');
+  text = text.replace(/&bull;/g, '\u2022');
+  text = text.replace(/&amp;/g, '&');
+  text = text.replace(/&lt;/g, '<');
+  text = text.replace(/&gt;/g, '>');
+  text = text.replace(/&#\d+;/g, '');
+  text = text.replace(/[ \t]+/g, ' ');
+  text = text.replace(/\n\s*\n\s*\n/g, '\n\n');
+  return text.trim();
 }
 
 function buildAttachmentPlan_(savedFiles) {
