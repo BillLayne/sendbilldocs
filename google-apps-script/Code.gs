@@ -299,10 +299,6 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     else if (lower.match(/\.pdf$/)) icon = '&#128203;';
     return '<tr><td style="padding:14px 20px;border-bottom:1px solid #e2e8f0;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-size:14px;color:#334155;font-family:\'Inter\',Arial,\'Helvetica Neue\',Helvetica,sans-serif;line-height:1.5;">' + icon + '&nbsp;&nbsp;' + htmlEscape_(file.name) + '</td><td align="right" style="font-size:13px;color:#64748b;font-family:\'Inter\',Arial,\'Helvetica Neue\',Helvetica,sans-serif;white-space:nowrap;">' + htmlEscape_(formatFileSize_(file.sizeBytes)) + '</td></tr></table></td></tr>';
   }).join('');
-  // Remove border from last file row
-  if (savedFiles.length > 0) {
-    fileRows = fileRows.replace(/border-bottom:1px solid #e2e8f0;([^"]*$)/, '$1');
-  }
 
   var localTime = '';
   try {
@@ -319,9 +315,10 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<!DOCTYPE html><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="x-apple-disable-message-reformatting"><meta name="format-detection" content="telephone=no"><title>Photos Received - ' + htmlEscape_(firstName) + ' - Bill Layne Insurance</title>',
     '<!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->',
     '<style>body,table,td,p,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}table,td{mso-table-lspace:0pt;mso-table-rspace:0pt}img{-ms-interpolation-mode:bicubic;border:0;outline:none;text-decoration:none;display:block}body{margin:0!important;padding:0!important;background-color:#f1f5f9;width:100%!important}.card-pad{padding:28px 32px!important}.hero-pad{padding:36px 28px!important}@media only screen and (max-width:620px){.email-container{width:100%!important}.card-pad{padding:20px 16px!important}.hero-pad{padding:28px 16px!important}.cta-btn{width:100%!important}}</style>',
+    '<script type="application/ld+json">{"@context":"http://schema.org","@type":"EmailMessage","description":"Photos received confirmation ' + htmlEscape_(submission.confirmationNumber) + ' for ' + htmlEscape_(firstName) + ' - Bill Layne Insurance","action":{"@type":"ViewAction","url":"https://www.BillLayneInsurance.com","name":"View Agency Website"}}</script>',
     '</head><body style="margin:0;padding:0;background-color:#f1f5f9;">',
 
-    '<div style="display:none;white-space:nowrap;font:15px courier;color:#f1f5f9;line-height:0;width:600px!important;min-width:600px!important;max-width:600px!important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>',
+    '<div style="display:none;white-space:nowrap;font:15px courier;color:#ffffff;line-height:0;width:600px!important;min-width:600px!important;max-width:600px!important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>',
 
     '<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;color:#f1f5f9;line-height:1px;">We received your photos &#8212; confirmation ' + htmlEscape_(submission.confirmationNumber) + '. All saved securely.&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;&nbsp;&#847;</div>',
 
@@ -330,29 +327,19 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<table cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width:600px;">',
 
     // CARD 1: HEADER
-    '<tr><td style="padding-bottom:4px;">',
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#fafafa" style="background-color:#fafafa;border-radius:16px 16px 0 0;border:1px solid #e2e8f0;">',
-    '<tr><td style="padding:28px 24px;text-align:center;" class="card-pad">',
-    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:8px;padding:8px 14px;">',
-    '<img src="https://i.imgur.com/lxu9nfT.png" width="180" alt="Bill Layne Insurance Agency" style="display:block;width:180px;height:auto;">',
-    '</td></tr></table>',
-    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background-color:#ecfdf5;border-radius:20px;padding:8px 18px;">',
-    '<span style="font-size:14px;color:#059669;font-weight:600;' + ff + '">&#9989; Photos Received Successfully</span>',
-    '</td></tr></table>',
+    '<tr><td style="padding-bottom:4px;"><table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#fafafa" style="background-color:#fafafa;border-radius:16px 16px 0 0;border:1px solid #e2e8f0;"><tr><td style="padding:28px 24px;text-align:center;" class="card-pad">',
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:8px;padding:8px 14px;"><img src="https://i.imgur.com/lxu9nfT.png" width="180" alt="Bill Layne Insurance Agency" style="display:block;width:180px;height:auto;"></td></tr></table>',
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background-color:#ecfdf5;border-radius:20px;padding:8px 18px;"><span style="font-size:14px;color:#059669;font-weight:600;' + ff + '">&#9989; Photos Received Successfully</span></td></tr></table>',
     '</td></tr></table></td></tr>',
 
     // CARD 2: CONFIRMATION DETAILS
-    '<tr><td style="padding-bottom:4px;">',
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:16px;border:1px solid #e2e8f0;">',
-    '<tr><td style="padding:28px 24px;" class="card-pad">',
-
+    '<tr><td style="padding-bottom:4px;"><table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:16px;border:1px solid #e2e8f0;"><tr><td style="padding:28px 24px;" class="card-pad">',
     '<p style="margin:0 0 6px 0;font-size:12px;color:#64748b;' + ff + 'letter-spacing:1.5px;text-transform:uppercase;">CONFIRMATION</p>',
     '<p style="margin:0 0 12px 0;font-size:24px;font-weight:800;color:#0f172a;' + ff + 'line-height:1.3;">Hi ' + htmlEscape_(firstName) + ', we got your photos!</p>',
     '<p style="margin:0 0 24px 0;font-size:15px;color:#334155;' + ff + 'line-height:1.6;">We have your photos and they\'re saved securely. Our team will review them and reach out if we need anything else.</p>',
 
-    // Details Card
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;">',
-    '<tr><td style="padding:20px;">',
+    // Details nested card
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;"><tr><td style="padding:20px;">',
     '<p style="margin:0 0 16px 0;font-size:12px;color:#64748b;' + ff + 'letter-spacing:1.5px;text-transform:uppercase;">DETAILS</p>',
     '<table cellpadding="0" cellspacing="0" border="0" width="100%">',
     '<tr><td style="padding:0 0 12px 0;"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="font-size:14px;color:#64748b;' + ff + '">Confirmation&nbsp;#</td><td align="right" style="font-size:14px;font-weight:700;color:#0f172a;' + ff + '">' + htmlEscape_(submission.confirmationNumber) + '</td></tr></table></td></tr>',
@@ -365,56 +352,36 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">',
     fileRows,
     '</table>',
-
     '</td></tr></table></td></tr>',
 
     // CARD 3: NEXT STEPS
-    '<tr><td style="padding-bottom:4px;">',
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:16px;border:1px solid #e2e8f0;border-left:4px solid #10b981;">',
-    '<tr><td style="padding:28px 24px;" class="card-pad">',
+    '<tr><td style="padding-bottom:4px;"><table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:16px;border:1px solid #e2e8f0;border-left:4px solid #10b981;"><tr><td style="padding:28px 24px;" class="card-pad">',
     '<p style="margin:0 0 6px 0;font-size:12px;color:#64748b;' + ff + 'letter-spacing:1.5px;text-transform:uppercase;">NEXT STEPS</p>',
     '<p style="margin:0 0 24px 0;font-size:22px;font-weight:800;color:#0f172a;' + ff + '">What Happens Next</p>',
-
     buildStep_(ff, '1', '&#128274; Securely stored', 'Your photos are saved in our system'),
     buildStep_(ff, '2', '&#128203; Team review', 'Our team will review your submission'),
     buildStepLast_(ff, '3', '&#128222; We\'ll be in touch', 'We\'ll contact you if anything else is needed'),
-
     '</td></tr></table></td></tr>',
 
     // CARD 4: CTA
-    '<tr><td style="padding-bottom:4px;">',
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#003f87" style="background-color:#003f87;border-radius:16px;border:1px solid #e2e8f0;">',
-    '<tr><td style="padding:32px 24px;text-align:center;" class="card-pad">',
+    '<tr><td style="padding-bottom:4px;"><table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#003f87" style="background-color:#003f87;border-radius:16px;border:1px solid #e2e8f0;"><tr><td style="padding:32px 24px;text-align:center;" class="card-pad">',
     '<p style="margin:0 0 20px 0;font-size:20px;font-weight:700;color:#ffffff;' + ff + '">Need help? We\'re here for you.</p>',
     '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td bgcolor="#10b981" style="background-color:#10b981;border-radius:8px;"><a href="tel:3368351993" style="display:inline-block;padding:16px 40px;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;' + ff + '" class="cta-btn">&#128222;&nbsp;&nbsp;Call (336) 835-1993</a></td></tr></table>',
-    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:8px;"><a href="https://www.BillLayneInsurance.com?utm_source=email&amp;utm_medium=photo_confirm&amp;utm_content=website_btn" style="display:inline-block;padding:14px 32px;color:#003f87;text-decoration:none;font-weight:700;font-size:14px;' + ff + '">Visit Our Website</a></td></tr></table>',
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:8px;"><a href="https://www.BillLayneInsurance.com?utm_source=email&amp;utm_medium=photo_confirm&amp;utm_content=website_btn" style="display:inline-block;padding:14px 32px;color:#003f87;text-decoration:none;font-weight:700;font-size:14px;' + ff + '">Visit My Agency Website</a></td></tr></table>',
     '</td></tr></table></td></tr>',
 
     // FOOTER
-    '<tr><td>',
-    '<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#fafafa" style="background-color:#fafafa;border-radius:0 0 16px 16px;border:1px solid #e2e8f0;border-top:none;">',
-    '<tr><td style="padding:28px 24px;text-align:center;" class="card-pad">',
+    '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#fafafa" style="background-color:#fafafa;border-radius:0 0 16px 16px;border:1px solid #e2e8f0;border-top:none;"><tr><td style="padding:28px 24px;text-align:center;" class="card-pad">',
 
     '<table cellpadding="0" cellspacing="0" border="0" width="60" style="margin:0 auto 20px auto;"><tr><td style="height:3px;background:linear-gradient(90deg,#003f87,#C8A84E);font-size:0;line-height:0;">&nbsp;</td></tr></table>',
 
-    // Agent Signature Chip
-    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px auto;background-color:#f1f5f9;border-radius:12px;border:1px solid #e2e8f0;"><tr>',
-    '<td style="padding:14px 0 14px 16px;vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0" width="64" height="64" style="width:64px;height:64px;"><tr><td width="64" height="64" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:10px;width:64px;height:64px;padding:0;"><img src="https://i.imgur.com/XacnUW4.jpeg" width="64" height="64" alt="Bill Layne" style="display:block;width:64px;height:64px;border-radius:10px;"></td></tr></table></td>',
-    '<td style="padding:14px 18px 14px 14px;vertical-align:middle;text-align:left;">',
-    '<p style="margin:0 0 1px 0;font-size:15px;font-weight:700;color:#0f172a;' + ff + '">Bill Layne</p>',
-    '<p style="margin:0 0 5px 0;font-size:12px;color:#64748b;' + ff + '">Licensed Insurance Agent &bull; Since 2005</p>',
-    '<table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:8px;"><a href="tel:3368351993" style="font-size:12px;font-weight:600;color:#003f87;text-decoration:none;' + ff + '">&#128222; (336)&nbsp;835&#8209;1993</a></td><td style="color:#cbd5e1;font-size:12px;padding-right:8px;">|</td><td><a href="mailto:Save@BillLayneInsurance.com" style="font-size:12px;font-weight:600;color:#003f87;text-decoration:none;' + ff + '">Send Email</a></td></tr></table>',
-    '</td></tr></table>',
-
-    // Agency Logo
-    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:8px;padding:8px 14px;"><img src="https://i.imgur.com/lxu9nfT.png" width="140" alt="Bill Layne Insurance Agency" style="display:block;width:140px;height:auto;"></td></tr></table>',
+    '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 12px auto;"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:6px;padding:6px 8px;"><img src="https://i.imgur.com/lxu9nfT.png" width="140" alt="Bill Layne Insurance Agency" style="display:block;width:140px;max-width:140px;height:auto;"></td></tr></table>',
 
     '<p style="margin:0 0 4px 0;font-size:14px;font-weight:700;color:#0f172a;' + ff + '">Bill Layne Insurance Agency</p>',
-    '<p style="margin:0 0 4px 0;font-size:12px;color:#64748b;' + ff + '">1283 N Bridge St, Elkin, NC 28621</p>',
-    '<p style="margin:0 0 4px 0;font-size:12px;color:#64748b;' + ff + '"><a href="tel:3368351993" style="color:#003f87;text-decoration:none;' + ff + '">(336)&nbsp;835&#8209;1993</a>&nbsp;&bull;&nbsp;<a href="mailto:Save@BillLayneInsurance.com" style="color:#003f87;text-decoration:none;' + ff + '">Save@BillLayneInsurance.com</a></p>',
+    '<p style="margin:0 0 2px 0;font-size:12px;color:#64748b;' + ff + '">1283 N Bridge St &bull; Elkin, NC 28621</p>',
+    '<p style="margin:0 0 2px 0;font-size:12px;color:#64748b;' + ff + '"><a href="tel:3368351993" style="color:#003f87;text-decoration:none;' + ff + '">(336)&nbsp;835&#8209;1993</a>&nbsp;&bull;&nbsp;<a href="mailto:Save@BillLayneInsurance.com" style="color:#003f87;text-decoration:none;' + ff + '">Save@BillLayneInsurance.com</a></p>',
     '<p style="margin:0 0 16px 0;font-size:12px;color:#64748b;' + ff + '"><a href="https://www.BillLayneInsurance.com" style="color:#003f87;text-decoration:none;' + ff + '">BillLayneInsurance.com</a>&nbsp;&bull;&nbsp;Est. 2005</p>',
 
-    // Social Row
     '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 16px auto;"><tr>',
     '<td style="padding:0 6px;"><a href="https://facebook.com/dollarbillagency" style="font-size:11px;color:#64748b;text-decoration:none;' + ff + '">Facebook</a></td>',
     '<td style="color:#cbd5e1;font-size:11px;">|</td>',
@@ -425,7 +392,6 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<td style="padding:0 6px;"><a href="https://x.com/shopsavecompare" style="font-size:11px;color:#64748b;text-decoration:none;' + ff + '">X</a></td>',
     '</tr></table>',
 
-    // Google Review Badge
     '<table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 14px auto;"><tr><td style="background-color:#f8fafc;border-radius:8px;padding:8px 14px;border:1px solid #e2e8f0;"><table cellpadding="0" cellspacing="0" border="0"><tr><td valign="middle" style="padding-right:6px;"><img src="https://i.imgur.com/nDFmjxh.png" width="18" height="18" alt="Google" style="display:block;width:18px;height:18px;"></td><td valign="middle"><p style="margin:0;font-size:12px;font-weight:700;color:#0f172a;' + ff + '">4.9 &#11088;&#11088;&#11088;&#11088;&#11088; <span style="font-weight:400;color:#64748b;">100+ Google Reviews</span></p></td></tr></table></td></tr></table>',
 
     '<p style="margin:0 0 10px 0;font-size:11px;color:#64748b;' + ff + 'text-align:center;">Follow us on Facebook for tips, reminders &amp; updates &nbsp;&rarr;&nbsp;<a href="https://facebook.com/dollarbillagency" target="_blank" style="color:#003f87;font-weight:700;text-decoration:none;' + ff + '">facebook.com/dollarbillagency</a></p>',
@@ -491,6 +457,7 @@ function buildCustomerPlainBody_(runtime, submission, savedFiles) {
     'Save@BillLayneInsurance.com'
   ].join('\n');
 }
+
 
 
 
