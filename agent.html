@@ -115,6 +115,18 @@
 
         .photo-count-badge{display:inline-flex;align-items:center;gap:5px;background:#eff6ff;color:var(--blue);padding:5px 12px;border-radius:50px;font-size:12px;font-weight:700;margin-top:10px}
         .photo-count-badge.has-count{background:var(--blue);color:white}
+        .custom-photo-builder{margin-top:14px;padding:14px;border:1px dashed var(--gray-300);border-radius:var(--radius-sm);background:var(--gray-50)}
+        .custom-photo-builder-label{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+        .custom-photo-builder-help{font-size:11px;color:var(--gray-500);line-height:1.4;margin-bottom:10px}
+        .custom-photo-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+        .custom-photo-row{display:grid;grid-template-columns:1fr 34px;gap:8px;align-items:center}
+        .custom-photo-input{height:40px;padding:0 12px;font-size:13px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:white;color:var(--gray-800);font-family:'DM Sans',sans-serif}
+        .custom-photo-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,0.12)}
+        .custom-photo-remove{width:34px;height:34px;border:none;border-radius:10px;background:white;color:var(--gray-400);cursor:pointer;border:1px solid var(--gray-200);display:flex;align-items:center;justify-content:center}
+        .custom-photo-remove:hover{background:#fee2e2;color:var(--red);border-color:#fecaca}
+        .custom-photo-add{height:38px;padding:0 13px;border-radius:50px;border:1px solid var(--blue);background:white;color:var(--blue);font-size:12px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+        .custom-photo-add:hover{background:#eff6ff}
+        .photo-check-thumb.icon-thumb{display:flex;align-items:center;justify-content:center;background:#eff6ff;color:var(--blue);font-size:18px}
 
         /* Generate button */
         .generate-btn{width:100%;height:52px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
@@ -301,6 +313,15 @@
                         <!-- Injected by JS -->
                     </div>
 
+                    <div class="custom-photo-builder" id="customPhotoBuilder">
+                        <div class="custom-photo-builder-label"><i class="fas fa-list-check"></i> Add specific photo requests</div>
+                        <div class="custom-photo-builder-help">Use this when you need multiple angles or a photo type that is not listed, like "Photo 1 - front side" and "Photo 2 - back side".</div>
+                        <div class="custom-photo-list" id="customPhotoList"></div>
+                        <button type="button" class="custom-photo-add" onclick="addCustomPhotoRequest()">
+                            <i class="fas fa-plus"></i> Add photo type
+                        </button>
+                    </div>
+
                     <div class="photo-count-badge" id="photoCountBadge">
                         <i class="fas fa-camera"></i> <span id="photoCountText">0 photos selected</span>
                     </div>
@@ -432,6 +453,7 @@ function unlockApp() {
 // PHOTO TYPES DEFINITION
 // =============================================
 var PHOTO_TYPES = [
+    { key:'damage',             label:'Damage Photo',            icon:'fa-car-burst',        sample:'',                               hint:'Vehicle or property damage' },
     { key:'bathroom',           label:'Bathroom',                icon:'fa-bath',             sample:'https://i.imgur.com/wGZfagl.jpeg',  hint:'Full bathroom view' },
     { key:'breaker_box',        label:'Breaker Box',             icon:'fa-bolt',             sample:'https://i.imgur.com/yY4Xcbo.jpeg',  hint:'Open panel, all breakers' },
     { key:'hot_water_heater',   label:'Hot Water Heater',        icon:'fa-fire',             sample:'https://i.imgur.com/G6lFX7G.jpeg',  hint:'Full unit with age sticker' },
@@ -446,15 +468,33 @@ var PHOTO_TYPES = [
 // =============================================
 // BUILD PHOTO CHECKLIST
 // =============================================
-(function buildPhotoGrid() {
+var customPhotoCounter = 0;
+
+function isPhotoRequestDocType(docType) {
+    return docType === 'Home Inspection Photos' || docType === 'Photo of Damage';
+}
+
+function getVisiblePhotoTypes() {
+    var docType = document.getElementById('agentDocType').value;
+    if (docType === 'Photo of Damage') {
+        return PHOTO_TYPES.filter(function(pt){ return pt.key === 'damage'; });
+    }
+    return PHOTO_TYPES.filter(function(pt){ return pt.key !== 'damage'; });
+}
+
+function renderPhotoGrid() {
     var grid = document.getElementById('photoCheckGrid');
-    PHOTO_TYPES.forEach(function(pt) {
+    grid.innerHTML = '';
+    getVisiblePhotoTypes().forEach(function(pt) {
         var item = document.createElement('div');
         item.className = 'photo-check-item';
+        var thumb = pt.sample
+            ? '<div class="photo-check-thumb"><img src="' + pt.sample + '" alt="' + pt.label + '" loading="lazy"></div>'
+            : '<div class="photo-check-thumb icon-thumb"><i class="fas ' + pt.icon + '"></i></div>';
         item.innerHTML =
             '<input type="checkbox" id="photo_' + pt.key + '" value="' + pt.key + '" onchange="updatePhotoCount()">' +
             '<label class="photo-check-tile" for="photo_' + pt.key + '">' +
-                '<div class="photo-check-thumb"><img src="' + pt.sample + '" alt="' + pt.label + '" loading="lazy"></div>' +
+                thumb +
                 '<div class="photo-check-info">' +
                     '<div class="photo-check-name">' + pt.label + '</div>' +
                     '<div class="photo-check-hint">' + pt.hint + '</div>' +
@@ -463,21 +503,88 @@ var PHOTO_TYPES = [
             '</label>';
         grid.appendChild(item);
     });
-})();
+}
+
+renderPhotoGrid();
 
 function selectAllPhotos() {
-    PHOTO_TYPES.forEach(function(pt){ document.getElementById('photo_' + pt.key).checked = true; });
+    getVisiblePhotoTypes().forEach(function(pt){
+        var input = document.getElementById('photo_' + pt.key);
+        if (input) input.checked = true;
+    });
     updatePhotoCount();
 }
 function clearAllPhotos() {
-    PHOTO_TYPES.forEach(function(pt){ document.getElementById('photo_' + pt.key).checked = false; });
+    getVisiblePhotoTypes().forEach(function(pt){
+        var input = document.getElementById('photo_' + pt.key);
+        if (input) input.checked = false;
+    });
     updatePhotoCount();
 }
 function getSelectedPhotoKeys() {
-    return PHOTO_TYPES.filter(function(pt){ return document.getElementById('photo_' + pt.key).checked; }).map(function(pt){ return pt.key; });
+    return getVisiblePhotoTypes().filter(function(pt){
+        var input = document.getElementById('photo_' + pt.key);
+        return input && input.checked;
+    }).map(function(pt){ return pt.key; });
+}
+function slugifyPhotoLabel(label) {
+    return String(label || 'photo').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,32) || 'photo';
+}
+function addCustomPhotoRequest(value) {
+    customPhotoCounter += 1;
+    var list = document.getElementById('customPhotoList');
+    var row = document.createElement('div');
+    row.className = 'custom-photo-row';
+    row.innerHTML =
+        '<input type="text" class="custom-photo-input" value="' + esc(value || '') + '" placeholder="Photo ' + customPhotoCounter + ' - describe angle or item" oninput="updatePhotoCount()">' +
+        '<button type="button" class="custom-photo-remove" onclick="removeCustomPhotoRequest(this)" aria-label="Remove photo request"><i class="fas fa-xmark"></i></button>';
+    list.appendChild(row);
+    updatePhotoCount();
+    row.querySelector('input').focus();
+}
+function removeCustomPhotoRequest(btn) {
+    var row = btn.closest('.custom-photo-row');
+    if (row) row.remove();
+    updatePhotoCount();
+}
+function getCustomPhotoRequests() {
+    var inputs = Array.prototype.slice.call(document.querySelectorAll('#customPhotoList .custom-photo-input'));
+    return inputs.map(function(input, index){
+        var label = input.value.trim();
+        if (!label) return null;
+        return {
+            key: 'custom_' + (index + 1) + '_' + slugifyPhotoLabel(label),
+            label: label,
+            hint: 'Requested by your agent',
+            icon: 'fa-camera',
+            sample: '',
+            custom: true
+        };
+    }).filter(Boolean);
+}
+function getSelectedPhotoRequests() {
+    var known = getSelectedPhotoKeys().map(function(key){
+        var pt = PHOTO_TYPES.find(function(p){ return p.key === key; });
+        return {
+            key: key,
+            label: pt ? pt.label : key,
+            hint: pt ? pt.hint : '',
+            icon: pt ? pt.icon : 'fa-camera',
+            sample: pt ? pt.sample : '',
+            custom: false
+        };
+    });
+    return known.concat(getCustomPhotoRequests());
+}
+function getPhotoLabel(photo) {
+    if (typeof photo === 'string') {
+        var pt = PHOTO_TYPES.find(function(p){ return p.key === photo; });
+        return pt ? pt.label : photo;
+    }
+    return photo && photo.label ? photo.label : '';
 }
 function updatePhotoCount() {
-    var keys = getSelectedPhotoKeys();
+    var keys = getSelectedPhotoRequests();
     var badge = document.getElementById('photoCountBadge');
     var text  = document.getElementById('photoCountText');
     text.textContent = keys.length === 0 ? '0 photos selected' : keys.length + ' photo' + (keys.length > 1 ? 's' : '') + ' selected';
@@ -491,9 +598,11 @@ function handleDocTypeChange() {
     var val = document.getElementById('agentDocType').value;
     var photoSection = document.getElementById('photoChecklistSection');
     var customSection = document.getElementById('customRequestSection');
-    if (val === 'Home Inspection Photos') {
+    if (isPhotoRequestDocType(val)) {
+        renderPhotoGrid();
         photoSection.classList.add('active');
         customSection.classList.remove('active');
+        updatePhotoCount();
     } else if (val === 'Other') {
         customSection.classList.add('active');
         photoSection.classList.remove('active');
@@ -557,7 +666,17 @@ function generateLink() {
     var phone   = document.getElementById('agentPhone').value.trim();
     var docType = document.getElementById('agentDocType').value;
     var notes   = document.getElementById('agentNotes').value.trim();
-    var photoKeys = docType === 'Home Inspection Photos' ? getSelectedPhotoKeys() : [];
+    var photoRequests = isPhotoRequestDocType(docType) ? getSelectedPhotoRequests() : [];
+    var photoKeys = photoRequests.filter(function(photo){ return !photo.custom; }).map(function(photo){ return photo.key; });
+    var customPhotos = photoRequests.filter(function(photo){ return photo.custom; }).map(function(photo){
+        return {
+            key: photo.key,
+            label: photo.label,
+            hint: photo.hint,
+            icon: photo.icon,
+            sample: photo.sample
+        };
+    });
     var customDocDesc = docType === 'Other' ? document.getElementById('customDocDesc').value.trim() : '';
     var refImageUrl   = docType === 'Other' ? document.getElementById('refImageUrl').value.trim() : '';
 
@@ -573,20 +692,21 @@ function generateLink() {
     if (customDocDesc) params.push('customDoc=' + encodeURIComponent(customDocDesc));
     if (refImageUrl)   params.push('refImg='    + encodeURIComponent(refImageUrl));
 
-    // Photo keys override — use ?photos= instead of doc= when specific photos are selected
+    // Keep doc= for context; photos= carries known request types and customPhotos= carries typed labels.
     if (photoKeys.length > 0) {
-        // Remove the doc param and add photos param
-        params = params.filter(function(p){ return !p.startsWith('doc='); });
         params.push('photos=' + photoKeys.join(','));
+    }
+    if (customPhotos.length > 0) {
+        params.push('customPhotos=' + encodeURIComponent(JSON.stringify(customPhotos)));
     }
 
     currentLink = params.length > 0 ? BASE_URL + '?' + params.join('&') : BASE_URL;
-    lastSelectedPhotoKeys = photoKeys;
+    lastSelectedPhotoKeys = photoRequests;
 
     // Pick default template for photo requests
-    if (photoKeys.length > 0 && currentTemplate === 'friendly') currentTemplate = 'photos';
+    if (photoRequests.length > 0 && currentTemplate === 'friendly') currentTemplate = 'photos';
 
-    currentText = buildTextMessage(name, docType, photoKeys, currentLink, currentTemplate, customDocDesc);
+    currentText = buildTextMessage(name, docType, photoRequests, currentLink, currentTemplate, customDocDesc);
 
     // Show output
     document.getElementById('outputEmpty').style.display = 'none';
@@ -599,11 +719,10 @@ function generateLink() {
     // Photo summary
     var summaryDiv  = document.getElementById('photoSummary');
     var summaryChips = document.getElementById('photoSummaryChips');
-    if (photoKeys.length > 0) {
+    if (photoRequests.length > 0) {
         summaryDiv.classList.add('active');
-        summaryChips.innerHTML = photoKeys.map(function(k) {
-            var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
-            return '<span class="photo-chip"><i class="fas fa-check"></i>' + (pt ? pt.label : k) + '</span>';
+        summaryChips.innerHTML = photoRequests.map(function(photo) {
+            return '<span class="photo-chip"><i class="fas fa-check"></i>' + esc(getPhotoLabel(photo)) + '</span>';
         }).join('');
     } else {
         summaryDiv.classList.remove('active');
@@ -617,7 +736,7 @@ function generateLink() {
     recentLinks.unshift({
         name:     name || 'No name',
         docType:  docType || '—',
-        photos:   photoKeys,
+        photos:   photoRequests,
         link:     currentLink,
         date:     new Date().toLocaleDateString(),
         time:     new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }),
@@ -640,17 +759,16 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
     // Build photo list for templates
     var photoList = '';
     if (isPhotos) {
-        var photoNames = photoKeys.map(function(k){
-            var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
-            return pt ? pt.label : k;
-        });
+        var photoNames = photoKeys.map(getPhotoLabel).filter(Boolean);
         photoList = '\n\nPhotos needed:\n' + photoNames.map(function(n){ return '  • ' + n; }).join('\n');
     }
+    var photoPurpose = docType === 'Photo of Damage' ? 'the damage photos' : 'a few photos';
+    var formalPhotoPurpose = docType === 'Photo of Damage' ? 'damage photos for your claim' : 'home photos for your policy';
 
     switch (template) {
         case 'photos':
             return (firstName ? 'Hi ' + firstName + '! ' : 'Hi! ') +
-                'This is Bill Layne Insurance. We need a few photos of your home to complete your policy.' +
+                'This is Bill Layne Insurance. We need ' + photoPurpose + '.' +
                 photoList + '\n\n' +
                 'Just tap the link — each photo has an example image to show you exactly what we need:\n\n' +
                 link + '\n\n' +
@@ -668,7 +786,7 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
         case 'formal':
             return (firstName ? 'Hello ' + firstName + ', ' : 'Hello, ') +
                 'this is Bill Layne Insurance Agency. ' +
-                (isPhotos ? 'We are requesting home photos for your policy.' + photoList + '\n\nPlease use the secure link below:' :
+                (isPhotos ? 'We are requesting ' + formalPhotoPurpose + '.' + photoList + '\n\nPlease use the secure link below:' :
                  isCustom ? 'We are requesting the following: ' + customDocDesc + '. Please use the secure link below to upload:' :
                  docType  ? 'We are requesting your ' + docLabel + '. Please use the secure link below to upload:' :
                  'We need a document from you. Please use the secure link below:') + '\n\n' +
@@ -678,7 +796,7 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
         case 'reminder':
             return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
                 'friendly reminder from Bill Layne Insurance — ' +
-                (isPhotos ? 'we still need those home photos for your policy. ' :
+                (isPhotos ? 'we still need those requested photos. ' :
                  isCustom ? 'we still need the following: ' + customDocDesc + '. ' :
                  docType  ? 'we still need your ' + docLabel + '. ' :
                  'we still need your document. ') +
@@ -699,7 +817,7 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
         case 'quick':
             return (firstName ? firstName + ' — ' : '') +
                 'Bill Layne Insurance here. ' +
-                (isPhotos ? 'Please send home photos: ' :
+                (isPhotos ? 'Please send requested photos: ' :
                  isCustom ? 'We need: ' + customDocDesc + '. Upload here: ' :
                  docType  ? 'Please send your ' + docLabel + ': ' :
                  'Please upload your docs: ') +
@@ -708,14 +826,16 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
         case 'spanish':
             var spanishPhotoList = '';
             if (isPhotos) {
-                var spanishPhotoNames = photoKeys.map(function(k){
+                var spanishPhotoNames = photoKeys.map(function(photo){
+                    var k = typeof photo === 'string' ? photo : photo.key;
                     var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
                     var spanishLabels = {
                         'bathroom':'Baño','breaker_box':'Caja de Breakers','hot_water_heater':'Calentador de Agua',
                         'kitchen':'Cocina','living_room':'Sala','outbuildings':'Edificios Externos / Cobertizo',
-                        'thermostat':'Termostato','under_bath_sink':'Debajo del Lavabo del Baño','under_kitchen_sink':'Debajo del Fregadero'
+                        'thermostat':'Termostato','under_bath_sink':'Debajo del Lavabo del Baño','under_kitchen_sink':'Debajo del Fregadero',
+                        'damage':'Foto del Daño'
                     };
-                    return spanishLabels[k] || (pt ? pt.label : k);
+                    return spanishLabels[k] || (pt ? pt.label : getPhotoLabel(photo));
                 });
                 spanishPhotoList = '\n\nFotos necesarias:\n' + spanishPhotoNames.map(function(n){ return '  • ' + n; }).join('\n');
             }
@@ -739,7 +859,8 @@ function setTemplate(template) {
     var name      = document.getElementById('agentName').value.trim();
     var docType   = document.getElementById('agentDocType').value;
     var photoKeys = lastSelectedPhotoKeys;
-    currentText   = buildTextMessage(name, docType, photoKeys, currentLink, template);
+    var customDocDesc = docType === 'Other' ? document.getElementById('customDocDesc').value.trim() : '';
+    currentText   = buildTextMessage(name, docType, photoKeys, currentLink, template, customDocDesc);
     updateTextPreview();
     showToast('Switched to ' + template + ' template');
 }
@@ -891,10 +1012,7 @@ function exportCSV() {
         var r = recentLinks[i];
         var photoNames = '';
         if (r.photos && r.photos.length > 0) {
-            photoNames = r.photos.map(function(k){
-                var pt = PHOTO_TYPES.find(function(p){ return p.key === k; });
-                return pt ? pt.label : k;
-            }).join('; ');
+            photoNames = r.photos.map(getPhotoLabel).filter(Boolean).join('; ');
         }
         rows.push([
             '"' + (r.name || '').replace(/"/g,'""') + '"',
