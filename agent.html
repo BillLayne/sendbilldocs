@@ -115,7 +115,8 @@
 
         .photo-count-badge{display:inline-flex;align-items:center;gap:5px;background:#eff6ff;color:var(--blue);padding:5px 12px;border-radius:50px;font-size:12px;font-weight:700;margin-top:10px}
         .photo-count-badge.has-count{background:var(--blue);color:white}
-        .custom-photo-builder{margin-top:14px;padding:14px;border:1px dashed var(--gray-300);border-radius:var(--radius-sm);background:var(--gray-50)}
+        .custom-photo-builder{display:none;margin-top:14px;padding:14px;border:1px dashed var(--gray-300);border-radius:var(--radius-sm);background:var(--gray-50)}
+        .custom-photo-builder.active{display:block}
         .custom-photo-builder-label{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px}
         .custom-photo-builder-help{font-size:11px;color:var(--gray-500);line-height:1.4;margin-bottom:10px}
         .custom-photo-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
@@ -312,16 +313,15 @@
                     <div class="photo-check-grid" id="photoCheckGrid">
                         <!-- Injected by JS -->
                     </div>
+                </div>
 
-                    <div class="custom-photo-builder" id="customPhotoBuilder">
-                        <div class="custom-photo-builder-label"><i class="fas fa-list-check"></i> Add specific photo requests</div>
-                        <div class="custom-photo-builder-help">Use this when you need multiple angles or a photo type that is not listed, like "Photo 1 - front side" and "Photo 2 - back side".</div>
-                        <div class="custom-photo-list" id="customPhotoList"></div>
-                        <button type="button" class="custom-photo-add" onclick="addCustomPhotoRequest()">
-                            <i class="fas fa-plus"></i> Add photo type
-                        </button>
-                    </div>
-
+                <div class="custom-photo-builder" id="customPhotoBuilder">
+                    <div class="custom-photo-builder-label"><i class="fas fa-list-check"></i> Add specific photo requests</div>
+                    <div class="custom-photo-builder-help">Use this when you need multiple images or angles that are not listed, like "Photo of shed" and "Photo of trampoline".</div>
+                    <div class="custom-photo-list" id="customPhotoList"></div>
+                    <button type="button" class="custom-photo-add" onclick="addCustomPhotoRequest()">
+                        <i class="fas fa-plus"></i> Add photo type
+                    </button>
                     <div class="photo-count-badge" id="photoCountBadge">
                         <i class="fas fa-camera"></i> <span id="photoCountText">0 photos selected</span>
                     </div>
@@ -598,17 +598,22 @@ function handleDocTypeChange() {
     var val = document.getElementById('agentDocType').value;
     var photoSection = document.getElementById('photoChecklistSection');
     var customSection = document.getElementById('customRequestSection');
+    var customPhotoBuilder = document.getElementById('customPhotoBuilder');
     if (isPhotoRequestDocType(val)) {
         renderPhotoGrid();
         photoSection.classList.add('active');
         customSection.classList.remove('active');
+        customPhotoBuilder.classList.add('active');
         updatePhotoCount();
     } else if (val === 'Other') {
         customSection.classList.add('active');
         photoSection.classList.remove('active');
+        customPhotoBuilder.classList.add('active');
+        updatePhotoCount();
     } else {
         photoSection.classList.remove('active');
         customSection.classList.remove('active');
+        customPhotoBuilder.classList.remove('active');
     }
 }
 
@@ -666,7 +671,7 @@ function generateLink() {
     var phone   = document.getElementById('agentPhone').value.trim();
     var docType = document.getElementById('agentDocType').value;
     var notes   = document.getElementById('agentNotes').value.trim();
-    var photoRequests = isPhotoRequestDocType(docType) ? getSelectedPhotoRequests() : [];
+    var photoRequests = isPhotoRequestDocType(docType) ? getSelectedPhotoRequests() : (docType === 'Other' ? getCustomPhotoRequests() : []);
     var photoKeys = photoRequests.filter(function(photo){ return !photo.custom; }).map(function(photo){ return photo.key; });
     var customPhotos = photoRequests.filter(function(photo){ return photo.custom; }).map(function(photo){
         return {
@@ -763,7 +768,7 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
         photoList = '\n\nPhotos needed:\n' + photoNames.map(function(n){ return '  • ' + n; }).join('\n');
     }
     var photoPurpose = docType === 'Photo of Damage' ? 'the damage photos' : 'a few photos';
-    var formalPhotoPurpose = docType === 'Photo of Damage' ? 'damage photos for your claim' : 'home photos for your policy';
+    var formalPhotoPurpose = docType === 'Photo of Damage' ? 'damage photos for your claim' : (docType === 'Other' ? 'the requested photos' : 'home photos for your policy');
 
     switch (template) {
         case 'photos':
