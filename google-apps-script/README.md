@@ -52,9 +52,16 @@ Example: `America/New_York`
 5. Deploy and authorize the script.
 6. Copy the new `/exec` URL.
 
+Important: GitHub Pages does not automatically update the Apps Script web app. After changing [Code.gs](C:/Users/bill/OneDrive/Documents/Playground/sendbilldocs/google-apps-script/Code.gs), paste the updated file into Apps Script and create a new deployment version.
+
 ## Update The Website
 
 Paste the new Apps Script web app URL into [index.html](C:/Users/bill/OneDrive/Documents/Playground/sendbilldocs/index.html) at the `GOOGLE_SCRIPT_URL` constant near line 507.
+
+The customer confirmation email uses first-party public images from the site:
+
+- `https://www.sendbilldocs.com/assets/bill-layne-logo.png`
+- `https://www.sendbilldocs.com/assets/email-hero.jpg`
 
 ## Recommended Test
 
