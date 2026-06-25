@@ -22,58 +22,87 @@
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         :root{
-            --navy:#0f2744;--navy-light:#1a3a5c;--blue:#2563eb;--blue-light:#3b82f6;
-            --blue-glow:rgba(37,99,235,0.3);--gold:#f59e0b;--gold-light:#fbbf24;
-            --green:#10b981;--green-light:#34d399;--gray-50:#f8fafc;--gray-100:#f1f5f9;
+            --navy:#061b36;--navy-light:#0b2b59;--navy-panel:#082044;--blue:#1657d9;--blue-light:#3478ff;
+            --blue-glow:rgba(22,87,217,0.24);--gold:#f7b731;--gold-light:#ffd36a;
+            --green:#16c784;--green-light:#50e0a4;--gray-50:#f6f8fc;--gray-100:#eef3fb;
             --gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;
-            --gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--red:#ef4444;
-            --radius:16px;--radius-sm:12px;--radius-lg:24px;
-            --shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12)
+            --gray-600:#475569;--gray-700:#334155;--gray-800:#172033;--red:#ef4444;
+            --radius:16px;--radius-sm:12px;--radius-lg:24px;--radius-xl:30px;
+            --shadow:0 12px 35px rgba(13,35,73,0.08);--shadow-lg:0 22px 70px rgba(10,31,66,0.16)
         }
         html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-        body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--gray-50);color:var(--gray-700);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(180deg,#f7faff 0%,#eef4ff 45%,#ffffff 100%);color:var(--gray-700);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
         a,button,input,select,textarea,label,[role="button"]{-webkit-tap-highlight-color:rgba(37,99,235,0.15);touch-action:manipulation}
 
         /* ======= HERO ======= */
-        .hero{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;text-align:center;padding:56px 20px 44px;overflow:hidden}
-        .hero-bg{position:absolute;inset:0;background:linear-gradient(165deg,rgba(15,39,68,0.92) 0%,rgba(26,58,92,0.88) 40%,rgba(37,99,235,0.75) 100%),url('assets/email-hero.jpg') center/cover no-repeat;z-index:0}
-        .hero-content{position:relative;z-index:2;max-width:580px}
-        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:50px;font-size:11px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
-        .hero-badge i{color:var(--green-light)}
-        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px,7vw,42px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;letter-spacing:-0.5px}
-        .hero h1 span{color:var(--gold-light)}
-        .hero-sub{font-size:clamp(14px,3.5vw,17px);color:rgba(255,255,255,0.85);max-width:460px;margin:0 auto 24px;font-weight:500}
-        .hero-arrow{display:flex;align-items:center;justify-content:center;animation:bounce 2s infinite}
-        .hero-arrow a{display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:19px;text-decoration:none;box-shadow:0 4px 20px rgba(245,158,11,0.4);transition:transform 0.3s}
-        .hero-arrow a:hover{transform:scale(1.1)}
+        .hero{position:relative;min-height:650px;padding:26px 20px 104px;overflow:hidden;background:radial-gradient(circle at 78% 12%,rgba(37,99,235,.32),transparent 34%),linear-gradient(135deg,#04142b 0%,#06224b 54%,#0a3471 100%)}
+        .hero::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:120px;background:linear-gradient(180deg,rgba(246,248,252,0) 0%,#f6f8fc 82%)}
+        .hero-bg{position:absolute;inset:0;background:radial-gradient(circle at 80% 42%,rgba(29,89,198,.34),transparent 34%),radial-gradient(circle at 20% 16%,rgba(247,183,49,.12),transparent 26%);z-index:0}
+        .site-nav{position:relative;z-index:3;max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+        .brand-lockup{display:flex;align-items:center;gap:12px;color:white;text-decoration:none;min-width:0}
+        .brand-mark{width:48px;height:48px;border:2px solid var(--gold);border-radius:14px;display:grid;place-items:center;color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:900;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+        .brand-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;letter-spacing:.04em;line-height:1.05;text-transform:uppercase}
+        .brand-text strong{display:block;font-size:17px;color:white}
+        .brand-text span{display:block;font-size:13px;color:var(--gold);letter-spacing:.14em}
+        .nav-actions{display:flex;align-items:center;gap:12px}
+        .nav-upload{height:50px;padding:0 22px;border-radius:12px;background:linear-gradient(180deg,#ffcd57,#f5a912);color:#071a35;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 12px 28px rgba(247,183,49,.32)}
+        .nav-menu{width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.08);color:white;font-size:22px;display:grid;place-items:center}
+        .hero-inner{position:relative;z-index:2;max-width:1120px;margin:62px auto 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,560px);gap:34px;align-items:center}
+        .hero-content{max-width:570px;color:white}
+        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(40px,7vw,68px);font-weight:900;color:white;line-height:.98;margin:0 0 22px;letter-spacing:0}
+        .hero h1 span{color:var(--gold)}
+        .hero-sub{font-size:clamp(16px,2.2vw,20px);color:rgba(255,255,255,0.86);max-width:520px;margin:0 0 28px;font-weight:600;line-height:1.55}
+        .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+        .hero-btn{min-height:58px;border-radius:14px;padding:0 28px;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:11px}
+        .hero-btn-primary{background:linear-gradient(180deg,#ffcf58,#f3a80d);color:#061b36;box-shadow:0 18px 36px rgba(247,183,49,.32)}
+        .hero-btn-secondary{border:1.5px solid rgba(255,255,255,.55);color:white;background:rgba(255,255,255,.06)}
+        .hero-visual{position:relative;min-height:390px;display:flex;align-items:center;justify-content:center;overflow:visible}
+        .hero-art{display:block;width:min(680px,122%);max-width:none;height:auto;filter:drop-shadow(0 34px 70px rgba(0,0,0,.34));transform:translateX(18px)}
         @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}60%{transform:translateY(-6px)}}
 
         /* ======= STEPS ======= */
-        .steps-section{padding:44px 20px 10px;max-width:660px;margin:0 auto}
-        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;text-align:center;color:var(--navy);margin-bottom:24px}
-        .steps-row{display:flex;gap:10px;justify-content:center;margin-bottom:8px}
-        .step-card{flex:1;max-width:190px;text-align:center;padding:18px 10px;background:white;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-100)}
-        .step-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:20px}
+        .steps-section{padding:46px 20px 14px;max-width:760px;margin:0 auto}
+        .section-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.12em;text-align:center;margin-bottom:4px}
+        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(25px,4vw,36px);font-weight:900;text-align:center;color:var(--navy);margin-bottom:28px;line-height:1.08;letter-spacing:0}
+        .steps-row{display:grid;gap:12px;margin-bottom:8px}
+        .step-card{display:grid;grid-template-columns:60px 1fr 28px;gap:16px;align-items:center;padding:18px;background:white;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(226,232,240,.9)}
+        .step-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:22px}
         .step-1 .step-icon{background:#eff6ff;color:var(--blue)}.step-2 .step-icon{background:#fef3c7;color:var(--gold)}.step-3 .step-icon{background:#d1fae5;color:var(--green)}
-        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-400);margin-bottom:3px}
-        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--navy)}
+        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:2px}
+        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:900;color:var(--navy);line-height:1.15}
+        .step-copy{font-size:13px;color:#64748b;line-height:1.35;margin-top:4px}
+        .step-chevron{color:var(--navy);font-size:15px;opacity:.7}
 
         /* ======= TRUST BAR ======= */
-        .trust-bar{padding:18px;text-align:center}
-        .trust-items{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-size:12px;font-weight:600;color:var(--gray-500)}
-        .trust-items span{display:flex;align-items:center;gap:5px}
-        .trust-items i.fa-lock{color:var(--green)}.trust-items i.fa-shield-halved{color:var(--blue)}.trust-items i.fa-clock{color:var(--gold)}
+        .trust-bar{position:relative;z-index:4;max-width:1000px;margin:-74px auto 0;padding:0 20px}
+        .trust-items{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:white;border-radius:18px;box-shadow:0 24px 70px rgba(10,31,66,.16);border:1px solid rgba(226,232,240,.8);overflow:hidden}
+        .trust-items span{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:20px;font-size:13px;font-weight:700;color:var(--gray-500);border-right:1px solid #e2e8f0}
+        .trust-items span:last-child{border-right:none}
+        .trust-items i{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:20px}
+        .trust-items strong{display:block;font-family:'Plus Jakarta Sans',sans-serif;color:var(--navy);font-size:14px;margin-bottom:2px}
+        .trust-items small{display:block;font-size:12px;line-height:1.35;color:#64748b}
+        .trust-items i.fa-lock{background:#e8fff5;color:var(--green)}.trust-items i.fa-shield-halved{background:#eff6ff;color:var(--blue)}.trust-items i.fa-clock{background:#fff7df;color:var(--gold)}
+
+        /* ======= DOCUMENT TYPES ======= */
+        .send-types{max-width:760px;margin:0 auto;padding:0 20px 22px}
+        .send-types-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;text-align:center}
+        .send-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+        .send-type{background:white;border:1px solid rgba(226,232,240,.9);border-radius:14px;min-height:86px;display:grid;place-items:center;text-align:center;padding:12px 8px;box-shadow:0 8px 22px rgba(13,35,73,.05)}
+        .send-type i{font-size:22px;color:var(--blue);margin-bottom:7px}.send-type span{font-size:12px;font-weight:900;color:var(--navy);line-height:1.15}
 
         /* ======= FORM SECTION ======= */
-        .form-section{padding:24px 16px 36px;max-width:580px;margin:0 auto}
-        .form-card{background:white;border-radius:var(--radius-lg);padding:28px 22px;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
+        .main-upload-wrap{max-width:1120px;margin:0 auto;padding:12px 20px 46px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+        .form-section{padding:0;max-width:none;margin:0}
+        .form-card{background:white;border-radius:22px;padding:30px;box-shadow:var(--shadow-lg);border:1px solid rgba(226,232,240,.9)}
         .form-header{text-align:center;margin-bottom:26px}
-        .form-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;color:var(--navy);margin-bottom:5px}
+        .form-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px,4vw,34px);font-weight:900;color:var(--navy);margin-bottom:5px;line-height:1.08;letter-spacing:0}
         .form-header p{font-size:14px;color:var(--gray-500)}
         .form-group{margin-bottom:18px}
         .form-label{display:block;font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:7px;letter-spacing:0.3px}
         .form-label .required{color:var(--red);margin-left:2px}
-        .form-input{width:100%;height:52px;padding:0 16px;font-size:16px;font-family:'DM Sans',sans-serif;border:2px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-50);color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+        .form-grid .wide{grid-column:1/-1}
+        .form-input{width:100%;height:52px;padding:0 16px;font-size:16px;font-family:'DM Sans',sans-serif;border:1.5px solid var(--gray-200);border-radius:12px;background:#fbfdff;color:var(--gray-800);transition:all 0.2s;-webkit-appearance:none;appearance:none}
         .form-input:focus{outline:none;border-color:var(--blue);background:white;box-shadow:0 0 0 4px var(--blue-glow)}
         .form-input::placeholder{color:var(--gray-400)}
         select.form-input{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:44px}
@@ -93,16 +122,16 @@
         .custom-request-ref .ref-caption{margin-top:6px;font-size:11px;color:#a16207;font-weight:600;text-align:center}
 
         /* ======= STANDARD UPLOAD ZONE (non-photo mode) ======= */
-        .upload-zone{position:relative;border:3px dashed var(--gray-300);border-radius:var(--radius);padding:36px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--gray-50)}
+        .upload-zone{position:relative;border:2px dashed #7ba7ff;border-radius:18px;padding:34px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:linear-gradient(180deg,#fbfdff,#f4f8ff)}
         .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:#eff6ff}
         .upload-zone.has-files{border-color:var(--green);background:#f0fdf4;border-style:solid}
-        .upload-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#4f46e5);color:white;display:flex;align-items:center;justify-content:center;font-size:29px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(37,99,235,0.3)}
+        .upload-icon{width:70px;height:70px;border-radius:22px;background:#eef5ff;color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px;box-shadow:inset 0 0 0 1px #dbeafe}
         .upload-zone.has-files .upload-icon{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 8px 24px rgba(16,185,129,0.3)}
         .upload-text-main{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:5px}
         .upload-text-sub{font-size:13px;color:var(--gray-500);margin-bottom:14px}
         .upload-buttons{display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;margin:0 auto}
-        .upload-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:0 22px;border-radius:50px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.2s;width:100%}
-        .upload-btn-camera{height:58px;background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.35);font-size:16px}
+        .upload-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:0 22px;border-radius:14px;font-size:15px;font-weight:800;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.2s;width:100%}
+        .upload-btn-camera{height:58px;background:var(--gold);color:var(--navy);box-shadow:0 10px 24px rgba(247,183,49,0.28);font-size:16px}
         .upload-btn-camera:hover{background:#e89209;transform:translateY(-1px)}
         .upload-btn-file{height:50px;background:white;color:var(--gray-600);border:2px solid var(--gray-200);font-size:14px}
         .upload-btn-file:hover{border-color:var(--blue);color:var(--blue)}
@@ -188,7 +217,7 @@
         .photo-progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:50px;transition:width 0.4s cubic-bezier(0.16,1,0.3,1)}
 
         /* ======= SUBMIT BTN ======= */
-        .submit-btn{width:100%;height:60px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),#4338ca);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 24px rgba(37,99,235,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;position:relative;overflow:hidden}
+        .submit-btn{width:100%;height:60px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--blue),#0045bf);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:900;cursor:pointer;transition:all 0.3s;box-shadow:0 14px 30px rgba(22,87,217,0.28);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;position:relative;overflow:hidden}
         .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,0.45)}
         .submit-btn:active:not(:disabled){transform:translateY(0)}
         .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
@@ -196,7 +225,7 @@
         @keyframes btnshine{0%,60%{left:-100%}100%{left:200%}}
 
         /* ======= SENDING / SUCCESS ======= */
-        .sending-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
+        .sending-section{display:none;grid-column:1/-1;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
         .sending-section.active{display:block}
         .sending-spinner{width:70px;height:70px;border:5px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px}
         @keyframes spin{to{transform:rotate(360deg)}}
@@ -204,7 +233,7 @@
         .sending-section p{font-size:15px;color:var(--gray-500);line-height:1.7}
         .sending-warning{display:flex;align-items:center;justify-content:center;gap:10px;background:#fef3c7;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:14px 18px;margin-top:22px;font-size:14px;font-weight:600;color:#92400e}
 
-        .success-section{display:none;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
+        .success-section{display:none;grid-column:1/-1;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
         .success-section.active{display:block}
         .success-check{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);color:white;display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 22px;box-shadow:0 12px 36px rgba(16,185,129,0.35);animation:popIn 0.5s cubic-bezier(0.16,1,0.3,1)}
         .success-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:27px;font-weight:900;color:var(--navy);margin-bottom:10px}
@@ -221,28 +250,34 @@
         .success-btn:hover{transform:translateY(-1px)}
 
         /* ======= HELP + FOOTER ======= */
-        .help-section{padding:0 16px 36px;max-width:580px;margin:0 auto}
-        .help-card{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:var(--radius-lg);padding:28px 22px;text-align:center;box-shadow:0 8px 32px rgba(15,39,68,0.3);position:relative;overflow:hidden}
-        .help-card::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(37,99,235,0.15);border-radius:50%;pointer-events:none}
-        .help-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:white;margin-bottom:7px;position:relative}
-        .help-card p{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:22px;line-height:1.6;position:relative}
+        .help-section{padding:0;max-width:none;margin:0;position:sticky;top:16px}
+        .help-card{background:white;border-radius:22px;padding:26px;text-align:left;box-shadow:var(--shadow-lg);border:1px solid rgba(226,232,240,.9);position:relative;overflow:hidden}
+        .help-card::before{content:'';position:absolute;inset:0 0 auto;height:7px;background:linear-gradient(90deg,var(--blue),var(--gold));pointer-events:none}
+        .help-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:900;color:var(--navy);margin:10px 0 8px;position:relative}
+        .help-card p{font-size:13px;color:#64748b;margin-bottom:22px;line-height:1.6;position:relative}
         .help-actions{display:flex;flex-direction:column;gap:10px;position:relative}
-        .help-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+        .help-btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
         .help-btn-call{background:var(--gold);color:var(--navy);box-shadow:0 4px 16px rgba(245,158,11,0.3)}
         .help-btn-call:hover{background:var(--gold-light);transform:translateY(-1px)}
-        .help-btn-email{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
-        .help-btn-email:hover{background:rgba(255,255,255,0.15)}
+        .help-btn-email{background:#eef5ff;color:var(--blue);border:1px solid #dbeafe}
+        .help-btn-email:hover{background:#e0ecff}
         .help-btn-messenger{background:linear-gradient(135deg,#0078FF,#00C6FF);color:white;box-shadow:0 4px 16px rgba(0,120,255,0.3)}
         .help-btn-messenger:hover{background:linear-gradient(135deg,#0066DD,#00B0EE);transform:translateY(-1px)}
-        .help-hours{font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;position:relative}
-
-        .footer{background:var(--navy);color:rgba(255,255,255,0.5);padding:36px 20px 100px;text-align:center}
-        .footer-logo{height:38px;opacity:0.6;margin-bottom:14px}
-        .footer-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:4px}
+        .help-hours{font-size:12px;color:#64748b;margin-top:14px;position:relative}
+        .security-note{margin-top:18px;background:#f4f8ff;border:1px solid #dbeafe;border-radius:16px;padding:16px;display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:center}
+        .security-note i{width:38px;height:38px;border-radius:12px;background:var(--blue);color:white;display:grid;place-items:center}.security-note strong{display:block;font-family:'Plus Jakarta Sans',sans-serif;color:var(--navy);font-size:13px}.security-note span{display:block;font-size:12px;color:#64748b;line-height:1.35}
+        .footer-cta{background:linear-gradient(135deg,#0b3ea3,#005ce6);color:white;padding:28px 20px}
+        .footer-cta-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+        .footer-cta h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,4vw,30px);line-height:1.15;margin:0;font-weight:900}.footer-cta p{margin:6px 0 0;color:rgba(255,255,255,.78);font-size:14px}
+        .footer-cta a{min-height:54px;border-radius:14px;background:var(--gold);color:var(--navy);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;padding:0 22px;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+        .footer{background:#031226;color:rgba(255,255,255,0.62);padding:36px 20px 100px;text-align:left}
+        .footer-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px}
+        .footer-logo{height:42px;opacity:0.86;margin-bottom:14px}
+        .footer-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:rgba(255,255,255,0.9);margin-bottom:4px}
         .footer-info{font-size:12px;line-height:1.9}
         .footer-info a{color:rgba(255,255,255,0.6);text-decoration:none}
         .footer-info a:hover{color:var(--gold-light)}
-        .footer-copy{margin-top:18px;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.4}
+        .footer-copy{max-width:1120px;margin:26px auto 0;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.46;text-align:center}
 
 
         /* ======= MOBILE DOCK ======= */
@@ -250,18 +285,38 @@
         .dock-inner{display:flex;gap:10px}
         .dock-btn{flex:1;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
         .dock-call{background:var(--gray-100);color:var(--gray-700)}.dock-upload{flex:2;background:linear-gradient(135deg,var(--blue),#4338ca);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3)}.dock-quote{background:var(--gold);color:var(--navy)}
-        @media(max-width:768px){.mobile-dock{display:block}.footer{padding-bottom:110px}}
+        @media(max-width:900px){
+            .hero{min-height:auto;padding-bottom:88px}
+            .site-nav{gap:10px}.brand-mark{width:42px;height:42px;border-radius:12px;font-size:18px}.brand-text strong{font-size:14px}.brand-text span{font-size:11px}.nav-upload{height:44px;padding:0 14px;font-size:13px}.nav-menu{width:44px;height:44px}
+            .hero-inner{grid-template-columns:1fr;margin-top:46px;gap:18px}
+            .hero-content{text-align:left}.hero-actions{display:grid;grid-template-columns:1fr;max-width:360px}.hero-btn{width:100%}
+            .hero-visual{min-height:275px;margin:0 -28px -18px;justify-content:center}.hero-art{width:min(610px,128%);transform:translateX(12px)}
+            .trust-bar{margin-top:-48px}.trust-items{grid-template-columns:1fr;border-radius:18px}.trust-items span{border-right:none;border-bottom:1px solid #e2e8f0;padding:16px 18px}.trust-items span:last-child{border-bottom:none}
+            .main-upload-wrap{grid-template-columns:1fr;padding-top:14px}.help-section{position:static}
+            .footer-cta-inner{align-items:flex-start;flex-direction:column}.footer-cta a{width:100%;justify-content:center}
+            .footer-inner{grid-template-columns:1fr;text-align:left}
+            .mobile-dock{display:none}.footer{padding-bottom:44px}
+        }
         @media(max-width:480px){
-            .hero{min-height:300px;padding:44px 16px 36px}
+            .hero{padding:18px 16px 72px}
+            .nav-upload span{display:none}.nav-upload{width:46px;padding:0;justify-content:center}.nav-menu{display:none}
+            .brand-text strong{font-size:13px}.brand-text span{font-size:10px}
+            .hero-inner{margin-top:38px;gap:14px}
+            .hero h1{font-size:38px;line-height:1.04;margin-bottom:14px}
+            .hero-sub{font-size:15px;margin-bottom:18px;line-height:1.5}
+            .hero-btn{min-height:54px}
+            .hero-visual{min-height:240px;margin:0 -72px -20px}.hero-art{width:150%;max-width:590px;transform:translateX(12px)}
+            .trust-bar{margin-top:-38px}
+            .steps-section{padding-top:38px}.step-card{grid-template-columns:54px 1fr 22px;padding:15px}.step-icon{width:52px;height:52px;font-size:19px}.step-label{font-size:16px}.step-copy{font-size:12px}
+            .send-type-grid{grid-template-columns:repeat(2,1fr)}
+            .main-upload-wrap{padding-left:14px;padding-right:14px}
             .form-card{padding:22px 16px}
-            .steps-row{gap:7px}
-            .step-card{padding:14px 7px}
-            .step-icon{width:46px;height:46px;font-size:17px}
-            .step-label{font-size:12px}
+            .form-grid{grid-template-columns:1fr}
             .photo-card-body{grid-template-columns:1fr 1fr}
             .photo-sample{min-height:140px;max-height:190px}
             .photo-upload-slot{min-height:140px;padding:12px 10px}
             .photo-preview{height:110px}
+            .footer-cta{padding:24px 16px}.footer{padding-left:16px;padding-right:16px}
         }
         @media(max-width:360px){
             .photo-card-body{grid-template-columns:1fr}
@@ -275,37 +330,67 @@
     <!-- HERO -->
     <header class="hero">
         <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(17px,4vw,22px);font-weight:900;color:white;letter-spacing:-0.3px;margin-bottom:14px;">
-                Bill Layne <span style="color:var(--gold-light);">Insurance</span>
+        <nav class="site-nav" aria-label="Primary">
+            <a class="brand-lockup" href="https://www.billlayneinsurance.com">
+                <span class="brand-mark">BL</span>
+                <span class="brand-text"><strong>Bill Layne</strong><span>Insurance</span></span>
+            </a>
+            <div class="nav-actions">
+                <a href="#upload-form" class="nav-upload"><i class="fas fa-arrow-up-from-bracket"></i><span>Start Upload</span></a>
+                <button type="button" class="nav-menu" onclick="document.getElementById('upload-form').scrollIntoView({behavior:'smooth',block:'start'});" aria-label="Go to upload form"><i class="fas fa-bars"></i></button>
             </div>
-            <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
-            <h1>Send Us Your<br><span>Documents</span></h1>
-            <p class="hero-sub">Need to send us a photo, letter, estimate, or any document? It takes less than 60 seconds.</p>
-            <div class="hero-arrow"><a href="#upload-form" aria-label="Scroll to upload form"><i class="fas fa-chevron-down"></i></a></div>
+        </nav>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>Securely Upload <span>Photos, Forms &amp; Insurance Documents</span></h1>
+                <p class="hero-sub">Send documents to Bill Layne Insurance quickly, safely, and with complete confidence. It takes less than a minute.</p>
+                <div class="hero-actions">
+                    <a href="#upload-form" class="hero-btn hero-btn-primary"><i class="fas fa-arrow-up-from-bracket"></i> Start Upload</a>
+                    <a href="#stepsSection" class="hero-btn hero-btn-secondary"><i class="fas fa-play"></i> How It Works</a>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <img class="hero-art" src="assets/document-upload-success-transparent.png" alt="">
+            </div>
         </div>
     </header>
-
-    <!-- STEPS -->
-    <section class="steps-section" id="stepsSection">
-        <h2 class="steps-title">It's Easy — Just 3 Steps</h2>
-        <div class="steps-row">
-            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i></div><div class="step-num">Step 1</div><div class="step-label">Your Info</div></div>
-            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i></div><div class="step-num">Step 2</div><div class="step-label">Snap or Upload</div></div>
-            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check-circle"></i></div><div class="step-num">Step 3</div><div class="step-label">Done!</div></div>
-        </div>
-    </section>
 
     <!-- TRUST BAR -->
     <div class="trust-bar" id="trustBar">
         <div class="trust-items">
-            <span><i class="fas fa-lock"></i> 100% Secure</span>
-            <span><i class="fas fa-shield-halved"></i> Files Go Directly To Us</span>
-            <span><i class="fas fa-clock"></i> Under 60 Seconds</span>
+            <span><i class="fas fa-lock"></i><span><strong>100% Secure</strong><small>Your data is encrypted and protected.</small></span></span>
+            <span><i class="fas fa-shield-halved"></i><span><strong>Direct to Our Team</strong><small>No third parties. Just our team.</small></span></span>
+            <span><i class="fas fa-clock"></i><span><strong>Under 60 Seconds</strong><small>Quick, simple, and stress-free.</small></span></span>
         </div>
     </div>
 
+    <!-- STEPS -->
+    <section class="steps-section" id="stepsSection">
+        <div class="section-label">How It Works</div>
+        <h2 class="steps-title">It's Easy - Just 3 Steps</h2>
+        <div class="steps-row">
+            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i></div><div><div class="step-num">Step 1</div><div class="step-label">Your Info</div><div class="step-copy">Tell us who you are so we know where to send it.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
+            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i></div><div><div class="step-num">Step 2</div><div class="step-label">Snap or Upload</div><div class="step-copy">Take a photo or upload files from your phone.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
+            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check-circle"></i></div><div><div class="step-num">Step 3</div><div class="step-label">Done!</div><div class="step-copy">Your documents are securely sent to our team.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
+        </div>
+    </section>
+
+    <section class="send-types" aria-label="Documents you can send">
+        <h2 class="send-types-title">What You Can Send</h2>
+        <div class="send-type-grid">
+            <div class="send-type"><i class="fas fa-id-card"></i><span>ID Cards</span></div>
+            <div class="send-type"><i class="fas fa-camera"></i><span>Photos</span></div>
+            <div class="send-type"><i class="fas fa-calculator"></i><span>Estimates</span></div>
+            <div class="send-type"><i class="fas fa-envelope"></i><span>Letters</span></div>
+            <div class="send-type"><i class="fas fa-shield-halved"></i><span>Policy Docs</span></div>
+            <div class="send-type"><i class="fas fa-clipboard-list"></i><span>Claim Forms</span></div>
+            <div class="send-type"><i class="fas fa-receipt"></i><span>Receipts</span></div>
+            <div class="send-type"><i class="fas fa-circle-ellipsis"></i><span>And More</span></div>
+        </div>
+    </section>
+
     <!-- MAIN FORM -->
+    <main class="main-upload-wrap">
     <section class="form-section" id="upload-form">
         <div class="form-card">
             <div class="form-header">
@@ -315,6 +400,7 @@
 
             <form id="docForm" onsubmit="return false;">
 
+                <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label" for="fullName">Your Name <span class="required">*</span></label>
                     <input type="text" id="fullName" class="form-input" placeholder="John Smith" required autocomplete="name">
@@ -350,9 +436,10 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group wide">
                     <label class="form-label" for="notes">Notes <span style="font-weight:400;color:var(--gray-400);">(optional)</span></label>
                     <textarea id="notes" class="form-input" placeholder="Anything else we should know? (e.g., 'This is for my claim from last week')" rows="2"></textarea>
+                </div>
                 </div>
 
                 <!-- ===== CUSTOM REQUEST BANNER (shown when agent sends custom request) ===== -->
@@ -431,7 +518,7 @@
 
                 <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
                     <span class="shine"></span>
-                    <i class="fas fa-paper-plane"></i> Send Photos
+                    <i class="fas fa-lock"></i> Send My Documents
                 </button>
 
             </form>
@@ -468,25 +555,56 @@
     <!-- HELP -->
     <section class="help-section" id="helpSection">
         <div class="help-card">
-            <h3><i class="fas fa-headset" style="color:var(--gold-light);margin-right:8px;"></i> Need Help?</h3>
-            <p>Having trouble uploading? Give us a call and we'll walk you through it or take your info over the phone.</p>
+            <h3><i class="fas fa-headset" style="color:var(--blue);margin-right:8px;"></i> We're Here to Help</h3>
+            <p>Need assistance? Our team is happy to help get your documents to the right place.</p>
             <div class="help-actions">
                 <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:19px;"></i> Call (336) 835-1993</a>
                 <a href="mailto:docs@billlayneinsurance.com" class="help-btn help-btn-email"><i class="fas fa-envelope"></i> Email Us</a>
                 <a href="https://m.me/dollarbillagency" target="_blank" class="help-btn help-btn-messenger"><i class="fab fa-facebook-messenger"></i> Message Us</a>
             </div>
-            <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon–Fri: 9am – 5pm</div>
+            <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon-Fri: 9am - 5pm</div>
+            <div class="security-note">
+                <i class="fas fa-lock"></i>
+                <div><strong>Bank-Level Security</strong><span>Your information is encrypted and never shared.</span></div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <section class="footer-cta">
+        <div class="footer-cta-inner">
+            <div>
+                <h2>We're here to protect what matters most.</h2>
+                <p>Send your documents securely and we'll take it from there.</p>
+            </div>
+            <a href="#upload-form"><i class="fas fa-arrow-up-from-bracket"></i> Start Upload Now</a>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="footer" id="footerSection">
-        <img src="assets/bill-layne-logo.png" alt="Bill Layne Insurance" class="footer-logo">
-        <div class="footer-name">Bill Layne Insurance Agency</div>
-        <div class="footer-info">
-            1283 N Bridge St, Elkin, NC 28621<br>
-            <a href="tel:3368351993">(336) 835-1993</a> &bull; <a href="mailto:Save@BillLayneInsurance.com">Save@BillLayneInsurance.com</a><br>
-            <a href="https://www.billlayneinsurance.com">www.BillLayneInsurance.com</a>
+        <div class="footer-inner">
+            <div>
+                <img src="assets/bill-layne-logo.png" alt="Bill Layne Insurance" class="footer-logo">
+                <div class="footer-name">Bill Layne Insurance Agency</div>
+                <div class="footer-info">Local service. Trusted protection.<br>We're here for you.</div>
+            </div>
+            <div>
+                <div class="footer-name">Contact</div>
+                <div class="footer-info">
+                    <a href="tel:3368351993">(336) 835-1993</a><br>
+                    <a href="mailto:Save@BillLayneInsurance.com">Save@BillLayneInsurance.com</a><br>
+                    1283 N Bridge St, Elkin, NC 28621
+                </div>
+            </div>
+            <div>
+                <div class="footer-name">Hours</div>
+                <div class="footer-info">
+                    Mon-Fri: 9am - 5pm<br>
+                    Saturday: By appointment<br>
+                    <a href="https://www.billlayneinsurance.com">BillLayneInsurance.com</a>
+                </div>
+            </div>
         </div>
         <div class="footer-copy">&copy; 2026 Bill Layne Insurance Agency</div>
     </footer>
