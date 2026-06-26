@@ -527,8 +527,8 @@
                         <div class="photo-mode-banner">
                             <div class="photo-mode-icon"><i class="fas fa-camera-retro"></i></div>
                             <div class="photo-mode-text">
-                                <h3>Home Insurance Photos Needed</h3>
-                                <p>Use the example photos as a guide. Tap the camera button on each card to snap your photo.</p>
+                                <h3 id="photoModeTitle">Home Insurance Photos Needed</h3>
+                                <p id="photoModeSubtitle">Use the example photos as a guide. Tap the camera button on each card to snap your photo.</p>
                             </div>
                         </div>
 
@@ -595,7 +595,7 @@
             <div class="help-actions">
                 <a href="tel:3368351993" class="help-btn help-btn-call"><i class="fas fa-phone-alt" style="font-size:19px;"></i> Call (336) 835-1993</a>
                 <a href="mailto:docs@billlayneinsurance.com" class="help-btn help-btn-email"><i class="fas fa-envelope"></i> Email Us</a>
-                <a href="https://m.me/dollarbillagency" target="_blank" class="help-btn help-btn-messenger"><i class="fab fa-facebook-messenger"></i> Message Us</a>
+                <a href="sms:+13368279065" class="help-btn help-btn-messenger"><i class="fas fa-comment-dots"></i> Text Us</a>
             </div>
             <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon-Fri: 9am - 5pm</div>
             <div class="security-note">
@@ -931,6 +931,13 @@
         photoMode = true;
         requiredPhotoKeys = keys.filter(function(k){ return !!PHOTO_TYPES[k]; });
         if (requiredPhotoKeys.length === 0) { exitPhotoMode(); return; }
+        var isDamage = requiredPhotoKeys.every(function(k){ return k === 'damage'; });
+        var titleEl = document.getElementById('photoModeTitle');
+        var subEl = document.getElementById('photoModeSubtitle');
+        if (titleEl) titleEl.textContent = isDamage ? 'Damage Photos Needed' : 'Home Insurance Photos Needed';
+        if (subEl) subEl.textContent = isDamage
+            ? 'Take clear photos of the damage from a few angles. Tap the camera button to snap each one.'
+            : 'Use the example photos as a guide. Tap the camera button on each card to snap your photo.';
         document.getElementById('standardUploadArea').style.display = 'none';
         document.getElementById('photoInspectionArea').style.display = 'block';
         renderPhotoGrid();
@@ -1089,9 +1096,9 @@
     document.getElementById('docType').addEventListener('change', function() {
         if (this.value === 'Home Inspection Photos') {
             enterPhotoMode(ALL_PHOTO_KEYS);
-        } else if (this.value === 'Photo of Damage') {
-            enterPhotoMode(DAMAGE_PHOTO_KEYS);
         } else {
+            // Everything else (incl. Photo of Damage) uses the standard
+            // multi-file upload — better for snapping several damage angles.
             if (photoMode) exitPhotoMode();
         }
     });
@@ -1117,11 +1124,10 @@
                     break;
                 }
             }
-            // Trigger photo mode if applicable
+            // Trigger photo mode if applicable (Home Inspection only;
+            // Photo of Damage uses the standard multi-file upload)
             if (docVal === 'Home Inspection Photos') {
                 enterPhotoMode(ALL_PHOTO_KEYS);
-            } else if (docVal === 'Photo of Damage') {
-                enterPhotoMode(DAMAGE_PHOTO_KEYS);
             }
         }
 
