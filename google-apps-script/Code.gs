@@ -3,7 +3,7 @@ const APP_CONFIG = Object.freeze({
   officePhone: '(336) 835-1993',
   officeWebsite: 'https://www.billlayneinsurance.com',
   emailLogoUrl: 'https://www.sendbilldocs.com/assets/bill-layne-logo.png',
-  emailHeroImageUrl: 'https://www.sendbilldocs.com/assets/email-hero.jpg',
+  emailHeroImageUrl: 'https://www.sendbilldocs.com/assets/email-hero-2026.jpg',
   defaultTimeZone: 'America/New_York',
   maxEmailAttachmentBytes: 18 * 1024 * 1024,
   maxSingleAttachmentBytes: 7 * 1024 * 1024
