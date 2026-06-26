@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Documents | Bill Layne Insurance Agency</title>
     <meta name="description" content="Securely upload documents, photos, and files to Bill Layne Insurance Agency in Elkin, NC. Snap a photo or upload a file — it's that easy.">
     <link rel="icon" href="https://fav.farm/📄" />
@@ -49,7 +49,9 @@
         .nav-menu{width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.08);color:white;font-size:22px;display:grid;place-items:center}
         .hero-inner{position:relative;z-index:2;max-width:1220px;margin:58px auto 0;display:grid;grid-template-columns:minmax(0,520px) minmax(520px,700px);gap:0;align-items:center}
         .hero-content{max-width:570px;color:white}
-        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(40px,7vw,68px);font-weight:900;color:white;line-height:.98;margin:0 0 22px;letter-spacing:0}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid rgba(247,183,49,.5);background:rgba(247,183,49,.12);color:var(--gold-light);border-radius:50px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:20px}
+        .hero-badge i{font-size:12px}
+        .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(38px,6.6vw,66px);font-weight:900;color:white;line-height:1;margin:0 0 22px;letter-spacing:0}
         .hero h1 span{color:var(--gold)}
         .hero-sub{font-size:clamp(16px,2.2vw,20px);color:rgba(255,255,255,0.86);max-width:520px;margin:0 0 28px;font-weight:600;line-height:1.55}
         .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
@@ -57,38 +59,47 @@
         .hero-btn-primary{background:linear-gradient(180deg,#ffcf58,#f3a80d);color:#061b36;box-shadow:0 18px 36px rgba(247,183,49,.32)}
         .hero-btn-secondary{border:1.5px solid rgba(255,255,255,.55);color:white;background:rgba(255,255,255,.06)}
         .hero-visual{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center;overflow:visible}
-        .hero-art{display:block;width:min(880px,148%);max-width:none;height:auto;filter:drop-shadow(0 38px 78px rgba(0,0,0,.36));transform:translateX(52px)}
+        .hero-visual::before{content:'';position:absolute;width:74%;height:58%;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(58,130,255,.5),rgba(58,130,255,0) 70%);filter:blur(36px);z-index:0;pointer-events:none}
+        .hero-art{position:relative;z-index:1;display:block;width:min(660px,112%);max-width:none;height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.34));transform:none}
         @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}60%{transform:translateY(-6px)}}
 
         /* ======= STEPS ======= */
-        .steps-section{padding:46px 20px 14px;max-width:760px;margin:0 auto}
-        .section-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.12em;text-align:center;margin-bottom:4px}
-        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(25px,4vw,36px);font-weight:900;text-align:center;color:var(--navy);margin-bottom:28px;line-height:1.08;letter-spacing:0}
-        .steps-row{display:grid;gap:12px;margin-bottom:8px}
-        .step-card{display:grid;grid-template-columns:60px 1fr 28px;gap:16px;align-items:center;padding:18px;background:white;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(226,232,240,.9)}
-        .step-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:22px}
-        .step-1 .step-icon{background:#eff6ff;color:var(--blue)}.step-2 .step-icon{background:#fef3c7;color:var(--gold)}.step-3 .step-icon{background:#d1fae5;color:var(--green)}
-        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:2px}
-        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:900;color:var(--navy);line-height:1.15}
-        .step-copy{font-size:13px;color:#64748b;line-height:1.35;margin-top:4px}
-        .step-chevron{color:var(--navy);font-size:15px;opacity:.7}
+        .steps-section{padding:54px 20px 16px;max-width:780px;margin:0 auto}
+        .section-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.16em;text-align:center;margin-bottom:7px}
+        .steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,40px);font-weight:900;text-align:center;color:var(--navy);margin-bottom:30px;line-height:1.06;letter-spacing:-.01em}
+        .steps-row{display:grid;gap:14px;margin-bottom:8px}
+        .step-card{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:22px 24px;background:white;border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(226,232,240,.9);transition:transform .2s,box-shadow .2s}
+        .step-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+        .step-icon{position:relative;width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:27px;color:white;flex-shrink:0}
+        .step-1 .step-icon{background:linear-gradient(135deg,#3a82ff,#1657d9);box-shadow:0 10px 22px rgba(22,87,217,.32)}
+        .step-2 .step-icon{background:linear-gradient(135deg,#ffd36a,#f3a80d);box-shadow:0 10px 22px rgba(243,168,13,.32)}
+        .step-3 .step-icon{background:linear-gradient(135deg,#4fe0a3,#059669);box-shadow:0 10px 22px rgba(5,150,105,.32)}
+        .step-num-badge{position:absolute;top:-9px;left:-9px;width:28px;height:28px;border-radius:50%;background:white;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;display:grid;place-items:center;box-shadow:0 3px 9px rgba(6,27,54,.18)}
+        .step-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);margin-bottom:4px}
+        .step-2 .step-num{color:#d97706}.step-3 .step-num{color:#059669}
+        .step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:900;color:var(--navy);line-height:1.15;margin-bottom:5px}
+        .step-copy{font-size:15px;color:var(--gray-600);line-height:1.5}
 
         /* ======= TRUST BAR ======= */
         .trust-bar{position:relative;z-index:4;max-width:1000px;margin:-74px auto 0;padding:0 20px}
         .trust-items{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:white;border-radius:18px;box-shadow:0 24px 70px rgba(10,31,66,.16);border:1px solid rgba(226,232,240,.8);overflow:hidden}
-        .trust-items span{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:20px;font-size:13px;font-weight:700;color:var(--gray-500);border-right:1px solid #e2e8f0}
-        .trust-items span:last-child{border-right:none}
-        .trust-items i{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:20px}
-        .trust-items strong{display:block;font-family:'Plus Jakarta Sans',sans-serif;color:var(--navy);font-size:14px;margin-bottom:2px}
-        .trust-items small{display:block;font-size:12px;line-height:1.35;color:#64748b}
-        .trust-items i.fa-lock{background:#e8fff5;color:var(--green)}.trust-items i.fa-shield-halved{background:#eff6ff;color:var(--blue)}.trust-items i.fa-clock{background:#fff7df;color:var(--gold)}
+        .trust-item{display:grid;grid-template-columns:44px 1fr;gap:13px;align-items:center;padding:18px 20px;border-right:1px solid #eef2f7}
+        .trust-item:last-child{border-right:none}
+        .trust-item > i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:18px}
+        .ti-text{min-width:0}
+        .ti-text strong{display:block;font-family:'Plus Jakarta Sans',sans-serif;color:var(--navy);font-size:14px;margin-bottom:3px;line-height:1.2}
+        .ti-text small{display:block;font-size:12px;line-height:1.4;color:#64748b}
+        .trust-item .ti-lock{background:#e8fff5;color:var(--green)}.trust-item .ti-shield{background:#eff6ff;color:var(--blue)}.trust-item .ti-clock{background:#fff7df;color:var(--gold)}
 
         /* ======= DOCUMENT TYPES ======= */
-        .send-types{max-width:760px;margin:0 auto;padding:0 20px 22px}
-        .send-types-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;text-align:center}
-        .send-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-        .send-type{background:white;border:1px solid rgba(226,232,240,.9);border-radius:14px;min-height:86px;display:grid;place-items:center;text-align:center;padding:12px 8px;box-shadow:0 8px 22px rgba(13,35,73,.05)}
-        .send-type i{font-size:22px;color:var(--blue);margin-bottom:7px}.send-type span{font-size:12px;font-weight:900;color:var(--navy);line-height:1.15}
+        .send-types{max-width:780px;margin:0 auto;padding:6px 20px 28px}
+        .send-types-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.16em;margin:0 0 16px;text-align:center}
+        .send-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+        .send-type{background:white;border:1px solid rgba(226,232,240,.9);border-radius:18px;min-height:108px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;text-align:center;padding:16px 10px;box-shadow:0 8px 22px rgba(13,35,73,.05);transition:transform .2s,box-shadow .2s,border-color .2s}
+        .send-type:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(13,35,73,.12);border-color:#c7dbff}
+        .send-type-ic{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:22px}
+        .send-type span{font-size:13.5px;font-weight:800;color:var(--navy);line-height:1.2}
+        .st-blue{background:#eff6ff;color:#1657d9}.st-gold{background:#fff7df;color:#d97706}.st-green{background:#e8fff5;color:#059669}.st-purple{background:#f3e8ff;color:#7c3aed}.st-red{background:#fee2e2;color:#ef4444}.st-teal{background:#ccfbf1;color:#0d9488}.st-indigo{background:#e0e7ff;color:#4f46e5}.st-slate{background:#eef2f7;color:#475569}
 
         /* ======= FORM SECTION ======= */
         .main-upload-wrap{max-width:1120px;margin:0 auto;padding:12px 20px 46px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
@@ -223,6 +234,8 @@
         .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
         .submit-btn .shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.3),transparent);transform:skewX(-25deg);animation:btnshine 4s infinite}
         @keyframes btnshine{0%,60%{left:-100%}100%{left:200%}}
+        .submit-reassure{display:flex;align-items:center;justify-content:center;gap:7px;margin:14px 0 0;font-size:12.5px;font-weight:600;color:var(--gray-500)}
+        .submit-reassure i{color:var(--green);font-size:12px}
 
         /* ======= SENDING / SUCCESS ======= */
         .sending-section{display:none;grid-column:1/-1;padding:60px 20px 40px;text-align:center;max-width:520px;margin:0 auto}
@@ -278,7 +291,23 @@
         .footer-info a{color:rgba(255,255,255,0.6);text-decoration:none}
         .footer-info a:hover{color:var(--gold-light)}
         .footer-copy{max-width:1120px;margin:26px auto 0;font-size:10px;text-transform:uppercase;letter-spacing:2px;opacity:0.46;text-align:center}
+        .footer-social{display:flex;gap:10px;margin-top:16px}
+        .footer-social a{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.82);display:grid;place-items:center;font-size:16px;text-decoration:none;transition:all .2s}
+        .footer-social a:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);transform:translateY(-2px)}
 
+        /* ======= FAQ ======= */
+        .faq-section{max-width:760px;margin:0 auto;padding:6px 20px 40px}
+        .faq-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(25px,4vw,34px);font-weight:900;text-align:center;color:var(--navy);margin-bottom:22px;line-height:1.08}
+        .faq-list{display:flex;flex-direction:column;gap:10px}
+        .faq-item{background:white;border:1px solid rgba(226,232,240,.9);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+        .faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--navy)}
+        .faq-item summary::-webkit-details-marker{display:none}
+        .faq-item summary .faq-q{display:flex;align-items:center;gap:11px}
+        .faq-item summary .faq-q i{color:var(--blue);font-size:15px;width:20px;text-align:center}
+        .faq-item summary .faq-chev{color:var(--gray-400);font-size:14px;transition:transform .25s;flex-shrink:0}
+        .faq-item[open] summary .faq-chev{transform:rotate(180deg);color:var(--blue)}
+        .faq-answer{padding:0 20px 18px 51px;font-size:14px;color:#64748b;line-height:1.6}
+        .faq-answer a{color:var(--blue);font-weight:700;text-decoration:none}
 
         /* ======= MOBILE DOCK ======= */
         .mobile-dock{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gray-200);box-shadow:0 -4px 20px rgba(0,0,0,0.08);padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
@@ -288,27 +317,28 @@
         @media(max-width:900px){
             .hero{min-height:auto;padding-bottom:88px}
             .site-nav{gap:10px}.brand-mark{width:42px;height:42px;border-radius:12px;font-size:18px}.brand-text strong{font-size:14px}.brand-text span{font-size:11px}.nav-upload{height:44px;padding:0 14px;font-size:13px}.nav-menu{width:44px;height:44px}
-            .hero-inner{grid-template-columns:1fr;margin-top:46px;gap:18px}
-            .hero-content{text-align:left}.hero-actions{display:grid;grid-template-columns:1fr;max-width:360px}.hero-btn{width:100%}
-            .hero-visual{min-height:275px;margin:0 -28px -18px;justify-content:center}.hero-art{width:min(610px,128%);transform:translateX(12px)}
-            .trust-bar{margin-top:-48px}.trust-items{grid-template-columns:1fr;border-radius:18px}.trust-items span{border-right:none;border-bottom:1px solid #e2e8f0;padding:16px 18px}.trust-items span:last-child{border-bottom:none}
+            .hero-inner{grid-template-columns:1fr;margin-top:24px;gap:12px}
+            .hero-content{text-align:left}.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:440px}.hero-btn{width:100%}
+            .hero-visual{min-height:auto;margin:8px 0 -14px;justify-content:center}.hero-art{width:min(520px,104%);transform:none}
+            .trust-bar{margin-top:-48px}.trust-items{grid-template-columns:1fr;border-radius:18px}.trust-item{border-right:none;border-bottom:1px solid #eef2f7;padding:15px 18px}.trust-item:last-child{border-bottom:none}
             .main-upload-wrap{grid-template-columns:1fr;padding-top:14px}.help-section{position:static}
             .footer-cta-inner{align-items:flex-start;flex-direction:column}.footer-cta a{width:100%;justify-content:center}
             .footer-inner{grid-template-columns:1fr;text-align:left}
             .mobile-dock{display:none}.footer{padding-bottom:44px}
         }
         @media(max-width:480px){
-            .hero{padding:18px 16px 72px}
+            .hero{padding:14px 16px 60px}
             .nav-upload span{display:none}.nav-upload{width:46px;padding:0;justify-content:center}.nav-menu{display:none}
             .brand-text strong{font-size:13px}.brand-text span{font-size:10px}
-            .hero-inner{margin-top:38px;gap:14px}
-            .hero h1{font-size:38px;line-height:1.04;margin-bottom:14px}
-            .hero-sub{font-size:15px;margin-bottom:18px;line-height:1.5}
-            .hero-btn{min-height:54px}
-            .hero-visual{min-height:240px;margin:0 -72px -20px}.hero-art{width:150%;max-width:590px;transform:translateX(12px)}
+            .hero-inner{margin-top:18px;gap:8px}
+            .hero-badge{margin-bottom:13px;padding:6px 13px;font-size:11px}
+            .hero h1{font-size:33px;line-height:1.06;margin-bottom:11px}
+            .hero-sub{font-size:14px;margin-bottom:14px;line-height:1.45}
+            .hero-actions{max-width:none}.hero-btn{min-height:50px;font-size:15px;padding:0 12px;gap:8px}
+            .hero-visual{min-height:auto;margin:6px 0 -10px}.hero-art{width:min(430px,104%);max-width:none;transform:none}
             .trust-bar{margin-top:-38px}
-            .steps-section{padding-top:38px}.step-card{grid-template-columns:54px 1fr 22px;padding:15px}.step-icon{width:52px;height:52px;font-size:19px}.step-label{font-size:16px}.step-copy{font-size:12px}
-            .send-type-grid{grid-template-columns:repeat(2,1fr)}
+            .steps-section{padding-top:42px}.step-card{grid-template-columns:auto 1fr;gap:15px;padding:18px}.step-icon{width:58px;height:58px;font-size:23px}.step-label{font-size:18px}.step-copy{font-size:14px}
+            .send-type-grid{grid-template-columns:repeat(2,1fr);gap:11px}.send-type{min-height:100px}
             .main-upload-wrap{padding-left:14px;padding-right:14px}
             .form-card{padding:22px 16px}
             .form-grid{grid-template-columns:1fr}
@@ -342,15 +372,19 @@
         </nav>
         <div class="hero-inner">
             <div class="hero-content">
-                <h1>Securely Upload <span>Photos, Forms &amp; Insurance Documents</span></h1>
-                <p class="hero-sub">Send documents to Bill Layne Insurance quickly, safely, and with complete confidence. It takes less than a minute.</p>
+                <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
+                <h1>Securely Upload <span>Photos, Forms &amp;</span> Insurance Documents</h1>
+                <p class="hero-sub">Securely send your photos and documents to our team in under a minute.</p>
                 <div class="hero-actions">
                     <a href="#upload-form" class="hero-btn hero-btn-primary"><i class="fas fa-arrow-up-from-bracket"></i> Start Upload</a>
                     <a href="#stepsSection" class="hero-btn hero-btn-secondary"><i class="fas fa-play"></i> How It Works</a>
                 </div>
             </div>
             <div class="hero-visual" aria-hidden="true">
-                <img class="hero-art" src="assets/document-upload-success-transparent.png" alt="">
+                <picture>
+                    <source srcset="assets/hero-upload-2026.webp" type="image/webp">
+                    <img class="hero-art" src="assets/hero-upload-2026.png" alt="" width="915" height="952" decoding="async">
+                </picture>
             </div>
         </div>
     </header>
@@ -358,9 +392,9 @@
     <!-- TRUST BAR -->
     <div class="trust-bar" id="trustBar">
         <div class="trust-items">
-            <span><i class="fas fa-lock"></i><span><strong>100% Secure</strong><small>Your data is encrypted and protected.</small></span></span>
-            <span><i class="fas fa-shield-halved"></i><span><strong>Direct to Our Team</strong><small>No third parties. Just our team.</small></span></span>
-            <span><i class="fas fa-clock"></i><span><strong>Under 60 Seconds</strong><small>Quick, simple, and stress-free.</small></span></span>
+            <div class="trust-item"><i class="fas fa-lock ti-lock"></i><div class="ti-text"><strong>100% Secure</strong><small>Your data is encrypted and always protected.</small></div></div>
+            <div class="trust-item"><i class="fas fa-shield-halved ti-shield"></i><div class="ti-text"><strong>Direct to Our Team</strong><small>No third parties. Just our team.</small></div></div>
+            <div class="trust-item"><i class="fas fa-clock ti-clock"></i><div class="ti-text"><strong>Under 60 Seconds</strong><small>Quick, simple, and stress-free.</small></div></div>
         </div>
     </div>
 
@@ -369,23 +403,23 @@
         <div class="section-label">How It Works</div>
         <h2 class="steps-title">It's Easy - Just 3 Steps</h2>
         <div class="steps-row">
-            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i></div><div><div class="step-num">Step 1</div><div class="step-label">Your Info</div><div class="step-copy">Tell us who you are so we know where to send it.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
-            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i></div><div><div class="step-num">Step 2</div><div class="step-label">Snap or Upload</div><div class="step-copy">Take a photo or upload files from your phone.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
-            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check-circle"></i></div><div><div class="step-num">Step 3</div><div class="step-label">Done!</div><div class="step-copy">Your documents are securely sent to our team.</div></div><i class="fas fa-chevron-down step-chevron"></i></div>
+            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i><span class="step-num-badge">1</span></div><div><div class="step-num">Step One</div><div class="step-label">Tell Us Who You Are</div><div class="step-copy">Just your name and email so we know exactly where your documents should go.</div></div></div>
+            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i><span class="step-num-badge">2</span></div><div><div class="step-num">Step Two</div><div class="step-label">Snap or Upload</div><div class="step-copy">Take a photo or pick files right from your phone — photos and PDFs both work great.</div></div></div>
+            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check"></i><span class="step-num-badge">3</span></div><div><div class="step-num">Step Three</div><div class="step-label">You're Done!</div><div class="step-copy">Tap send and your documents arrive securely with our team in seconds.</div></div></div>
         </div>
     </section>
 
     <section class="send-types" aria-label="Documents you can send">
         <h2 class="send-types-title">What You Can Send</h2>
         <div class="send-type-grid">
-            <div class="send-type"><i class="fas fa-id-card"></i><span>ID Cards</span></div>
-            <div class="send-type"><i class="fas fa-camera"></i><span>Photos</span></div>
-            <div class="send-type"><i class="fas fa-calculator"></i><span>Estimates</span></div>
-            <div class="send-type"><i class="fas fa-envelope"></i><span>Letters</span></div>
-            <div class="send-type"><i class="fas fa-shield-halved"></i><span>Policy Docs</span></div>
-            <div class="send-type"><i class="fas fa-clipboard-list"></i><span>Claim Forms</span></div>
-            <div class="send-type"><i class="fas fa-receipt"></i><span>Receipts</span></div>
-            <div class="send-type"><i class="fas fa-circle-ellipsis"></i><span>And More</span></div>
+            <div class="send-type"><span class="send-type-ic st-blue"><i class="fas fa-id-card"></i></span><span>ID Cards</span></div>
+            <div class="send-type"><span class="send-type-ic st-purple"><i class="fas fa-camera"></i></span><span>Photos</span></div>
+            <div class="send-type"><span class="send-type-ic st-gold"><i class="fas fa-calculator"></i></span><span>Estimates</span></div>
+            <div class="send-type"><span class="send-type-ic st-teal"><i class="fas fa-envelope"></i></span><span>Letters</span></div>
+            <div class="send-type"><span class="send-type-ic st-green"><i class="fas fa-shield-halved"></i></span><span>Policy Docs</span></div>
+            <div class="send-type"><span class="send-type-ic st-indigo"><i class="fas fa-clipboard-list"></i></span><span>Claim Forms</span></div>
+            <div class="send-type"><span class="send-type-ic st-red"><i class="fas fa-receipt"></i></span><span>Receipts</span></div>
+            <div class="send-type"><span class="send-type-ic st-slate"><i class="fas fa-ellipsis"></i></span><span>And More</span></div>
         </div>
     </section>
 
@@ -520,6 +554,7 @@
                     <span class="shine"></span>
                     <i class="fas fa-lock"></i> Send My Documents
                 </button>
+                <p class="submit-reassure"><i class="fas fa-lock"></i> Your information is 100% secure and encrypted.</p>
 
             </form>
         </div>
@@ -571,6 +606,34 @@
     </section>
     </main>
 
+    <!-- FAQ -->
+    <section class="faq-section" aria-label="Common questions">
+        <div class="section-label">Common Questions</div>
+        <h2 class="faq-title">Good to Know</h2>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary><span class="faq-q"><i class="fas fa-shield-halved"></i> Is my upload secure?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
+                <div class="faq-answer">Yes. Every file is encrypted while it's sent and goes straight to our team at Bill Layne Insurance — never to a third party or outside service.</div>
+            </details>
+            <details class="faq-item">
+                <summary><span class="faq-q"><i class="fas fa-file-lines"></i> What file types can I send?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
+                <div class="faq-answer">Photos straight from your phone (JPG, PNG, HEIC), PDFs, and Word documents all work great. You can attach several files at once, up to 10&nbsp;MB each.</div>
+            </details>
+            <details class="faq-item">
+                <summary><span class="faq-q"><i class="fas fa-camera"></i> Do I need a scanner?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
+                <div class="faq-answer">No scanner needed. Just tap <strong>Take a Photo</strong> and snap a clear picture of your document — a phone photo is all we need.</div>
+            </details>
+            <details class="faq-item">
+                <summary><span class="faq-q"><i class="fas fa-clock"></i> How soon will you respond?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
+                <div class="faq-answer">We review uploads quickly and reach out if we need anything else — most requests are handled within one business day.</div>
+            </details>
+            <details class="faq-item">
+                <summary><span class="faq-q"><i class="fas fa-headset"></i> Need help? Call or text us.</span><i class="fas fa-chevron-down faq-chev"></i></summary>
+                <div class="faq-answer">Our team is happy to walk you through it. Call or text <a href="tel:3368351993">(336)&nbsp;835-1993</a> Monday–Friday, 9am–5pm.</div>
+            </details>
+        </div>
+    </section>
+
     <section class="footer-cta">
         <div class="footer-cta-inner">
             <div>
@@ -588,6 +651,11 @@
                 <img src="assets/bill-layne-logo.png" alt="Bill Layne Insurance" class="footer-logo">
                 <div class="footer-name">Bill Layne Insurance Agency</div>
                 <div class="footer-info">Local service. Trusted protection.<br>We're here for you.</div>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/dollarbillagency" target="_blank" rel="noopener" aria-label="Bill Layne Insurance on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://m.me/dollarbillagency" target="_blank" rel="noopener" aria-label="Message us on Messenger"><i class="fab fa-facebook-messenger"></i></a>
+                    <a href="https://www.google.com/search?q=Bill+Layne+Insurance+Agency+Elkin+NC" target="_blank" rel="noopener" aria-label="Find Bill Layne Insurance on Google"><i class="fab fa-google"></i></a>
+                </div>
             </div>
             <div>
                 <div class="footer-name">Contact</div>
