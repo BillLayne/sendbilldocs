@@ -1,0 +1,6 @@
+# Local-only docs — do NOT publish to the GitHub Pages site (sendbilldocs.com)
+HANDOFF.md
+
+# Local preview / scratch artifacts
+_email-preview.html
+*.local.html
