@@ -132,6 +132,16 @@
         .custom-request-ref img{width:100%;max-width:400px;border-radius:10px;border:2px solid #fbbf24;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
         .custom-request-ref .ref-caption{margin-top:6px;font-size:11px;color:#a16207;font-weight:600;text-align:center}
 
+        .doc-example{display:none;margin:0 0 18px;border:1.5px solid #bfdbfe;border-radius:var(--radius);background:#eff6ff;overflow:hidden}
+        .doc-example.active{display:block}
+        .doc-example-header{display:flex;align-items:center;gap:10px;padding:12px 14px;color:#1e40af;font-weight:800;font-size:14px}
+        .doc-example-header i{font-size:18px;color:var(--blue)}
+        .doc-example-body{padding:0 14px 14px;display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:center}
+        .doc-example-img{width:132px;aspect-ratio:1/1;object-fit:cover;border-radius:12px;border:2px solid white;box-shadow:0 4px 12px rgba(15,23,42,0.12);background:white}
+        .doc-example-copy{font-size:13px;line-height:1.45;color:#1e3a8a}
+        .doc-example-copy strong{display:block;margin-bottom:3px;color:#172554;font-size:13px}
+        @media(max-width:480px){.doc-example-body{grid-template-columns:1fr}.doc-example-img{width:100%;max-width:220px;margin:0 auto}.doc-example-copy{text-align:center}}
+
         /* ======= STANDARD UPLOAD ZONE (non-photo mode) ======= */
         .upload-zone{position:relative;border:2px dashed #7ba7ff;border-radius:18px;padding:34px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:linear-gradient(180deg,#fbfdff,#f4f8ff)}
         .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:#eff6ff}
@@ -477,6 +487,20 @@
                 </div>
                 </div>
 
+                <div class="doc-example" id="docExample" aria-live="polite">
+                    <div class="doc-example-header">
+                        <i class="fas fa-circle-info"></i>
+                        <span id="docExampleTitle">Example</span>
+                    </div>
+                    <div class="doc-example-body">
+                        <img class="doc-example-img" id="docExampleImg" src="" alt="" loading="lazy" decoding="async" fetchpriority="low">
+                        <div class="doc-example-copy">
+                            <strong id="docExampleHeading">What to send</strong>
+                            <span id="docExampleText"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ===== CUSTOM REQUEST BANNER (shown when agent sends custom request) ===== -->
                 <div class="custom-request-banner" id="customRequestBanner">
                     <div class="custom-request-header">
@@ -812,6 +836,22 @@
     });
     const DAMAGE_PHOTO_KEYS = ['damage'];
     const ALL_PHOTO_KEYS = HOME_PHOTO_KEYS;
+    const DOC_EXAMPLES = {
+        'Drivers License': {
+            title: "Driver's License Example",
+            heading: 'Send a clear photo of the front of the license',
+            text: 'Place the license on a flat surface with all four corners visible. Make sure the name, address, license number, and expiration date are readable.',
+            img: 'https://i.imgur.com/jMwqXE4.jpeg',
+            alt: "Example of a driver's license photo for upload"
+        },
+        'Vehicle Registration': {
+            title: 'Vehicle Registration Example',
+            heading: 'Send the vehicle registration card or document',
+            text: 'A photo or PDF is fine. Please make sure the vehicle year, make, model, VIN, plate, and expiration are readable if available.',
+            img: 'https://i.imgur.com/Yjc4C03.jpeg',
+            alt: 'Example of a vehicle registration document for upload'
+        }
+    };
 
     // =============================================
     // STATE
@@ -861,6 +901,27 @@
             console.warn('Could not parse custom photo requests', error);
             return [];
         }
+    }
+
+    function updateDocExample(docType) {
+        var example = DOC_EXAMPLES[docType];
+        var panel = document.getElementById('docExample');
+        var img = document.getElementById('docExampleImg');
+        if (!panel || !img) return;
+
+        if (!example) {
+            panel.classList.remove('active');
+            img.removeAttribute('src');
+            img.alt = '';
+            return;
+        }
+
+        document.getElementById('docExampleTitle').textContent = example.title;
+        document.getElementById('docExampleHeading').textContent = example.heading;
+        document.getElementById('docExampleText').textContent = example.text;
+        img.src = example.img;
+        img.alt = example.alt;
+        panel.classList.add('active');
     }
 
     // =============================================
@@ -1215,6 +1276,7 @@
     // DOC TYPE CHANGE → SWITCH MODES
     // =============================================
     document.getElementById('docType').addEventListener('change', function() {
+        updateDocExample(this.value);
         if (this.value === 'Home Inspection Photos') {
             enterPhotoMode(ALL_PHOTO_KEYS);
         } else if (this.value === 'Auto Claim / Accident Photos') {
@@ -1254,6 +1316,7 @@
             } else if (docVal === 'Auto Claim / Accident Photos') {
                 enterPhotoMode(CLAIM_PHOTO_KEYS);
             }
+            updateDocExample(docSelect.value);
         }
 
         // Handle specific photos list: ?photos=bathroom,kitchen,breaker_box
@@ -1291,7 +1354,10 @@
         // Auto-scroll to upload zone when agent sends prefilled link
         if (params.has('name') || params.has('doc') || params.has('photos') || params.has('customPhotos') || params.has('customDoc')) {
             setTimeout(function() {
-                var target = photoMode ? document.getElementById('photoInspectionArea') : document.getElementById('uploadZone');
+                var docExample = document.getElementById('docExample');
+                var target = docExample && docExample.classList.contains('active')
+                    ? docExample
+                    : (photoMode ? document.getElementById('photoInspectionArea') : document.getElementById('uploadZone'));
                 if (target) {
                     target.scrollIntoView({ behavior:'smooth', block:'center' });
                 }
