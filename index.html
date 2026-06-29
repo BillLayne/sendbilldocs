@@ -456,6 +456,7 @@
                     <label class="form-label" for="docType">What Are You Sending? <span class="required">*</span></label>
                     <select id="docType" class="form-input" required>
                         <option value="" disabled selected>Choose one...</option>
+                        <option value="Auto Claim / Accident Photos">Auto Claim / Accident Photos</option>
                         <option value="Photo of Damage">Photo of Damage</option>
                         <option value="Tow Bill">Tow Bill / Towing Receipt</option>
                         <option value="Estimate / Repair Bill">Estimate / Repair Bill</option>
@@ -706,6 +707,39 @@
             sample: '',
             caption: 'Take a clear photo of the requested damage'
         },
+        'exchange_slip': {
+            label: 'Exchange Slip',
+            hint: 'Police exchange slip, if available',
+            icon: 'fa-file-shield',
+            sample: 'https://i.imgur.com/xFz3QCc.jpeg',
+            caption: 'Upload a photo or PDF of the exchange slip if you have it',
+            optional: true
+        },
+        'your_vehicle_damage': {
+            label: 'Your Vehicle Damage',
+            hint: 'Damage photos of your vehicle, if available',
+            icon: 'fa-car-burst',
+            sample: 'https://i.imgur.com/i3WylEG.jpeg',
+            caption: 'Take clear photos of your vehicle from a few angles',
+            optional: true
+        },
+        'other_damage': {
+            label: 'Other Vehicle / Property Damage',
+            hint: 'Other vehicle or property damage, if available',
+            icon: 'fa-car-on',
+            sample: 'https://i.imgur.com/i3WylEG.jpeg',
+            caption: 'Add photos of other vehicle or property damage if you have them',
+            optional: true
+        },
+        'additional_damage_photos': {
+            label: 'Additional Damage Photos',
+            hint: 'Extra angles or close-ups, if available',
+            icon: 'fa-images',
+            sample: 'https://i.imgur.com/i3WylEG.jpeg',
+            caption: 'Add any extra damage photos that may help the claim',
+            optional: true,
+            multiple: true
+        },
         'bathroom': {
             label: 'Bathroom',
             hint: 'Full view of bathroom — tub, shower & fixtures',
@@ -772,7 +806,10 @@
     };
 
     // Default photo sets by request type
-    const HOME_PHOTO_KEYS = Object.keys(PHOTO_TYPES).filter(function(key){ return key !== 'damage'; });
+    const CLAIM_PHOTO_KEYS = ['exchange_slip','your_vehicle_damage','other_damage','additional_damage_photos'];
+    const HOME_PHOTO_KEYS = Object.keys(PHOTO_TYPES).filter(function(key){
+        return ['damage','exchange_slip','your_vehicle_damage','other_damage','additional_damage_photos'].indexOf(key) === -1;
+    });
     const DAMAGE_PHOTO_KEYS = ['damage'];
     const ALL_PHOTO_KEYS = HOME_PHOTO_KEYS;
 
@@ -890,6 +927,15 @@
         return /\.(heic|heif|jpg|jpeg|png|gif|bmp|tiff|tif|webp)$/i.test(file.name || '');
     }
 
+    function isHeicFile(file) {
+        if (!file) return false;
+        return /image\/hei[cf]/i.test(file.type || '') || /\.(heic|heif)$/i.test(file.name || '');
+    }
+
+    function isPreviewableImageFile(file) {
+        return isImageFile(file) && !isHeicFile(file);
+    }
+
     function getFileIcon(file) {
         if (isImageFile(file)) return { c:'img', i:'fa-image' };
         if (file.type === 'application/pdf') return { c:'pdf', i:'fa-file-pdf' };
@@ -927,17 +973,26 @@
     // =============================================
     // PHOTO INSPECTION MODE
     // =============================================
+    function isClaimPhotoSet(keys) {
+        return keys.length > 0 && keys.every(function(k){ return CLAIM_PHOTO_KEYS.indexOf(k) > -1; });
+    }
+
     function enterPhotoMode(keys) {
         photoMode = true;
         requiredPhotoKeys = keys.filter(function(k){ return !!PHOTO_TYPES[k]; });
         if (requiredPhotoKeys.length === 0) { exitPhotoMode(); return; }
         var isDamage = requiredPhotoKeys.every(function(k){ return k === 'damage'; });
+        var isClaim = isClaimPhotoSet(requiredPhotoKeys);
         var titleEl = document.getElementById('photoModeTitle');
         var subEl = document.getElementById('photoModeSubtitle');
-        if (titleEl) titleEl.textContent = isDamage ? 'Damage Photos Needed' : 'Home Insurance Photos Needed';
-        if (subEl) subEl.textContent = isDamage
-            ? 'Take clear photos of the damage from a few angles. Tap the camera button to snap each one.'
-            : 'Use the example photos as a guide. Tap the camera button on each card to snap your photo.';
+        var progressLabel = document.querySelector('.photo-progress-label');
+        if (titleEl) titleEl.textContent = isClaim ? 'Auto Claim Items' : (isDamage ? 'Damage Photos Needed' : 'Home Insurance Photos Needed');
+        if (subEl) subEl.textContent = isClaim
+            ? 'If available, upload the exchange slip and clear photos of the vehicle or property damage. Send whatever you have.'
+            : (isDamage
+                ? 'Take clear photos of the damage from a few angles. Tap the camera button to snap each one.'
+                : 'Use the example photos as a guide. Tap the camera button on each card to snap your photo.');
+        if (progressLabel) progressLabel.textContent = isClaim ? 'Items Uploaded' : 'Photos Uploaded';
         document.getElementById('standardUploadArea').style.display = 'none';
         document.getElementById('photoInspectionArea').style.display = 'block';
         renderPhotoGrid();
@@ -962,13 +1017,17 @@
             card.className = 'photo-card';
             card.id = 'photocard-' + key;
             var sampleHtml = pt.sample
-                ? '<img src="' + escHtml(pt.sample) + '" alt="Example: ' + escHtml(pt.label) + '" loading="lazy">'
+                ? '<img src="' + escHtml(pt.sample) + '" alt="Example: ' + escHtml(pt.label) + '" loading="lazy" decoding="async" fetchpriority="low">'
                 : '<div class="photo-sample-placeholder"><i class="fas ' + escHtml(pt.icon) + '"></i></div>';
+            var statusText = pt.optional ? 'If available' : 'Needed';
+            var multipleAttr = pt.multiple ? ' multiple' : '';
+            var emptyText = pt.multiple ? 'Tap below to<br>add photos' : 'Tap below to<br>add your photo';
+            var fileButtonText = pt.multiple ? 'From Gallery / Files' : 'From Gallery';
             card.innerHTML =
                 '<div class="photo-card-header">' +
                     '<div class="photo-card-icon"><i class="fas ' + escHtml(pt.icon) + '"></i></div>' +
                     '<div class="photo-card-title"><h4>' + escHtml(pt.label) + '</h4><p>' + escHtml(pt.hint) + '</p></div>' +
-                    '<div class="photo-card-status"><span class="status-badge needed" id="badge-'+escHtml(key)+'"><i class="fas fa-camera" style="margin-right:3px;"></i> Needed</span></div>' +
+                    '<div class="photo-card-status"><span class="status-badge needed" id="badge-'+escHtml(key)+'"><i class="fas fa-camera" style="margin-right:3px;"></i> ' + escHtml(statusText) + '</span></div>' +
                 '</div>' +
                 '<div class="photo-card-body">' +
                     '<div class="photo-sample">' +
@@ -980,15 +1039,15 @@
                     '</div>' +
                     '<div class="photo-upload-slot" id="slot-'+key+'">' +
                         '<div class="slot-empty-icon"><i class="fas fa-camera"></i></div>' +
-                        '<div class="slot-empty-text">Tap below to<br>add your photo</div>' +
+                        '<div class="slot-empty-text">' + emptyText + '</div>' +
                         '<button type="button" class="slot-btn slot-btn-camera" onclick="triggerPhotoInput(\''+key+'\')">' +
                             '<i class="fas fa-camera"></i> Take Photo' +
                         '</button>' +
                         '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
-                            '<i class="fas fa-image"></i> From Gallery' +
+                            '<i class="fas fa-image"></i> ' + fileButtonText +
                         '</button>' +
                         '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-                        '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                        '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf"' + multipleAttr + ' onchange="handlePhotoInput(\''+key+'\',this)">' +
                     '</div>' +
                 '</div>';
             grid.appendChild(card);
@@ -1003,30 +1062,75 @@
     }
 
     function handlePhotoInput(key, inputEl) {
-        var file = inputEl.files[0];
-        if (!file) return;
-        if (file.size > MAX_FILE_SIZE) { alert('"' + file.name + '" is too large. Max file size is 10MB.'); inputEl.value=''; return; }
-        photoFiles[key] = file;
+        var incoming = Array.prototype.slice.call(inputEl.files || []);
+        if (!incoming.length) return;
+        var pt = PHOTO_TYPES[key] || {};
+        var accepted = [];
+        for (var i = 0; i < incoming.length; i++) {
+            var file = incoming[i];
+            if (file.size > MAX_FILE_SIZE) { alert('"' + file.name + '" is too large. Max file size is 10MB.'); continue; }
+            accepted.push(file);
+        }
+        if (!accepted.length) { inputEl.value=''; return; }
+        if (pt.multiple) {
+            var existing = Array.isArray(photoFiles[key]) ? photoFiles[key] : (photoFiles[key] ? [photoFiles[key]] : []);
+            accepted.forEach(function(file){
+                var duplicate = existing.some(function(existingFile){
+                    return existingFile.name === file.name && existingFile.size === file.size;
+                });
+                if (!duplicate) existing.push(file);
+            });
+            photoFiles[key] = existing;
+        } else {
+            photoFiles[key] = accepted[0];
+        }
         inputEl.value = '';
-        renderPhotoSlot(key, file);
+        renderPhotoSlot(key, photoFiles[key]);
         updatePhotoProgress();
         document.getElementById('fileError').style.display = 'none';
     }
 
-    function renderPhotoSlot(key, file) {
+    function renderPhotoSlot(key, fileValue) {
         var slot = document.getElementById('slot-' + key);
         var card = document.getElementById('photocard-' + key);
         var badge = document.getElementById('badge-' + key);
         if (!slot || !card) return;
+        var pt = PHOTO_TYPES[key] || {};
+        var files = Array.isArray(fileValue) ? fileValue : [fileValue];
+        files = files.filter(Boolean);
+        if (!files.length) return;
 
         // Update card styling
         card.classList.add('uploaded');
         card.classList.remove('required-missing');
         badge.className = 'status-badge done';
-        badge.innerHTML = '<i class="fas fa-check" style="margin-right:3px;"></i> Done!';
+        badge.innerHTML = '<i class="fas fa-check" style="margin-right:3px;"></i> ' + (pt.multiple ? files.length + ' Added' : 'Done!');
 
-        // Show preview in slot
-        if (isImageFile(file)) {
+        if (pt.multiple) {
+            slot.innerHTML =
+                '<div class="photo-check"><i class="fas fa-check"></i></div>' +
+                '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+                    files.map(function(file, index){
+                        var iconClass = isImageFile(file) ? 'fa-image' : (file.type === 'application/pdf' ? 'fa-file-pdf' : 'fa-file');
+                        var note = isHeicFile(file) ? '<div style="font-size:10px;color:var(--gray-400);">Apple HEIC image - ready to upload</div>' : '<div style="font-size:10px;color:var(--gray-400);">' + formatSize(file.size) + '</div>';
+                        return '<div class="file-item" style="padding:7px;margin:0;">' +
+                            '<div class="file-item-icon img" style="width:32px;height:32px;font-size:13px;"><i class="fas ' + iconClass + '"></i></div>' +
+                            '<div class="file-item-info"><div class="file-item-name" style="font-size:11px;">' + escHtml(file.name) + '</div>' + note + '</div>' +
+                            '<button type="button" class="file-item-remove" onclick="removePhotoFile(\''+key+'\','+index+')" aria-label="Remove file"><i class="fas fa-xmark"></i></button>' +
+                        '</div>';
+                    }).join('') +
+                '</div>' +
+                '<button type="button" class="slot-btn slot-btn-file" style="margin-top:8px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
+                    '<i class="fas fa-plus"></i> Add More' +
+                '</button>' +
+                '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
+                '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" multiple onchange="handlePhotoInput(\''+key+'\',this)">';
+            return;
+        }
+
+        var file = files[0];
+        // Show preview in slot when the browser can display it.
+        if (isPreviewableImageFile(file)) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 slot.innerHTML =
@@ -1044,12 +1148,16 @@
             };
             reader.readAsDataURL(file);
         } else {
+            var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name || '');
+            var fileIcon = isHeicFile(file) ? 'fa-image' : (isPdf ? 'fa-file-pdf' : 'fa-file');
+            var fileColor = isHeicFile(file) ? 'var(--blue)' : (isPdf ? 'var(--red)' : 'var(--gray-500)');
+            var fileNote = isHeicFile(file) ? 'Apple HEIC image - ready to upload' : formatSize(file.size);
             slot.innerHTML =
                 '<div class="photo-check"><i class="fas fa-check"></i></div>' +
                 '<div style="text-align:center;">' +
-                    '<i class="fas fa-file-pdf" style="font-size:36px;color:var(--red);margin-bottom:8px;display:block;"></i>' +
+                    '<i class="fas '+fileIcon+'" style="font-size:36px;color:'+fileColor+';margin-bottom:8px;display:block;"></i>' +
                     '<div style="font-size:11px;color:var(--gray-600);font-weight:600;">' + escHtml(file.name) + '</div>' +
-                    '<div style="font-size:10px;color:var(--gray-400);">' + formatSize(file.size) + '</div>' +
+                    '<div style="font-size:10px;color:var(--gray-400);">' + escHtml(fileNote) + '</div>' +
                 '</div>' +
                 '<button type="button" class="slot-btn slot-btn-file" style="margin-top:8px;" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
                     '<i class="fas fa-redo"></i> Replace' +
@@ -1059,7 +1167,15 @@
         }
     }
 
-    function removePhotoFile(key) {
+    function removePhotoFile(key, index) {
+        if (typeof index === 'number' && Array.isArray(photoFiles[key])) {
+            photoFiles[key].splice(index, 1);
+            if (photoFiles[key].length > 0) {
+                renderPhotoSlot(key, photoFiles[key]);
+                updatePhotoProgress();
+                return;
+            }
+        }
         delete photoFiles[key];
         var card = document.getElementById('photocard-' + key);
         var badge = document.getElementById('badge-' + key);
@@ -1067,25 +1183,30 @@
         if (!pt || !card) return;
         card.classList.remove('uploaded');
         badge.className = 'status-badge needed';
-        badge.innerHTML = '<i class="fas fa-camera" style="margin-right:3px;"></i> Needed';
+        badge.innerHTML = '<i class="fas fa-camera" style="margin-right:3px;"></i> ' + (pt.optional ? 'If available' : 'Needed');
         var slot = document.getElementById('slot-' + key);
+        var multipleAttr = pt.multiple ? ' multiple' : '';
+        var emptyText = pt.multiple ? 'Tap below to<br>add photos' : 'Tap below to<br>add your photo';
+        var fileButtonText = pt.multiple ? 'From Gallery / Files' : 'From Gallery';
         slot.innerHTML =
             '<div class="slot-empty-icon"><i class="fas fa-camera"></i></div>' +
-            '<div class="slot-empty-text">Tap below to<br>add your photo</div>' +
+            '<div class="slot-empty-text">' + emptyText + '</div>' +
             '<button type="button" class="slot-btn slot-btn-camera" onclick="triggerPhotoInput(\''+key+'\')">' +
                 '<i class="fas fa-camera"></i> Take Photo' +
             '</button>' +
             '<button type="button" class="slot-btn slot-btn-file" onclick="triggerPhotoFilePicker(\''+key+'\')">' +
-                '<i class="fas fa-image"></i> From Gallery' +
+                '<i class="fas fa-image"></i> ' + fileButtonText +
             '</button>' +
             '<input type="file" class="file-input" id="photo-camera-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment" onchange="handlePhotoInput(\''+key+'\',this)">' +
-            '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf" onchange="handlePhotoInput(\''+key+'\',this)">';
+            '<input type="file" class="file-input" id="photo-file-'+key+'" accept="image/*,.heic,.heif,image/heic,image/heif,.pdf"' + multipleAttr + ' onchange="handlePhotoInput(\''+key+'\',this)">';
         updatePhotoProgress();
     }
 
     function updatePhotoProgress() {
         var total = requiredPhotoKeys.length;
-        var done = Object.keys(photoFiles).length;
+        var done = Object.keys(photoFiles).filter(function(key){
+            return Array.isArray(photoFiles[key]) ? photoFiles[key].length > 0 : !!photoFiles[key];
+        }).length;
         document.getElementById('progressCount').textContent = done + ' of ' + total;
         document.getElementById('progressFill').style.width = (total > 0 ? Math.round((done/total)*100) : 0) + '%';
     }
@@ -1096,6 +1217,8 @@
     document.getElementById('docType').addEventListener('change', function() {
         if (this.value === 'Home Inspection Photos') {
             enterPhotoMode(ALL_PHOTO_KEYS);
+        } else if (this.value === 'Auto Claim / Accident Photos') {
+            enterPhotoMode(CLAIM_PHOTO_KEYS);
         } else {
             // Everything else (incl. Photo of Damage) uses the standard
             // multi-file upload — better for snapping several damage angles.
@@ -1128,6 +1251,8 @@
             // Photo of Damage uses the standard multi-file upload)
             if (docVal === 'Home Inspection Photos') {
                 enterPhotoMode(ALL_PHOTO_KEYS);
+            } else if (docVal === 'Auto Claim / Accident Photos') {
+                enterPhotoMode(CLAIM_PHOTO_KEYS);
             }
         }
 
@@ -1259,6 +1384,16 @@
             var filesToUpload = [];
             if (photoMode) {
                 for (var key in photoFiles) {
+                    if (Array.isArray(photoFiles[key])) {
+                        var multiLabel = PHOTO_TYPES[key] ? PHOTO_TYPES[key].label : key;
+                        for (var mf = 0; mf < photoFiles[key].length; mf++) {
+                            var multiFile = photoFiles[key][mf];
+                            if (!multiFile) continue;
+                            var multiB64 = await fileToBase64(multiFile);
+                            filesToUpload.push({ name: multiLabel + ' ' + (mf + 1) + ' - ' + multiFile.name, type: multiFile.type, size: multiFile.size, data: multiB64 });
+                        }
+                        continue;
+                    }
                     var f = photoFiles[key];
                     var label = PHOTO_TYPES[key] ? PHOTO_TYPES[key].label : key;
                     var b64 = await fileToBase64(f);

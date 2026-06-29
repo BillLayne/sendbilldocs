@@ -270,6 +270,7 @@
                     <label class="field-label" for="agentDocType">What Do They Need to Send?</label>
                     <select id="agentDocType" class="field-input" onchange="handleDocTypeChange()">
                         <option value="">— Don't prefill (let them choose) —</option>
+                        <option value="Auto Claim / Accident Photos">Auto Claim / Accident Photos</option>
                         <option value="Photo of Damage">Photo of Damage</option>
                         <option value="Tow Bill">Tow Bill / Towing Receipt</option>
                         <option value="Estimate / Repair Bill">Estimate / Repair Bill</option>
@@ -454,6 +455,10 @@ function unlockApp() {
 // =============================================
 var PHOTO_TYPES = [
     { key:'damage',             label:'Damage Photo',            icon:'fa-car-burst',        sample:'',                               hint:'Vehicle or property damage' },
+    { key:'exchange_slip',      label:'Exchange Slip',           icon:'fa-file-shield',      sample:'https://i.imgur.com/xFz3QCc.jpeg', hint:'Police exchange slip, if available' },
+    { key:'your_vehicle_damage',label:'Your Vehicle Damage',     icon:'fa-car-burst',        sample:'https://i.imgur.com/i3WylEG.jpeg', hint:'Photos of your vehicle damage, if available' },
+    { key:'other_damage',       label:'Other Vehicle / Property',icon:'fa-car-on',           sample:'https://i.imgur.com/i3WylEG.jpeg', hint:'Other vehicle or property damage, if available' },
+    { key:'additional_damage_photos', label:'Additional Damage Photos', icon:'fa-images',     sample:'https://i.imgur.com/i3WylEG.jpeg', hint:'Extra angles or close-ups, if available' },
     { key:'bathroom',           label:'Bathroom',                icon:'fa-bath',             sample:'https://i.imgur.com/wGZfagl.jpeg',  hint:'Full bathroom view' },
     { key:'breaker_box',        label:'Breaker Box',             icon:'fa-bolt',             sample:'https://i.imgur.com/yY4Xcbo.jpeg',  hint:'Open panel, all breakers' },
     { key:'hot_water_heater',   label:'Hot Water Heater',        icon:'fa-fire',             sample:'https://i.imgur.com/G6lFX7G.jpeg',  hint:'Full unit with age sticker' },
@@ -471,15 +476,22 @@ var PHOTO_TYPES = [
 var customPhotoCounter = 0;
 
 function isPhotoRequestDocType(docType) {
-    return docType === 'Home Inspection Photos' || docType === 'Photo of Damage';
+    return docType === 'Home Inspection Photos' || docType === 'Photo of Damage' || docType === 'Auto Claim / Accident Photos';
 }
 
 function getVisiblePhotoTypes() {
     var docType = document.getElementById('agentDocType').value;
+    if (docType === 'Auto Claim / Accident Photos') {
+        return PHOTO_TYPES.filter(function(pt){
+            return ['exchange_slip','your_vehicle_damage','other_damage','additional_damage_photos'].indexOf(pt.key) > -1;
+        });
+    }
     if (docType === 'Photo of Damage') {
         return PHOTO_TYPES.filter(function(pt){ return pt.key === 'damage'; });
     }
-    return PHOTO_TYPES.filter(function(pt){ return pt.key !== 'damage'; });
+    return PHOTO_TYPES.filter(function(pt){
+        return ['damage','exchange_slip','your_vehicle_damage','other_damage','additional_damage_photos'].indexOf(pt.key) === -1;
+    });
 }
 
 function renderPhotoGrid() {
@@ -489,7 +501,7 @@ function renderPhotoGrid() {
         var item = document.createElement('div');
         item.className = 'photo-check-item';
         var thumb = pt.sample
-            ? '<div class="photo-check-thumb"><img src="' + pt.sample + '" alt="' + pt.label + '" loading="lazy"></div>'
+            ? '<div class="photo-check-thumb"><img src="' + pt.sample + '" alt="' + pt.label + '" loading="lazy" decoding="async" fetchpriority="low"></div>'
             : '<div class="photo-check-thumb icon-thumb"><i class="fas ' + pt.icon + '"></i></div>';
         item.innerHTML =
             '<input type="checkbox" id="photo_' + pt.key + '" value="' + pt.key + '" onchange="updatePhotoCount()">' +
@@ -604,7 +616,8 @@ function handleDocTypeChange() {
         photoSection.classList.add('active');
         customSection.classList.remove('active');
         customPhotoBuilder.classList.add('active');
-        updatePhotoCount();
+        if (val === 'Auto Claim / Accident Photos') selectAllPhotos();
+        else updatePhotoCount();
     } else if (val === 'Other') {
         customSection.classList.add('active');
         photoSection.classList.remove('active');
@@ -709,7 +722,9 @@ function generateLink() {
     lastSelectedPhotoKeys = photoRequests;
 
     // Pick default template for photo requests
-    if (photoRequests.length > 0 && currentTemplate === 'friendly') currentTemplate = 'photos';
+    if (photoRequests.length > 0 && currentTemplate === 'friendly') {
+        currentTemplate = docType === 'Auto Claim / Accident Photos' ? 'claims' : 'photos';
+    }
 
     currentText = buildTextMessage(name, docType, photoRequests, currentLink, currentTemplate, customDocDesc);
 
@@ -765,10 +780,12 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
     var photoList = '';
     if (isPhotos) {
         var photoNames = photoKeys.map(getPhotoLabel).filter(Boolean);
-        photoList = '\n\nPhotos needed:\n' + photoNames.map(function(n){ return '  • ' + n; }).join('\n');
+        var photoListTitle = docType === 'Auto Claim / Accident Photos' ? 'Items requested' : 'Photos needed';
+        photoList = '\n\n' + photoListTitle + ':\n' + photoNames.map(function(n){ return '  • ' + n; }).join('\n');
     }
-    var photoPurpose = docType === 'Photo of Damage' ? 'the damage photos' : 'a few photos';
-    var formalPhotoPurpose = docType === 'Photo of Damage' ? 'damage photos for your claim' : (docType === 'Other' ? 'the requested photos' : 'home photos for your policy');
+    var isAutoClaim = docType === 'Auto Claim / Accident Photos';
+    var photoPurpose = isAutoClaim ? 'any accident documents or damage photos you have available' : (docType === 'Photo of Damage' ? 'the damage photos' : 'a few photos');
+    var formalPhotoPurpose = isAutoClaim ? 'the accident exchange slip and damage photos, if available' : (docType === 'Photo of Damage' ? 'damage photos for your claim' : (docType === 'Other' ? 'the requested photos' : 'home photos for your policy'));
 
     switch (template) {
         case 'photos':
@@ -810,6 +827,14 @@ function buildTextMessage(name, docType, photoKeys, link, template, customDocDes
                 'Thanks! Let us know if you need help. 📞 (336) 835-1993';
 
         case 'claims':
+            if (isAutoClaim) {
+                return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
+                    'this is Bill Layne Insurance regarding your auto claim. If you have them available, please upload a copy/photo of the exchange slip and any clear photos of the vehicle or property damage.' +
+                    photoList + '\n\n' +
+                    'This is not mandatory, but it can help us submit the claim faster:\n\n' +
+                    link + '\n\n' +
+                    'If you have any trouble, call us at (336) 835-1993.';
+            }
             return (firstName ? 'Hi ' + firstName + ', ' : 'Hi, ') +
                 'this is Bill Layne Insurance regarding your claim. ' +
                 (isCustom ? 'We need the following: ' + customDocDesc + '. ' :
