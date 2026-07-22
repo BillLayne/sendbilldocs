@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Send Your Towing Bill | Bill Layne Insurance</title>
+  <meta name="description" content="Take a photo or upload your towing receipt for Bill Layne Insurance to review. No account needed, and you will receive a confirmation number.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://www.sendbilldocs.com/towing/">
+  <meta name="theme-color" content="#0b1f3a">
+  <meta property="og:title" content="Send Your Towing Bill | Bill Layne Insurance">
+  <meta property="og:description" content="Photograph or upload your towing receipt for agency review.">
+  <meta property="og:image" content="https://www.sendbilldocs.com/assets/tow-hero-desktop-2026.jpg">
+  <meta property="og:url" content="https://www.sendbilldocs.com/towing/">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="../assets/tow-hero-desktop-2026.jpg" media="(min-width: 721px)">
+  <link rel="preload" as="image" href="../assets/tow-hero-mobile-2026.jpg" media="(max-width: 720px)">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37THY37CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N37THY37CR', { anonymize_ip: true });
+  </script>
+  <style>
+    :root {
+      --navy: #0b1f3a;
+      --navy-2: #102f5d;
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-soft: #eff6ff;
+      --gold: #fbbf24;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --red: #dc2626;
+      --slate-950: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-300: #cbd5e1;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .11);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--slate-950);
+      background: var(--white);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.is-uploading { overflow: hidden; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { max-width: 100%; }
+    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .icon { width: 22px; height: 22px; flex: 0 0 auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: #bfdbfe;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 20;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,.98);
+      border-bottom: 1px solid rgba(226,232,240,.9);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; text-decoration: none; }
+    .brand img { display: block; width: 210px; height: auto; }
+    .header-help {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 0 16px;
+      color: var(--navy);
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 18px rgba(15,23,42,.06);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      isolation: isolate;
+      overflow: hidden;
+      background: var(--navy) url('../assets/tow-hero-desktop-2026.jpg') center center / cover no-repeat;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(4,16,35,.94) 0%, rgba(4,16,35,.80) 40%, rgba(4,16,35,.22) 68%, rgba(4,16,35,.06) 100%);
+    }
+    .hero-copy { width: min(620px, 56%); padding: 62px 0 66px; }
+    .hero h1 {
+      margin: 0;
+      max-width: 620px;
+      font-family: Outfit, Inter, sans-serif;
+      font-size: clamp(44px, 5.1vw, 72px);
+      line-height: .98;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-lead {
+      max-width: 590px;
+      margin: 22px 0 0;
+      color: #e2e8f0;
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.6;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+    .button {
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: var(--navy); background: var(--gold); box-shadow: 0 14px 28px rgba(251,191,36,.22); }
+    .button-primary:hover { background: #fcd34d; }
+    .button-secondary { color: var(--white); background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.32); backdrop-filter: blur(10px); }
+    .hero-assurance { display: flex; flex-wrap: wrap; gap: 9px 20px; margin-top: 24px; color: #cbd5e1; font-size: 13px; font-weight: 700; }
+    .hero-assurance span { display: inline-flex; align-items: center; gap: 7px; }
+    .hero-assurance .icon { width: 16px; height: 16px; color: #6ee7b7; }
+
+    .trust-strip { background: var(--white); border-bottom: 1px solid var(--slate-200); }
+    .trust-row { min-height: 82px; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; }
+    .trust-item { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 10px 24px; color: var(--slate-700); font-size: 14px; font-weight: 800; }
+    .trust-item + .trust-item { border-left: 1px solid var(--slate-200); }
+    .trust-icon { width: 38px; height: 38px; display: grid; place-items: center; color: var(--blue); background: var(--blue-soft); border-radius: 50%; }
+    .trust-icon .icon { width: 19px; height: 19px; }
+
+    .guide { padding: 74px 0; background: var(--slate-50); }
+    .guide-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 58px; align-items: center; }
+    .guide-media { position: relative; }
+    .guide-media img { display: block; width: 100%; aspect-ratio: 8 / 5; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .guide-badge { position: absolute; left: 18px; bottom: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 11px 14px; color: #065f46; background: rgba(236,253,245,.96); border: 1px solid #a7f3d0; border-radius: var(--radius); font-weight: 800; font-size: 13px; }
+    .section-kicker { margin: 0 0 10px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .section-title { margin: 0; font-family: Outfit, Inter, sans-serif; font-size: clamp(34px, 4vw, 50px); line-height: 1.05; font-weight: 800; letter-spacing: 0; }
+    .section-copy { margin: 17px 0 0; color: var(--slate-600); font-size: 17px; }
+    .check-list { list-style: none; display: grid; gap: 14px; margin: 26px 0 0; padding: 0; }
+    .check-list li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; color: var(--slate-700); }
+    .check-number { width: 34px; height: 34px; display: grid; place-items: center; color: var(--white); background: var(--blue); border-radius: 50%; font-family: Outfit, sans-serif; font-weight: 800; }
+    .check-list strong { display: block; color: var(--slate-950); font-size: 16px; }
+    .check-list span { display: block; margin-top: 2px; font-size: 14px; }
+    .receipt-requirements { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0 0; }
+    .requirement {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 54px;
+      padding: 10px 12px;
+      color: var(--slate-700);
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .requirement:last-child { grid-column: 1 / -1; }
+    .requirement-check { width: 28px; height: 28px; display: grid; place-items: center; color: #047857; background: var(--green-soft); border-radius: 50%; }
+    .requirement-check .icon { width: 15px; height: 15px; }
+    .missing-detail-note { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 13px 14px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius); font-size: 12px; }
+    .missing-detail-note .icon { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; }
+
+    .upload-section { padding: 78px 0 88px; background: var(--white); scroll-margin-top: 16px; }
+    .upload-heading { max-width: 730px; margin: 0 auto 34px; text-align: center; }
+    .upload-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 28px; align-items: start; }
+    .upload-card { padding: 28px; background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .step-label { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .upload-card h3, .next-panel h3 { margin: 0; font-family: Outfit, sans-serif; font-size: 25px; line-height: 1.15; }
+    .upload-card-intro { margin: 8px 0 22px; color: var(--slate-600); font-size: 14px; }
+    .upload-zone {
+      position: relative;
+      min-height: 228px;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      background: var(--blue-soft);
+      border: 2px dashed #93c5fd;
+      border-radius: var(--radius);
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .upload-zone.is-dragging { border-color: var(--blue); background: #dbeafe; }
+    .upload-zone.has-files { background: var(--green-soft); border-color: #6ee7b7; }
+    .upload-symbol { width: 56px; height: 56px; display: grid; place-items: center; margin: 0 auto 13px; color: var(--blue); background: var(--white); border-radius: 50%; box-shadow: 0 8px 20px rgba(37,99,235,.14); }
+    .upload-symbol .icon { width: 27px; height: 27px; }
+    .upload-zone strong { display: block; font-family: Outfit, sans-serif; font-size: 20px; }
+    .upload-zone p { margin: 5px 0 0; color: var(--slate-600); font-size: 13px; }
+    .upload-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .upload-option { min-height: 48px; padding: 0 17px; border: 1px solid var(--blue); border-radius: var(--radius); color: var(--white); background: var(--blue); font-weight: 800; cursor: pointer; }
+    .upload-option.secondary { color: var(--blue); background: var(--white); }
+    .native-file { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+    .file-list { display: grid; gap: 10px; margin-top: 14px; }
+    .file-row { display: grid; grid-template-columns: 62px minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 10px; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius); }
+    .file-preview { width: 62px; height: 54px; object-fit: cover; background: var(--slate-200); border-radius: 5px; }
+    .file-preview.file-generic { display: grid; place-items: center; color: var(--blue); }
+    .file-preview.file-generic .icon { width: 25px; height: 25px; }
+    .file-info { min-width: 0; }
+    .file-name { overflow: hidden; color: var(--slate-800); font-size: 13px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .file-size { margin-top: 2px; color: var(--slate-500); font-size: 12px; }
+    .remove-file { width: 38px; height: 38px; display: grid; place-items: center; color: var(--red); background: var(--white); border: 1px solid #fecaca; border-radius: var(--radius); cursor: pointer; }
+    .remove-file .icon { width: 17px; height: 17px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+    .contact-heading { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; padding: 14px 15px; color: var(--slate-700); background: var(--blue-soft); border: 1px solid #bfdbfe; border-radius: var(--radius); }
+    .contact-heading-icon { width: 38px; height: 38px; display: grid; place-items: center; flex: 0 0 auto; color: var(--blue); background: var(--white); border-radius: 50%; }
+    .contact-heading-icon .icon { width: 19px; height: 19px; }
+    .contact-heading strong { display: block; color: var(--navy); font-size: 14px; }
+    .contact-heading span { display: block; margin-top: 2px; font-size: 12px; }
+    .field.wide { grid-column: 1 / -1; }
+    .field label { display: block; margin-bottom: 7px; color: var(--slate-700); font-size: 13px; font-weight: 800; }
+    .field label span { color: var(--red); }
+    .field input, .field textarea {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 14px;
+      color: var(--slate-950);
+      background: var(--white);
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius);
+      font-size: 16px;
+      outline: none;
+    }
+    .field textarea { min-height: 86px; resize: vertical; }
+    .field input:focus, .field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,.12); }
+    .field input[aria-invalid="true"] { border-color: var(--red); }
+    .field-error { display: none; margin-top: 5px; color: var(--red); font-size: 12px; font-weight: 700; }
+    .field-error.show { display: block; }
+    .honeypot { position: absolute !important; left: -9999px !important; opacity: 0 !important; pointer-events: none !important; }
+    .submit-button { width: 100%; min-height: 58px; margin-top: 22px; color: var(--navy); background: var(--gold); border: 0; border-radius: var(--radius); font-size: 17px; font-weight: 800; cursor: pointer; box-shadow: 0 12px 25px rgba(251,191,36,.23); }
+    .submit-button:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
+    .form-note { display: flex; gap: 8px; align-items: flex-start; margin: 13px 0 0; color: var(--slate-500); font-size: 12px; }
+    .form-note .icon { width: 16px; height: 16px; color: var(--green); margin-top: 1px; }
+    .next-panel { padding: 26px 0 0 4px; }
+    .next-list { display: grid; gap: 20px; margin-top: 25px; }
+    .next-item { display: grid; grid-template-columns: 42px 1fr; gap: 13px; }
+    .next-icon { width: 42px; height: 42px; display: grid; place-items: center; color: var(--blue); background: var(--blue-soft); border-radius: 50%; }
+    .next-icon .icon { width: 20px; height: 20px; }
+    .next-item strong { display: block; color: var(--slate-950); font-size: 14px; }
+    .next-item span { display: block; margin-top: 3px; color: var(--slate-600); font-size: 13px; }
+    .coverage-notice { margin-top: 26px; padding: 15px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius); font-size: 12px; }
+    .coverage-notice strong { display: block; margin-bottom: 4px; color: #78350f; }
+    .privacy-note { margin-top: 18px; color: var(--slate-500); font-size: 12px; }
+    .privacy-note strong { color: var(--slate-700); }
+
+    .site-footer { padding: 30px 0 36px; color: #cbd5e1; background: var(--navy); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .footer-brand { color: var(--white); font-family: Outfit, sans-serif; font-size: 18px; font-weight: 800; }
+    .footer-meta { margin-top: 4px; font-size: 12px; }
+    .footer-link { color: var(--white); font-weight: 800; text-decoration: none; }
+
+    .status-overlay { position: fixed; inset: 0; z-index: 80; display: none; place-items: center; padding: 20px; background: rgba(3,12,28,.82); backdrop-filter: blur(6px); }
+    .status-overlay.active { display: grid; }
+    .status-card { width: min(500px, 100%); padding: 34px 26px; text-align: center; background: var(--white); border-radius: var(--radius); box-shadow: 0 28px 70px rgba(0,0,0,.3); }
+    .status-mark { width: 68px; height: 68px; display: grid; place-items: center; margin: 0 auto 18px; color: var(--white); background: var(--blue); border-radius: 50%; }
+    .status-overlay.active .status-mark:not(.success) { animation: statusPulse 1.25s ease-in-out infinite; }
+    .status-mark.success { background: var(--green); }
+    .status-mark .icon { width: 32px; height: 32px; }
+    .status-card h2 { margin: 0; font-family: Outfit, sans-serif; font-size: 30px; }
+    .status-card p { margin: 10px 0 0; color: var(--slate-600); }
+    .confirmation { display: none; margin: 20px 0 0; padding: 13px; color: var(--slate-700); background: var(--slate-100); border-radius: var(--radius); font-size: 13px; }
+    .confirmation strong { display: block; margin-top: 3px; color: var(--navy); font-size: 19px; letter-spacing: .04em; }
+    .status-actions { display: none; gap: 10px; margin-top: 20px; }
+    .status-actions .button { flex: 1; min-height: 50px; }
+    .status-actions .button-secondary { color: var(--blue); background: var(--white); border-color: var(--slate-300); }
+
+    @keyframes statusPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,99,235,.25); }
+      50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(37,99,235,0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .status-overlay.active .status-mark:not(.success) { animation: none; }
+    }
+
+    @media (max-width: 900px) {
+      .guide-grid { gap: 34px; }
+      .upload-layout { grid-template-columns: minmax(0, 1fr) 280px; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 28px, 620px); }
+      .site-header { height: 64px; }
+      .brand img { width: 174px; }
+      .header-help { width: 44px; min-height: 44px; padding: 0; justify-content: center; }
+      .header-help span { display: none; }
+      .hero {
+        min-height: 548px;
+        align-items: flex-end;
+        background-image: url('../assets/tow-hero-mobile-2026.jpg');
+        background-position: center 34%;
+      }
+      .hero::before { background: linear-gradient(180deg, rgba(4,16,35,.02) 22%, rgba(4,16,35,.43) 48%, rgba(4,16,35,.96) 78%, rgba(4,16,35,1) 100%); }
+      .hero-copy { width: 100%; padding: 234px 0 28px; }
+      .eyebrow { margin-bottom: 9px; font-size: 10px; }
+      .hero h1 { max-width: 390px; font-size: clamp(38px, 11vw, 48px); line-height: 1; }
+      .hero-lead { margin-top: 12px; font-size: 15px; line-height: 1.45; }
+      .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 18px; }
+      .hero-actions .button { min-height: 50px; padding: 0 10px; font-size: 14px; }
+      .hero-assurance { gap: 7px 14px; margin-top: 15px; font-size: 11px; }
+      .trust-row { min-height: 72px; }
+      .trust-item { padding: 9px 8px; font-size: 10px; line-height: 1.25; text-align: center; }
+      .trust-item { flex-direction: column; gap: 5px; }
+      .trust-icon { width: 30px; height: 30px; }
+      .trust-icon .icon { width: 16px; height: 16px; }
+      .guide { padding: 52px 0; }
+      .guide-grid { grid-template-columns: 1fr; gap: 31px; }
+      .guide-copy { order: -1; }
+      .section-title { font-size: 35px; }
+      .section-copy { font-size: 15px; }
+      .receipt-requirements { grid-template-columns: 1fr; }
+      .requirement:last-child { grid-column: auto; }
+      .guide-badge { left: 10px; right: 10px; bottom: 10px; justify-content: center; font-size: 11px; }
+      .upload-section { padding: 54px 0 66px; }
+      .upload-layout { grid-template-columns: 1fr; }
+      .upload-card { padding: 20px 16px; }
+      .upload-zone { min-height: 248px; padding: 24px 13px; }
+      .upload-buttons { display: grid; width: 100%; }
+      .upload-option { width: 100%; min-height: 52px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .field.wide { grid-column: auto; }
+      .next-panel { padding: 5px 2px 0; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .status-actions { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 390px) {
+      .hero { min-height: 570px; }
+      .hero-copy { padding-top: 245px; }
+      .hero h1 { font-size: 38px; }
+      .hero-actions { grid-template-columns: 1fr; }
+      .hero-assurance span:last-child { display: none; }
+      .trust-item { font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="https://www.billlayneinsurance.com" aria-label="Bill Layne Insurance home">
+        <img src="../assets/bill-layne-logo.png" width="420" height="96" alt="Bill Layne Insurance Agency">
+      </a>
+      <a class="header-help" href="tel:3368351993" aria-label="Call Bill Layne Insurance at 336-835-1993">
+        <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+        <span>(336) 835-1993</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg> Bill Layne Insurance customer service</p>
+          <h1 id="page-title">Send Your <span>Towing Bill</span></h1>
+          <p class="hero-lead">Take a clear photo or choose a file from your phone. Our service team will review the receipt and contact you if anything else is needed.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" data-open-camera>
+              <svg class="icon" aria-hidden="true"><use href="#i-camera"></use></svg>
+              Take a Photo
+            </button>
+            <button class="button button-secondary" type="button" data-open-files>
+              <svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>
+              Choose a File
+            </button>
+          </div>
+          <div class="hero-assurance" aria-label="Upload benefits">
+            <span><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>No account needed</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Email confirmation</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Keep your original receipt</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Service assurances">
+      <div class="shell trust-row">
+        <div class="trust-item"><span class="trust-icon"><svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg></span><span>Encrypted in transit</span></div>
+        <div class="trust-item"><span class="trust-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span><span>Sent to our service team</span></div>
+        <div class="trust-item"><span class="trust-icon"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg></span><span>Usually reviewed in 1 business day</span></div>
+      </div>
+    </section>
+
+    <section class="guide" aria-labelledby="photo-guide-title">
+      <div class="shell guide-grid">
+        <div class="guide-media">
+          <img src="../assets/tow-receipt-photo-guide-2026.jpg" width="1586" height="992" loading="lazy" decoding="async" alt="Phone positioned to photograph an entire towing receipt clearly">
+          <div class="guide-badge"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg> This is the right way to frame your receipt</div>
+        </div>
+        <div class="guide-copy">
+          <p class="section-kicker">Before you send</p>
+          <h2 class="section-title" id="photo-guide-title">Make sure your bill has every required detail</h2>
+          <p class="section-copy">The insurance company needs the information below on the towing bill before it can consider reimbursement.</p>
+          <div class="receipt-requirements" aria-label="Required towing bill information">
+            <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Policyholder's full name and address</span></div>
+            <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Vehicle year, make and full VIN</span></div>
+            <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Date the vehicle was towed</span></div>
+            <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Total towing amount</span></div>
+            <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Pickup and destination: where it was towed from and where it was towed to</span></div>
+          </div>
+          <div class="missing-detail-note"><svg class="icon" aria-hidden="true"><use href="#i-receipt"></use></svg><span><strong>Is something missing?</strong> Ask the towing company for a corrected, itemized bill before uploading it.</span></div>
+          <ol class="check-list">
+            <li><span class="check-number">1</span><span><strong>Show all four corners</strong><span>Place the receipt on a flat surface and include the entire page.</span></span></li>
+            <li><span class="check-number">2</span><span><strong>Make every detail readable</strong><span>Check the photo before sending it, especially the VIN, addresses, date and amount.</span></span></li>
+            <li><span class="check-number">3</span><span><strong>Avoid glare and shadows</strong><span>Use bright, even light and hold the phone still before taking the photo.</span></span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="upload-section" id="upload" aria-labelledby="upload-title">
+      <div class="shell">
+        <div class="upload-heading">
+          <p class="section-kicker">Towing receipt upload</p>
+          <h2 class="section-title" id="upload-title">Send it in a few simple steps</h2>
+          <p class="section-copy">Attach your receipt, tell us who you are, and we will send you a confirmation number.</p>
+        </div>
+
+        <div class="upload-layout">
+          <form class="upload-card" id="towForm" novalidate>
+            <p class="step-label">Step 1 of 2</p>
+            <h3>Add your towing receipt</h3>
+            <p class="upload-card-intro">You can add up to five photos or PDF pages. Each file must be 10 MB or smaller.</p>
+
+            <div class="upload-zone" id="uploadZone">
+              <div>
+                <span class="upload-symbol"><svg class="icon" aria-hidden="true"><use href="#i-receipt"></use></svg></span>
+                <strong id="uploadHeading">Photograph or upload the bill</strong>
+                <p id="uploadDescription">Phone photos, JPG, PNG, HEIC and PDF files are accepted.</p>
+                <div class="upload-buttons">
+                  <button class="upload-option" type="button" data-open-camera><svg class="icon" aria-hidden="true"><use href="#i-camera"></use></svg> Take a Photo</button>
+                  <button class="upload-option secondary" type="button" data-open-files><svg class="icon" aria-hidden="true"><use href="#i-folder"></use></svg> Choose a File</button>
+                </div>
+              </div>
+            </div>
+            <input class="native-file" id="cameraInput" type="file" accept="image/*,.heic,.heif,image/heic,image/heif" capture="environment">
+            <input class="native-file" id="fileInput" type="file" accept="image/*,.pdf,.heic,.heif,image/heic,image/heif" multiple>
+            <div class="file-list" id="fileList" aria-live="polite"></div>
+            <div class="field-error" id="fileError">Please take a photo or choose at least one file.</div>
+
+            <div class="field-grid">
+              <div class="contact-heading">
+                <span class="contact-heading-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span>
+                <span><strong>Where should we send your confirmation?</strong><span>Enter a mobile number and email address we can use for this towing bill.</span></span>
+              </div>
+              <div class="field">
+                <label for="fullName">Your name <span>*</span></label>
+                <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="First and last name" required>
+                <div class="field-error" data-error-for="fullName">Please enter your name.</div>
+              </div>
+              <div class="field">
+                <label for="phone">Mobile number <span>*</span></label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(336) 555-1234" required>
+                <div class="field-error" data-error-for="phone">Please enter a phone number.</div>
+              </div>
+              <div class="field wide">
+                <label for="email">Email address <span>*</span></label>
+                <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+                <div class="field-error" data-error-for="email">Please enter a valid email address.</div>
+              </div>
+              <div class="field">
+                <label for="carrier">Insurance company <small>(optional)</small></label>
+                <input id="carrier" name="carrier" type="text" autocomplete="off" placeholder="Example: Progressive">
+              </div>
+              <div class="field">
+                <label for="vehicle">Vehicle <small>(optional)</small></label>
+                <input id="vehicle" name="vehicle" type="text" autocomplete="off" placeholder="Example: 2022 Honda CR-V">
+              </div>
+              <div class="field wide">
+                <label for="notes">Anything else we should know? <small>(optional)</small></label>
+                <textarea id="notes" name="notes" placeholder="Example: The tow happened on July 18 near Elkin."></textarea>
+              </div>
+              <div class="honeypot" aria-hidden="true">
+                <label for="website">Leave this field blank</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+            </div>
+
+            <button class="submit-button" id="submitButton" type="submit">Send My Towing Bill</button>
+            <p class="form-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg><span>Your files are encrypted while being sent and delivered to Bill Layne Insurance. Do not upload Social Security numbers or payment-card information.</span></p>
+          </form>
+
+          <aside class="next-panel" aria-labelledby="next-title">
+            <p class="step-label">Step 2 of 2</p>
+            <h3 id="next-title">What happens next?</h3>
+            <div class="next-list">
+              <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span><span><strong>We receive the receipt</strong><span>It goes to our agency document team with your contact information.</span></span></div>
+              <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg></span><span><strong>We review it</strong><span>We match the bill to your policy and check what information is available.</span></span></div>
+              <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg></span><span><strong>We contact you if needed</strong><span>Keep your original receipt until the review is complete.</span></span></div>
+            </div>
+            <div class="coverage-notice"><strong>Important coverage notice</strong>Uploading a receipt does not guarantee reimbursement. Coverage, service limits, eligibility and carrier requirements vary by policy.</div>
+            <p class="privacy-note"><strong>Need help?</strong><br>Call our service team at <a href="tel:3368351993">(336) 835-1993</a>.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div><div class="footer-brand">Bill Layne Insurance Agency</div><div class="footer-meta">Independent insurance help for North Carolina</div></div>
+      <a class="footer-link" href="https://www.billlayneinsurance.com">BillLayneInsurance.com</a>
+    </div>
+  </footer>
+
+  <div class="status-overlay" id="statusOverlay" role="dialog" aria-modal="true" aria-labelledby="statusTitle" aria-live="polite">
+    <div class="status-card">
+      <span class="status-mark" id="statusMark"><svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg></span>
+      <h2 id="statusTitle">Sending your towing bill</h2>
+      <p id="statusText"><strong>Please wait for your confirmation.</strong><br>Do not close or leave this page while your files are being uploaded.</p>
+      <div class="confirmation" id="confirmationBox">Your confirmation number<strong id="confirmationNumber"></strong></div>
+      <div class="status-actions" id="statusActions">
+        <button class="button button-primary" id="closeConfirmation" type="button">Back to Page</button>
+        <button class="button button-secondary" id="sendAnother" type="button">Send Another Receipt</button>
+        <a class="button button-secondary" href="tel:3368351993">Call Us</a>
+      </div>
+    </div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3v8Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4 16 7h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4l1.5-3h5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3v12m0-12-4 4m4-4 4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 7h6M9 11h6M9 15h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6V2Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 2v5h5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m-9 0 1 14h10l1-14M10 11v6m4-6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <script>
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxPiWW8Oo4U2OkTp6Ut38B06JaPVHuH4TnHHZeV6PWOv1kbz-AoYw2VV2qxTqGfU0UI/exec';
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;
+    const MAX_FILES = 5;
+    const PREVIEW_MODE = location.protocol === 'file:' || new URLSearchParams(location.search).get('preview') === '1';
+    let selectedFiles = [];
+    const formStartedAt = Date.now();
+
+    const form = document.getElementById('towForm');
+    const cameraInput = document.getElementById('cameraInput');
+    const fileInput = document.getElementById('fileInput');
+    const uploadZone = document.getElementById('uploadZone');
+    const fileList = document.getElementById('fileList');
+    const fileError = document.getElementById('fileError');
+    const submitButton = document.getElementById('submitButton');
+
+    function trackEvent(name, params) {
+      if (typeof gtag === 'function') gtag('event', name, params || {});
+    }
+
+    document.querySelectorAll('[data-open-camera]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        trackEvent('tow_camera_open');
+        cameraInput.click();
+      });
+    });
+
+    document.querySelectorAll('[data-open-files]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        trackEvent('tow_file_picker_open');
+        fileInput.click();
+      });
+    });
+
+    cameraInput.addEventListener('change', function() {
+      addFiles(cameraInput.files, 'camera');
+      cameraInput.value = '';
+    });
+    fileInput.addEventListener('change', function() {
+      addFiles(fileInput.files, 'file_picker');
+      fileInput.value = '';
+    });
+
+    ['dragenter', 'dragover'].forEach(function(eventName) {
+      uploadZone.addEventListener(eventName, function(event) {
+        event.preventDefault();
+        uploadZone.classList.add('is-dragging');
+      });
+    });
+    ['dragleave', 'drop'].forEach(function(eventName) {
+      uploadZone.addEventListener(eventName, function(event) {
+        event.preventDefault();
+        uploadZone.classList.remove('is-dragging');
+      });
+    });
+    uploadZone.addEventListener('drop', function(event) { addFiles(event.dataTransfer.files, 'drag_drop'); });
+
+    function addFiles(fileCollection, method) {
+      const incoming = Array.from(fileCollection || []);
+      if (!incoming.length) return;
+      let rejected = '';
+
+      incoming.forEach(function(file) {
+        if (selectedFiles.length >= MAX_FILES) {
+          rejected = 'You can send up to five files at a time.';
+          return;
+        }
+        if (file.size > MAX_FILE_BYTES) {
+          rejected = file.name + ' is larger than 10 MB.';
+          return;
+        }
+        const duplicate = selectedFiles.some(function(existing) {
+          return existing.name === file.name && existing.size === file.size && existing.lastModified === file.lastModified;
+        });
+        if (!duplicate) selectedFiles.push(file);
+      });
+
+      fileError.textContent = rejected || '';
+      fileError.classList.toggle('show', Boolean(rejected));
+      trackEvent('tow_file_selected', { method: method, file_count: selectedFiles.length });
+      renderFiles();
+      document.getElementById('upload').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderFiles() {
+      fileList.innerHTML = '';
+      uploadZone.classList.toggle('has-files', selectedFiles.length > 0);
+      document.getElementById('uploadHeading').textContent = selectedFiles.length ? selectedFiles.length + (selectedFiles.length === 1 ? ' file ready' : ' files ready') : 'Photograph or upload the bill';
+      document.getElementById('uploadDescription').textContent = selectedFiles.length ? 'Review the previews below or add another page.' : 'Phone photos, JPG, PNG, HEIC and PDF files are accepted.';
+
+      selectedFiles.forEach(function(file, index) {
+        const row = document.createElement('div');
+        row.className = 'file-row';
+        const isImage = file.type.startsWith('image/') && !/heic|heif/i.test(file.type + file.name);
+        let preview;
+        if (isImage) {
+          preview = document.createElement('img');
+          preview.className = 'file-preview';
+          preview.alt = 'Preview of ' + file.name;
+          preview.src = URL.createObjectURL(file);
+          preview.onload = function() { URL.revokeObjectURL(preview.src); };
+        } else {
+          preview = document.createElement('span');
+          preview.className = 'file-preview file-generic';
+          preview.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-file"></use></svg>';
+        }
+        const info = document.createElement('div');
+        info.className = 'file-info';
+        const safeName = document.createElement('div');
+        safeName.className = 'file-name';
+        safeName.textContent = file.name;
+        const size = document.createElement('div');
+        size.className = 'file-size';
+        size.textContent = formatFileSize(file.size);
+        info.append(safeName, size);
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'remove-file';
+        remove.setAttribute('aria-label', 'Remove ' + file.name);
+        remove.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-trash"></use></svg>';
+        remove.addEventListener('click', function() {
+          selectedFiles.splice(index, 1);
+          renderFiles();
+        });
+        row.append(preview, info, remove);
+        fileList.append(row);
+      });
+    }
+
+    function formatFileSize(bytes) {
+      if (bytes < 1024 * 1024) return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    document.getElementById('phone').addEventListener('input', function(event) {
+      const digits = event.target.value.replace(/\D/g, '').slice(0, 10);
+      if (digits.length >= 7) event.target.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+      else if (digits.length >= 4) event.target.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+      else event.target.value = digits;
+    });
+
+    function validateForm() {
+      let valid = true;
+      fileError.classList.remove('show');
+      if (!selectedFiles.length) {
+        fileError.textContent = 'Please take a photo or choose at least one file.';
+        fileError.classList.add('show');
+        valid = false;
+      }
+
+      ['fullName', 'phone', 'email'].forEach(function(id) {
+        const input = document.getElementById(id);
+        const error = document.querySelector('[data-error-for="' + id + '"]');
+        let fieldValid = input.value.trim().length > 0;
+        if (id === 'email') fieldValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        if (id === 'phone') fieldValid = input.value.replace(/\D/g, '').length >= 10;
+        input.setAttribute('aria-invalid', fieldValid ? 'false' : 'true');
+        error.classList.toggle('show', !fieldValid);
+        if (!fieldValid) valid = false;
+      });
+      return valid;
+    }
+
+    function fileToBase64(file) {
+      return new Promise(function(resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function() { resolve(String(reader.result).split(',')[1]); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function confirmationNumber() {
+      const now = new Date();
+      const date = String(now.getFullYear()).slice(-2) + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+      return 'TOW-' + date + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+    }
+
+    function showStatus() {
+      const mark = document.getElementById('statusMark');
+      mark.classList.remove('success');
+      mark.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>';
+      document.getElementById('statusTitle').textContent = 'Sending your towing bill';
+      document.getElementById('statusText').innerHTML = '<strong>Please wait for your confirmation.</strong><br>Do not close or leave this page while your files are being uploaded.';
+      document.getElementById('confirmationBox').style.display = 'none';
+      document.getElementById('statusActions').style.display = 'none';
+      form.setAttribute('aria-busy', 'true');
+      document.body.classList.add('is-uploading');
+      document.getElementById('statusOverlay').classList.add('active');
+    }
+
+    function showSuccess(reference) {
+      const mark = document.getElementById('statusMark');
+      mark.classList.add('success');
+      mark.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>';
+      document.getElementById('statusTitle').textContent = PREVIEW_MODE ? 'Preview submission complete' : 'We received your towing bill';
+      document.getElementById('statusText').textContent = PREVIEW_MODE ? 'No files were sent because this page is running locally.' : 'A confirmation email is on its way. Keep your original receipt while our team reviews the request.';
+      document.getElementById('confirmationNumber').textContent = reference;
+      document.getElementById('confirmationBox').style.display = 'block';
+      document.getElementById('statusActions').style.display = 'grid';
+      form.setAttribute('aria-busy', 'false');
+      trackEvent('tow_upload_success', { preview_mode: PREVIEW_MODE });
+    }
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      if (!validateForm()) {
+        trackEvent('tow_upload_validation_error');
+        const firstError = document.querySelector('[aria-invalid="true"]');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        else uploadZone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (document.getElementById('website').value || Date.now() - formStartedAt < 1800) return;
+
+      submitButton.disabled = true;
+      showStatus();
+      const reference = confirmationNumber();
+      trackEvent('tow_upload_submit', { file_count: selectedFiles.length });
+
+      try {
+        if (!PREVIEW_MODE) {
+          const files = [];
+          for (const file of selectedFiles) {
+            files.push({ name: file.name, type: file.type, size: file.size, data: await fileToBase64(file) });
+          }
+          const carrier = document.getElementById('carrier').value.trim();
+          const vehicle = document.getElementById('vehicle').value.trim();
+          const customerNotes = document.getElementById('notes').value.trim();
+          const notes = [carrier ? 'Insurance company: ' + carrier : '', vehicle ? 'Vehicle: ' + vehicle : '', customerNotes].filter(Boolean).join('\n');
+          const payload = {
+            name: document.getElementById('fullName').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            docType: 'Tow Bill',
+            notes: notes,
+            confirmationNumber: reference,
+            files: files,
+            timestamp: new Date().toISOString()
+          };
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          await new Promise(function(resolve) { setTimeout(resolve, 850); });
+        }
+        showSuccess(reference);
+      } catch (error) {
+        console.error(error);
+        trackEvent('tow_upload_error');
+        document.body.classList.remove('is-uploading');
+        document.getElementById('statusOverlay').classList.remove('active');
+        form.setAttribute('aria-busy', 'false');
+        submitButton.disabled = false;
+        alert('We could not send the towing bill. Please try again or call (336) 835-1993.');
+      }
+    });
+
+    document.getElementById('sendAnother').addEventListener('click', function() {
+      selectedFiles = [];
+      form.reset();
+      renderFiles();
+      submitButton.disabled = false;
+      document.body.classList.remove('is-uploading');
+      document.getElementById('statusOverlay').classList.remove('active');
+      form.setAttribute('aria-busy', 'false');
+      document.getElementById('statusMark').classList.remove('success');
+      document.getElementById('statusMark').innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>';
+      document.getElementById('confirmationBox').style.display = 'none';
+      document.getElementById('statusActions').style.display = 'none';
+      document.getElementById('upload').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('closeConfirmation').addEventListener('click', function() {
+      document.body.classList.remove('is-uploading');
+      document.getElementById('statusOverlay').classList.remove('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

@@ -119,7 +119,7 @@ function getRuntimeConfig_() {
     throw new Error('Missing script property: UPLOADS_ROOT_FOLDER_ID');
   }
 
-  const officeEmails = String(props.getProperty('OFFICE_EMAILS') || 'billlayneinsurance@gmail.com')
+  const officeEmails = String(props.getProperty('OFFICE_EMAILS') || 'docs@billlayneinsurance.com')
     .split(',')
     .map(function(value) { return cleanText_(value); })
     .filter(Boolean);

@@ -30,7 +30,7 @@ The Google Drive folder ID where uploads should be stored.
 
 `OFFICE_EMAILS`
 Comma-separated office recipients, for example:
-`billlayneinsurance@gmail.com,save@billlayneinsurance.com`
+`docs@billlayneinsurance.com`
 
 Optional properties:
 
