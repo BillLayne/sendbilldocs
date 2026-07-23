@@ -335,16 +335,16 @@
       .hero::before { background: linear-gradient(180deg, rgba(4,16,35,.02) 22%, rgba(4,16,35,.43) 48%, rgba(4,16,35,.96) 78%, rgba(4,16,35,1) 100%); }
       .hero-copy { width: 100%; padding: 234px 0 28px; }
       .eyebrow { margin-bottom: 9px; font-size: 10px; }
-      .hero h1 { max-width: 390px; font-size: clamp(38px, 11vw, 48px); line-height: 1; }
+      .hero h1 { max-width: 390px; font-size: clamp(38px, 11vw, 48px); line-height: 1.05; }
       .hero-lead { margin-top: 12px; font-size: 15px; line-height: 1.45; }
       .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 18px; }
       .hero-actions .button { min-height: 50px; padding: 0 10px; font-size: 14px; }
       .hero-assurance { gap: 7px 14px; margin-top: 15px; font-size: 11px; }
-      .trust-row { min-height: 72px; }
-      .trust-item { padding: 9px 8px; font-size: 10px; line-height: 1.25; text-align: center; }
-      .trust-item { flex-direction: column; gap: 5px; }
-      .trust-icon { width: 30px; height: 30px; }
-      .trust-icon .icon { width: 16px; height: 16px; }
+      .trust-row { grid-template-columns: 1fr; min-height: 0; padding: 6px 0; }
+      .trust-item { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 12px 6px; font-size: 13px; line-height: 1.35; text-align: left; }
+      .trust-item + .trust-item { border-left: 0; border-top: 1px solid var(--slate-200); }
+      .trust-icon { width: 34px; height: 34px; }
+      .trust-icon .icon { width: 17px; height: 17px; }
       .guide { padding: 52px 0; }
       .guide-grid { grid-template-columns: 1fr; gap: 31px; }
       .guide-copy { order: -1; }
@@ -371,8 +371,6 @@
       .hero-copy { padding-top: 245px; }
       .hero h1 { font-size: 38px; }
       .hero-actions { grid-template-columns: 1fr; }
-      .hero-assurance span:last-child { display: none; }
-      .trust-item { font-size: 9px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -437,7 +435,7 @@
         <div class="guide-copy">
           <p class="section-kicker">Before you send</p>
           <h2 class="section-title" id="photo-guide-title">Make sure your bill has every required detail</h2>
-          <p class="section-copy">The insurance company needs the information below on the towing bill before it can consider reimbursement.</p>
+          <p class="section-copy">The more of this your bill shows, the faster we can help. Missing something? Send it anyway and we'll help you sort it out.</p>
           <div class="receipt-requirements" aria-label="Required towing bill information">
             <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Policyholder's full name and address</span></div>
             <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Vehicle year, make and full VIN</span></div>
@@ -445,9 +443,9 @@
             <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Total towing amount</span></div>
             <div class="requirement"><span class="requirement-check"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span><span>Pickup and destination: where it was towed from and where it was towed to</span></div>
           </div>
-          <div class="missing-detail-note"><svg class="icon" aria-hidden="true"><use href="#i-receipt"></use></svg><span><strong>Is something missing?</strong> Ask the towing company for a corrected, itemized bill before uploading it.</span></div>
+          <div class="missing-detail-note"><svg class="icon" aria-hidden="true"><use href="#i-receipt"></use></svg><span><strong>Is something missing?</strong> You can still send it now. For the fastest review, you can also ask the towing company for a corrected, itemized bill.</span></div>
           <ol class="check-list">
-            <li><span class="check-number">1</span><span><strong>Show all four corners</strong><span>Place the receipt on a flat surface and include the entire page.</span></span></li>
+            <li><span class="check-number">1</span><span><strong>Get the whole receipt in the photo</strong><span>Lay it flat on a table and include the entire page so nothing is cut off.</span></span></li>
             <li><span class="check-number">2</span><span><strong>Make every detail readable</strong><span>Check the photo before sending it, especially the VIN, addresses, date and amount.</span></span></li>
             <li><span class="check-number">3</span><span><strong>Avoid glare and shadows</strong><span>Use bright, even light and hold the phone still before taking the photo.</span></span></li>
           </ol>
@@ -465,7 +463,7 @@
 
         <div class="upload-layout">
           <form class="upload-card" id="towForm" novalidate>
-            <p class="step-label">Step 1 of 2</p>
+            <p class="step-label">Step 1: Send it</p>
             <h3>Add your towing receipt</h3>
             <p class="upload-card-intro">You can add up to five photos or PDF pages. Each file must be 10 MB or smaller.</p>
 
@@ -528,12 +526,12 @@
           </form>
 
           <aside class="next-panel" aria-labelledby="next-title">
-            <p class="step-label">Step 2 of 2</p>
+            <p class="step-label">Step 2: We take it from here</p>
             <h3 id="next-title">What happens next?</h3>
             <div class="next-list">
               <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span><span><strong>We receive the receipt</strong><span>It goes to our agency document team with your contact information.</span></span></div>
               <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg></span><span><strong>We review it</strong><span>We match the bill to your policy and check what information is available.</span></span></div>
-              <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg></span><span><strong>We contact you if needed</strong><span>Keep your original receipt until the review is complete.</span></span></div>
+              <div class="next-item"><span class="next-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg></span><span><strong>We follow up, usually within 1 business day</strong><span>Keep your original receipt until the review is complete.</span></span></div>
             </div>
             <div class="coverage-notice"><strong>Important coverage notice</strong>Uploading a receipt does not guarantee reimbursement. Coverage, service limits, eligibility and carrier requirements vary by policy.</div>
             <p class="privacy-note"><strong>Need help?</strong><br>Call our service team at <a href="tel:3368351993">(336) 835-1993</a>.</p>
