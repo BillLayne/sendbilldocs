@@ -364,6 +364,7 @@
             .photo-upload-slot{border-left:none;border-top:1px solid var(--gray-100)}
         }
     </style>
+<link rel="stylesheet" href="assets/upload-refinements.css">
 </head>
 <body>
 
@@ -383,8 +384,8 @@
         <div class="hero-inner">
             <div class="hero-content">
                 <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
-                <h1>Securely Upload <span>Photos, Forms &amp;</span> Insurance Documents</h1>
-                <p class="hero-sub">Securely send your photos and documents to our team in under a minute.</p>
+                <h1>Send Your Documents to <span>Bill Layne Insurance</span></h1>
+                <p class="hero-sub">Upload photos, PDFs, or forms from your phone or computer.</p>
                 <div class="hero-actions">
                     <a href="#upload-form" class="hero-btn hero-btn-primary"><i class="fas fa-arrow-up-from-bracket"></i> Start Upload</a>
                     <a href="#stepsSection" class="hero-btn hero-btn-secondary"><i class="fas fa-play"></i> How It Works</a>
@@ -398,40 +399,6 @@
             </div>
         </div>
     </header>
-
-    <!-- TRUST BAR -->
-    <div class="trust-bar" id="trustBar">
-        <div class="trust-items">
-            <div class="trust-item"><i class="fas fa-lock ti-lock"></i><div class="ti-text"><strong>100% Secure</strong><small>Your data is encrypted and always protected.</small></div></div>
-            <div class="trust-item"><i class="fas fa-shield-halved ti-shield"></i><div class="ti-text"><strong>Direct to Our Team</strong><small>No third parties. Just our team.</small></div></div>
-            <div class="trust-item"><i class="fas fa-clock ti-clock"></i><div class="ti-text"><strong>Under 60 Seconds</strong><small>Quick, simple, and stress-free.</small></div></div>
-        </div>
-    </div>
-
-    <!-- STEPS -->
-    <section class="steps-section" id="stepsSection">
-        <div class="section-label">How It Works</div>
-        <h2 class="steps-title">It's Easy - Just 3 Steps</h2>
-        <div class="steps-row">
-            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i><span class="step-num-badge">1</span></div><div><div class="step-num">Step One</div><div class="step-label">Tell Us Who You Are</div><div class="step-copy">Just your name and email so we know exactly where your documents should go.</div></div></div>
-            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i><span class="step-num-badge">2</span></div><div><div class="step-num">Step Two</div><div class="step-label">Snap or Upload</div><div class="step-copy">Take a photo or pick files right from your phone — photos and PDFs both work great.</div></div></div>
-            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check"></i><span class="step-num-badge">3</span></div><div><div class="step-num">Step Three</div><div class="step-label">You're Done!</div><div class="step-copy">Tap send and your documents arrive securely with our team in seconds.</div></div></div>
-        </div>
-    </section>
-
-    <section class="send-types" aria-label="Documents you can send">
-        <h2 class="send-types-title">What You Can Send</h2>
-        <div class="send-type-grid">
-            <div class="send-type"><span class="send-type-ic st-blue"><i class="fas fa-id-card"></i></span><span>ID Cards</span></div>
-            <div class="send-type"><span class="send-type-ic st-purple"><i class="fas fa-camera"></i></span><span>Photos</span></div>
-            <div class="send-type"><span class="send-type-ic st-gold"><i class="fas fa-calculator"></i></span><span>Estimates</span></div>
-            <div class="send-type"><span class="send-type-ic st-teal"><i class="fas fa-envelope"></i></span><span>Letters</span></div>
-            <div class="send-type"><span class="send-type-ic st-green"><i class="fas fa-shield-halved"></i></span><span>Policy Docs</span></div>
-            <div class="send-type"><span class="send-type-ic st-indigo"><i class="fas fa-clipboard-list"></i></span><span>Claim Forms</span></div>
-            <div class="send-type"><span class="send-type-ic st-red"><i class="fas fa-receipt"></i></span><span>Receipts</span></div>
-            <div class="send-type"><span class="send-type-ic st-slate"><i class="fas fa-ellipsis"></i></span><span>And More</span></div>
-        </div>
-    </section>
 
     <!-- MAIN FORM -->
     <main class="main-upload-wrap">
@@ -520,13 +487,14 @@
                         Attach Files <span class="required">*</span>
                         <span style="font-weight:400;color:var(--gray-400);"> — Multiple files OK</span>
                     </label>
+                    <p class="attachment-guidance">Selected files stay on this page until you press Send My Documents. Each file must be 10 MB or smaller.</p>
 
                     <!-- STANDARD UPLOAD (shown by default, hidden in photo mode) -->
                     <div id="standardUploadArea">
                         <div class="upload-zone" id="uploadZone">
                             <div class="upload-icon" id="uploadIcon"><i class="fas fa-cloud-arrow-up"></i></div>
-                            <div class="upload-text-main" id="uploadTextMain">Tap to add your files</div>
-                            <div class="upload-text-sub">Photos, PDFs, documents — most phone photos work great!</div>
+                            <div class="upload-text-main" id="uploadTextMain" role="status" aria-live="polite">Tap to add your files</div>
+                            <div class="upload-text-sub">Phone photos (including HEIC), PDFs, and Word files. Up to 10 MB per file; multiple files welcome.</div>
                             <div class="upload-buttons">
                                 <button type="button" class="upload-btn upload-btn-camera" onclick="openCamera('cameraInput')">
                                     <i class="fas fa-camera" style="font-size:19px;"></i> Take a Photo
@@ -560,8 +528,8 @@
                         <!-- Progress bar -->
                         <div class="photo-progress-bar">
                             <div class="photo-progress-header">
-                                <div class="photo-progress-label">Photos Uploaded</div>
-                                <div class="photo-progress-count" id="progressCount">0 of 0</div>
+                                <div class="photo-progress-label">Photos Selected</div>
+                                <div class="photo-progress-count" id="progressCount" role="status" aria-live="polite">0 of 0</div>
                             </div>
                             <div class="photo-progress-track">
                                 <div class="photo-progress-fill" id="progressFill" style="width:0%"></div>
@@ -579,7 +547,7 @@
                     <span class="shine"></span>
                     <i class="fas fa-lock"></i> Send My Documents
                 </button>
-                <p class="submit-reassure"><i class="fas fa-lock"></i> Your information is 100% secure and encrypted.</p>
+                <p class="submit-reassure"><i class="fas fa-lock"></i> Files are sent over an encrypted connection. Check your email for delivery confirmation.</p>
 
             </form>
         </div>
@@ -590,20 +558,21 @@
         <div class="sending-spinner"></div>
         <h2>Sending Your Documents...</h2>
         <p>We're securely uploading your files to our team.<br>This may take a moment depending on file size.</p>
-        <div class="sending-warning"><i class="fas fa-exclamation-triangle"></i> Please don't close this page until you see your confirmation.</div>
+        <div class="sending-warning"><i class="fas fa-exclamation-triangle"></i> Please keep this page open until sending finishes.</div>
     </section>
 
     <!-- SUCCESS -->
     <section class="success-section" id="successSection">
         <div class="success-check"><i class="fas fa-check"></i></div>
-        <h2>Documents Received!</h2>
-        <p>Thank you — we've got your files and our team is on it.</p>
+        <h2>Upload Request Sent</h2>
+        <p>Thank you. Your upload request has been sent. Check your email to confirm your documents were received.</p>
         <div class="confirmation-box">
-            <div class="confirmation-label">Your Confirmation Number</div>
+            <div class="confirmation-label">Your Upload Reference</div>
             <div class="confirmation-number" id="confirmationDisplay">—</div>
             <div class="confirmation-tip">Save this number for your records</div>
         </div>
-        <div class="email-note"><i class="fas fa-envelope-circle-check"></i> A confirmation email has been sent to you.</div>
+        <p>If no confirmation arrives, contact us at <a href="tel:3368351993">(336) 835-1993</a> with your upload reference.</p>
+        <div class="email-note"><i class="fas fa-envelope-circle-check"></i> Look for a confirmation email, including in spam or junk.</div>
         <p style="font-size:13px;color:var(--gray-500);">We'll review your documents and reach out if we need anything else. Most requests are handled within one business day.</p>
         <div class="success-actions">
             <button class="success-btn success-btn-primary" onclick="resetForm()"><i class="fas fa-plus"></i> Send More Documents</button>
@@ -625,11 +594,45 @@
             <div class="help-hours"><i class="fas fa-clock" style="margin-right:4px;"></i> Mon-Fri: 9am - 5pm</div>
             <div class="security-note">
                 <i class="fas fa-lock"></i>
-                <div><strong>Bank-Level Security</strong><span>Your information is encrypted and never shared.</span></div>
+                <div><strong>What Happens Next</strong><span>Our team receives your documents for review. Look for a confirmation email after sending.</span></div>
             </div>
         </div>
     </section>
     </main>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar" id="trustBar">
+        <div class="trust-items">
+            <div class="trust-item"><i class="fas fa-lock ti-lock"></i><div class="ti-text"><strong>Encrypted Connection</strong><small>Files are encrypted in transit using HTTPS.</small></div></div>
+            <div class="trust-item"><i class="fas fa-shield-halved ti-shield"></i><div class="ti-text"><strong>Direct to Our Team</strong><small>Delivered for Bill Layne Insurance to review.</small></div></div>
+            <div class="trust-item"><i class="fas fa-clock ti-clock"></i><div class="ti-text"><strong>Email Confirmation</strong><small>Check your inbox after sending.</small></div></div>
+        </div>
+    </div>
+
+    <!-- STEPS -->
+    <section class="steps-section" id="stepsSection">
+        <div class="section-label">How It Works</div>
+        <h2 class="steps-title">It's Easy - Just 3 Steps</h2>
+        <div class="steps-row">
+            <div class="step-card step-1"><div class="step-icon"><i class="fas fa-user"></i><span class="step-num-badge">1</span></div><div><div class="step-num">Step One</div><div class="step-label">Tell Us Who You Are</div><div class="step-copy">Just your name and email so we know exactly where your documents should go.</div></div></div>
+            <div class="step-card step-2"><div class="step-icon"><i class="fas fa-camera"></i><span class="step-num-badge">2</span></div><div><div class="step-num">Step Two</div><div class="step-label">Snap or Upload</div><div class="step-copy">Take a photo or pick files right from your phone — photos and PDFs both work great.</div></div></div>
+            <div class="step-card step-3"><div class="step-icon"><i class="fas fa-check"></i><span class="step-num-badge">3</span></div><div><div class="step-num">Step Three</div><div class="step-label">You're Done!</div><div class="step-copy">Tap Send My Documents, then check your inbox for the delivery confirmation.</div></div></div>
+        </div>
+    </section>
+
+    <section class="send-types" aria-label="Documents you can send">
+        <h2 class="send-types-title">What You Can Send</h2>
+        <div class="send-type-grid">
+            <div class="send-type"><span class="send-type-ic st-blue"><i class="fas fa-id-card"></i></span><span>ID Cards</span></div>
+            <div class="send-type"><span class="send-type-ic st-purple"><i class="fas fa-camera"></i></span><span>Photos</span></div>
+            <div class="send-type"><span class="send-type-ic st-gold"><i class="fas fa-calculator"></i></span><span>Estimates</span></div>
+            <div class="send-type"><span class="send-type-ic st-teal"><i class="fas fa-envelope"></i></span><span>Letters</span></div>
+            <div class="send-type"><span class="send-type-ic st-green"><i class="fas fa-shield-halved"></i></span><span>Policy Docs</span></div>
+            <div class="send-type"><span class="send-type-ic st-indigo"><i class="fas fa-clipboard-list"></i></span><span>Claim Forms</span></div>
+            <div class="send-type"><span class="send-type-ic st-red"><i class="fas fa-receipt"></i></span><span>Receipts</span></div>
+            <div class="send-type"><span class="send-type-ic st-slate"><i class="fas fa-ellipsis"></i></span><span>And More</span></div>
+        </div>
+    </section>
 
     <!-- FAQ -->
     <section class="faq-section" aria-label="Common questions">
@@ -638,7 +641,7 @@
         <div class="faq-list">
             <details class="faq-item">
                 <summary><span class="faq-q"><i class="fas fa-shield-halved"></i> Is my upload secure?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
-                <div class="faq-answer">Yes. Every file is encrypted while it's sent and goes straight to our team at Bill Layne Insurance — never to a third party or outside service.</div>
+                <div class="faq-answer">This page uses HTTPS to encrypt files in transit. We use Google services to store uploads and deliver email notifications for our team to review.</div>
             </details>
             <details class="faq-item">
                 <summary><span class="faq-q"><i class="fas fa-file-lines"></i> What file types can I send?</span><i class="fas fa-chevron-down faq-chev"></i></summary>
@@ -1014,7 +1017,7 @@
         if (selectedFiles.length > 0) {
             zone.classList.add('has-files');
             icon.innerHTML = '<i class="fas fa-check"></i>';
-            mainText.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' ready to send';
+            mainText.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' selected — not sent yet';
             addMore.style.display = 'block';
         } else {
             zone.classList.remove('has-files');
@@ -1053,7 +1056,7 @@
             : (isDamage
                 ? 'Take clear photos of the damage from a few angles. Tap the camera button to snap each one.'
                 : 'Use the example photos as a guide. Tap the camera button on each card to snap your photo.');
-        if (progressLabel) progressLabel.textContent = isClaim ? 'Items Uploaded' : 'Photos Uploaded';
+        if (progressLabel) progressLabel.textContent = isClaim ? 'Items Selected' : 'Photos Selected';
         document.getElementById('standardUploadArea').style.display = 'none';
         document.getElementById('photoInspectionArea').style.display = 'block';
         renderPhotoGrid();
@@ -1520,7 +1523,7 @@
         success.scrollIntoView({ behavior:'smooth', block:'start' });
         var dockUpload = document.getElementById('dockUpload');
         if (dockUpload) {
-            dockUpload.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
+            dockUpload.innerHTML = '<i class="fas fa-check-circle"></i> Request Sent';
             dockUpload.style.background = 'linear-gradient(135deg,#10b981,#059669)';
             dockUpload.style.pointerEvents = '';
             dockUpload.style.opacity = '';
@@ -1547,6 +1550,17 @@
     function escHtml(str) {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
+    </script>
+    <script>
+    // Keep photo instructions usable when an externally hosted example is unavailable.
+    document.addEventListener('error', function(event) {
+        var img = event.target;
+        if (!(img instanceof HTMLImageElement) || !img.closest('.photo-sample')) return;
+        var fallback = document.createElement('div');
+        fallback.className = 'photo-example-fallback';
+        fallback.textContent = 'Example image unavailable. Follow the photo instructions above.';
+        img.replaceWith(fallback);
+    }, true);
     </script>
 </body>
 </html>

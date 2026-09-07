@@ -1,0 +1,32 @@
+/* Focused document-upload layout and readability refinements. */
+body{background:#f3f6fb;color:#334155}
+.hero{min-height:0;padding:20px 24px 30px;background:linear-gradient(120deg,#061b36,#123c73)}
+.hero::after,.hero-bg,.hero-visual::before{display:none}
+.hero-inner{margin:24px auto 0;grid-template-columns:minmax(0,1fr) 240px;gap:32px;max-width:1100px}
+.hero-content{max-width:740px}.hero h1{font-size:clamp(28px,3.3vw,44px);line-height:1.16;margin-bottom:14px}
+.hero-sub{font-size:17px;max-width:640px;margin-bottom:18px}.hero-badge{margin-bottom:12px}
+.hero-visual{min-height:0;margin:0}.hero-art{width:230px;max-width:100%;filter:none}
+.hero-btn{min-height:48px;font-size:14px;padding:0 20px}.hero-btn-primary,.nav-upload{box-shadow:none;background:#f7b731}
+.main-upload-wrap{margin:28px auto 40px;scroll-margin-top:20px}
+#upload-form,#stepsSection{scroll-margin-top:24px}
+.form-card,.help-card,.step-card,.faq-item,.send-type{box-shadow:0 4px 16px rgba(6,27,54,.05);border:1px solid #e2e8f0}
+.form-header p,.form-label,.upload-text-sub,.attachment-guidance,.step-copy,.ti-text small,.help-card p,.help-hours,.security-note span,.submit-reassure,.file-item-size,.confirmation-tip{font-size:14px;color:#475569;line-height:1.6}
+.attachment-guidance{margin:0 0 14px}.form-input::placeholder{color:#64748b;opacity:1}
+.form-label span{color:#475569!important}.form-label .required{color:#b91c1c!important}
+.submit-btn,.submit-btn:hover{background:#f7b731;color:#061b36;box-shadow:none}.submit-btn .shine{display:none}
+.upload-btn-camera,.help-btn-call,.help-btn-messenger,.help-btn-email{background:#eef4ff;color:#123c73;box-shadow:none;border:1px solid #cbd5e1}
+.upload-zone{background:#f8fafc;border-color:#94a3b8}.upload-zone.has-files{background:#eff6ff;border-color:#2563eb}
+.file-item-remove{min-width:44px;min-height:44px}
+.trust-bar{margin:24px auto;position:relative;top:auto}.trust-items{box-shadow:none;border:1px solid #e2e8f0}
+.steps-section,.send-types,.faq-section{margin:40px auto}.step-card{box-shadow:none}.step-icon{box-shadow:none}
+.photo-preview-name,.photo-hint,.sample-caption{font-size:14px}.photo-preview-name{white-space:normal;overflow-wrap:anywhere}
+.photo-card [style*="font-size:10px"]{font-size:14px!important;color:#475569!important}
+:where(a,button,input,textarea,select,summary):focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+.hero :focus-visible{outline-color:#f7b731}
+@media(max-width:900px){.hero-inner{grid-template-columns:minmax(0,1fr) 170px;gap:16px}.hero-art{width:170px}.hero-actions{display:flex}.main-upload-wrap{margin-top:20px}.hero-content{text-align:left}}
+@media(max-width:600px){.hero{padding:16px 16px 24px}.hero-inner{display:block;margin-top:22px}.hero-visual{display:none}.hero h1{font-size:29px;line-height:1.2}.hero-sub{font-size:16px}.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hero-btn{font-size:13px;padding:0 10px}.main-upload-wrap{margin-top:18px}.form-header h2{font-size:23px}.trust-items{gap:18px}.send-type-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.send-type{padding:12px 4px;font-size:12px}.form-card{padding:22px 18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.photo-card-title p,.slot-empty-text{font-size:14px;color:#475569;line-height:1.5}
+.photo-example-fallback{padding:28px 16px 80px;min-height:220px;font-size:14px;line-height:1.6;color:#475569;background:#f1f5f9}
+.step-1 .step-icon,.step-2 .step-icon,.step-3 .step-icon{box-shadow:none}
