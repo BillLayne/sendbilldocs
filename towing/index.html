@@ -508,8 +508,16 @@
                 <input id="carrier" name="carrier" type="text" autocomplete="off" placeholder="Example: Progressive">
               </div>
               <div class="field">
-                <label for="vehicle">Vehicle <small>(optional)</small></label>
-                <input id="vehicle" name="vehicle" type="text" autocomplete="off" placeholder="Example: 2022 Honda CR-V">
+                <label for="vehicle">Vehicle year, make and VIN <small>(if not printed on the receipt)</small></label>
+                <input id="vehicle" name="vehicle" type="text" autocomplete="off" placeholder="Example: 2022 Honda CR-V, VIN 2HKRW2H5...">
+              </div>
+              <div class="field">
+                <label for="towDate">Date towed <small>(if not on the receipt)</small></label>
+                <input id="towDate" name="towDate" type="text" inputmode="numeric" autocomplete="off" placeholder="Example: 09/12/2026">
+              </div>
+              <div class="field">
+                <label for="towRoute">Towed from / to <small>(if not on the receipt)</small></label>
+                <input id="towRoute" name="towRoute" type="text" autocomplete="off" placeholder="Example: I-77 near Elkin to Smith's Garage">
               </div>
               <div class="field wide">
                 <label for="notes">Anything else we should know? <small>(optional)</small></label>
@@ -806,8 +814,10 @@
           }
           const carrier = document.getElementById('carrier').value.trim();
           const vehicle = document.getElementById('vehicle').value.trim();
+          const towDate = document.getElementById('towDate').value.trim();
+          const towRoute = document.getElementById('towRoute').value.trim();
           const customerNotes = document.getElementById('notes').value.trim();
-          const notes = [carrier ? 'Insurance company: ' + carrier : '', vehicle ? 'Vehicle: ' + vehicle : '', customerNotes].filter(Boolean).join('\n');
+          const notes = [carrier ? 'Insurance company: ' + carrier : '', vehicle ? 'Vehicle / VIN: ' + vehicle : '', towDate ? 'Date towed: ' + towDate : '', towRoute ? 'Towed from / to: ' + towRoute : '', customerNotes].filter(Boolean).join('\n');
           const payload = {
             name: document.getElementById('fullName').value.trim(),
             email: document.getElementById('email').value.trim(),

@@ -442,6 +442,17 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '</table>' +
     '<div style="' + GE_TSA + GE_FONT + 'font-size:11px;line-height:15px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#8a6d2f;padding:8px 0 6px 0;">Files received (' + savedFiles.length + ')</div>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background-color:#ffffff;border:1px solid #e3dccd;"><tr><td style="padding:4px 12px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' + fileRows + '</table></td></tr></table>' +
+    (kind.noun === 'tow bill'
+      ? '<div style="' + GE_TSA + GE_FONT + 'font-size:11px;line-height:15px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#8a6d2f;padding:18px 0 6px 0;">Your receipt should show</div>' +
+        '<div style="' + GE_TSA + GE_FONT + 'font-size:14px;line-height:22px;color:#555555;">' +
+        '&bull; Policyholder&rsquo;s full name and address<br>' +
+        '&bull; Vehicle year, make and full VIN<br>' +
+        '&bull; Date the vehicle was towed<br>' +
+        '&bull; Where it was towed from and where it was towed to<br>' +
+        '&bull; Total towing amount' +
+        '</div>' +
+        '<div style="' + GE_TSA + GE_FONT + 'font-size:13px;line-height:20px;color:#8a8a8a;padding-top:8px;">Missing something? Reply to this email with the details, or ask the towing company for a corrected, itemized bill.</div>'
+      : '') +
     '<div style="height:14px;line-height:14px;font-size:0;">&nbsp;</div>' +
     '</td></tr></table>' +
     '</td></tr>',
@@ -531,6 +542,7 @@ function buildCustomerPlainBody_(runtime, submission, savedFiles) {
     '--- FILES RECEIVED (' + savedFiles.length + ') ---',
     fileLines,
     '',
+    (submissionNoun_(submission).noun === 'tow bill' ? '--- YOUR RECEIPT SHOULD SHOW ---\n  - Policyholder full name and address\n  - Vehicle year, make and full VIN\n  - Date towed\n  - Towed from / to\n  - Total towing amount\nMissing something? Reply with the details.\n' : ''),
     '--- WHAT HAPPENS NEXT ---',
     '  1. Your ' + submissionNoun_(submission).noun + ' ' + (submissionNoun_(submission).plural ? 'are' : 'is') + ' securely stored',
     '  2. Our team will review your submission',
