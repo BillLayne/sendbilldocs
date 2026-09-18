@@ -415,6 +415,7 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     // HERO
     '<tr><td style="padding-bottom:4px;">' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background-color:#ffffff;border:1px solid #e3dccd;">' +
+    '<tr><td style="padding:0;line-height:0;font-size:0;"><img src="' + APP_CONFIG.emailHeroImageUrl + '" alt="Your upload was received" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></td></tr>' +
     '<tr><td class="hero-pad" style="padding:30px 20px 26px 20px;text-align:center;">' +
     '<div style="' + GE_TSA + GE_FONT + 'font-size:12px;line-height:16px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#8a6d2f;">&#9989; Received</div>' +
     '<div style="' + GE_TSA + GE_SERIF + 'font-size:27px;line-height:33px;color:#000000;padding-top:12px;">Thank you, ' + firstName + ' &mdash; ' + got + '.</div>' +
