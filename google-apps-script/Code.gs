@@ -480,7 +480,7 @@ function buildCustomerHtmlBody_(runtime, submission, savedFiles) {
     '<tr><td class="full-btn" align="center" style="background-color:#D4A843;border-radius:6px;"><a href="tel:+13368351993" style="' + GE_TSA + 'display:block;padding:14px 18px;' + GE_FONT + 'font-size:15px;font-weight:bold;color:#000000;text-decoration:none;">Call (336) 835-1993</a></td></tr>' +
     '<tr><td height="8" style="font-size:0;line-height:8px;">&nbsp;</td></tr>' +
     '<tr><td class="full-btn" align="center" style="border:1px solid #3a3a3a;border-radius:6px;"><a href="mailto:Save&#64;BillLayneInsurance&#46;com?subject=' + encodeURIComponent('Question about ' + submission.confirmationNumber) + '" style="' + GE_TSA + 'display:block;padding:14px 18px;' + GE_FONT + 'font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;">Email Us</a></td></tr>' +
-    '<tr><td align="center" style="' + GE_TSA + 'padding-top:10px;' + GE_FONT + 'font-size:12.5px;line-height:18px;color:#c9c9c9;">Prefer to text? (336) 835-1993</td></tr>' +
+    '<tr><td align="center" style="' + GE_TSA + 'padding-top:10px;' + GE_FONT + 'font-size:12.5px;line-height:18px;color:#c9c9c9;">Prefer to text? <a href="sms:+13368279065" style="color:#D4A843;text-decoration:none;font-weight:bold;">(336) 827-9065</a></td></tr>' +
     '</table>' +
     '</td></tr></table>' +
     '</td></tr>',
