@@ -365,16 +365,18 @@
         }
     </style>
 <link rel="stylesheet" href="assets/upload-refinements.css">
+<link rel="stylesheet" href="assets/snap-hero.css?v=20261008">
+<link rel="preload" as="image" href="https://img.billlayneinsurance.com/i/2026/10/send-bill-docs-desktop-w62zdn.webp" media="(min-width:768px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://img.billlayneinsurance.com/i/2026/10/smartphone-insurance-upload-scene-2-mobi-pudwyb.webp" media="(max-width:767px)" fetchpriority="high">
 </head>
 <body>
 
     <!-- HERO -->
-    <header class="hero">
+    <header class="hero snap-hero">
         <div class="hero-bg"></div>
         <nav class="site-nav" aria-label="Primary">
             <a class="brand-lockup" href="https://www.billlayneinsurance.com">
-                <span class="brand-mark">BL</span>
-                <span class="brand-text"><strong>Bill Layne</strong><span>Insurance</span></span>
+                <img class="snap-agency-logo" src="https://img.billlayneinsurance.com/i/2026/08/bli-agency-logo-4jqj2j.png" alt="Bill Layne Insurance" width="784" height="248" decoding="async">
             </a>
             <div class="nav-actions">
                 <a href="#upload-form" class="nav-upload"><i class="fas fa-arrow-up-from-bracket"></i><span>Start Upload</span></a>
@@ -383,13 +385,14 @@
         </nav>
         <div class="hero-inner">
             <div class="hero-content">
-                <div class="hero-badge"><i class="fas fa-lock"></i> Secure Document Upload</div>
-                <h1>Send Your Documents to <span>Bill Layne Insurance</span></h1>
-                <p class="hero-sub">Upload photos, PDFs, or forms from your phone or computer.</p>
+                <div class="hero-badge">SEND DOCUMENTS TO OUR LOCAL TEAM</div>
+                <h1>Your documents.<br><span>Sent in a snap.</span></h1>
+                <p class="hero-sub">Send photos, PDFs or forms straight to our local team&mdash;from your phone or computer.</p>
                 <div class="hero-actions">
-                    <a href="#upload-form" class="hero-btn hero-btn-primary"><i class="fas fa-arrow-up-from-bracket"></i> Start Upload</a>
-                    <a href="#stepsSection" class="hero-btn hero-btn-secondary"><i class="fas fa-play"></i> How It Works</a>
+                    <a href="#upload-form" class="hero-btn hero-btn-primary"><i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i> Upload documents <span aria-hidden="true">&rarr;</span></a>
+                    <a href="#stepsSection" class="hero-btn hero-btn-secondary"><i class="fas fa-circle-play" aria-hidden="true"></i> See how it works</a>
                 </div>
+                <ul class="snap-features" aria-label="Upload options"><li><i class="fas fa-camera" aria-hidden="true"></i>Take a photo</li><li><i class="far fa-file" aria-hidden="true"></i>Choose a file</li><li><i class="far fa-paper-plane" aria-hidden="true"></i>Send to our team</li></ul>
             </div>
             <div class="hero-visual" aria-hidden="true">
                 <picture>
@@ -405,8 +408,9 @@
     <section class="form-section" id="upload-form">
         <div class="form-card">
             <div class="form-header">
-                <h2><i class="fas fa-paper-plane" style="color:var(--blue);margin-right:8px;"></i> Upload Your Documents</h2>
+                <h2><i class="fas fa-paper-plane" style="color:var(--blue);margin-right:8px;"></i> Ready to send your documents?</h2>
                 <p>Fill in your info and attach your files below.</p>
+                <p class="snap-file-guidance">Photos (including HEIC/HEIF), PDFs, and Word documents. Maximum 10 MB per file.</p>
             </div>
 
             <form id="docForm" onsubmit="return false;">
@@ -557,6 +561,8 @@
     <section class="sending-section" id="sendingSection">
         <div class="sending-spinner"></div>
         <h2>Sending Your Documents...</h2>
+        <p id="uploadStatus" role="status" aria-live="polite">Preparing your files...</p>
+        <progress id="uploadProgress" max="1" value="0" aria-label="File preparation progress"></progress>
         <p>We're securely uploading your files to our team.<br>This may take a moment depending on file size.</p>
         <div class="sending-warning"><i class="fas fa-exclamation-triangle"></i> Please keep this page open until sending finishes.</div>
     </section>
@@ -573,7 +579,7 @@
         </div>
         <p>If no confirmation arrives, contact us at <a href="tel:3368351993">(336) 835-1993</a> with your upload reference.</p>
         <div class="email-note"><i class="fas fa-envelope-circle-check"></i> Look for a confirmation email, including in spam or junk.</div>
-        <p style="font-size:13px;color:var(--gray-500);">We'll review your documents and reach out if we need anything else. Most requests are handled within one business day.</p>
+        <p style="font-size:16px;color:var(--gray-500);">Our team will review your documents and reach out if anything else is needed.</p>
         <div class="success-actions">
             <button class="success-btn success-btn-primary" onclick="resetForm()"><i class="fas fa-plus"></i> Send More Documents</button>
             <a href="tel:3368351993" class="success-btn success-btn-secondary"><i class="fas fa-phone-alt"></i> Call Us: (336) 835-1993</a>
@@ -1435,6 +1441,11 @@
             return;
         }
         var confirmationNumber = generateConfirmationNumber();
+        var fileCount = photoMode ? Object.values(photoFiles).reduce(function(total, file) { return total + (Array.isArray(file) ? file.length : (file ? 1 : 0)); }, 0) : selectedFiles.length;
+        var uploadProgress = document.getElementById('uploadProgress');
+        uploadProgress.max = Math.max(1, fileCount);
+        uploadProgress.value = 0;
+        document.getElementById('uploadStatus').textContent = 'Preparing ' + fileCount + (fileCount === 1 ? ' file...' : ' files...');
 
         // Switch to sending view
         document.querySelector('.form-section').style.display = 'none';
@@ -1460,6 +1471,7 @@
                             if (!multiFile) continue;
                             var multiB64 = await fileToBase64(multiFile);
                             filesToUpload.push({ name: multiLabel + ' ' + (mf + 1) + ' - ' + multiFile.name, type: multiFile.type, size: multiFile.size, data: multiB64 });
+                            uploadProgress.value = filesToUpload.length;
                         }
                         continue;
                     }
@@ -1467,12 +1479,14 @@
                     var label = PHOTO_TYPES[key] ? PHOTO_TYPES[key].label : key;
                     var b64 = await fileToBase64(f);
                     filesToUpload.push({ name: label + ' — ' + f.name, type: f.type, size: f.size, data: b64 });
+                    uploadProgress.value = filesToUpload.length;
                 }
             } else {
                 for (var i = 0; i < selectedFiles.length; i++) {
                     var sf = selectedFiles[i];
                     var b64s = await fileToBase64(sf);
                     filesToUpload.push({ name: sf.name, type: sf.type, size: sf.size, data: b64s });
+                    uploadProgress.value = filesToUpload.length;
                 }
             }
 
@@ -1487,6 +1501,8 @@
                 timestamp: new Date().toISOString()
             };
 
+            uploadProgress.removeAttribute('value');
+            document.getElementById('uploadStatus').textContent = 'Sending your upload request. Keep this page open; check your email for delivery confirmation.';
             await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST', mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain' },
